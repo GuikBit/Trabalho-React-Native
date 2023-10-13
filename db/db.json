@@ -1,0 +1,10 @@
+{
+    "pacientes":[],
+    "endereco_paciente":[],
+    "anamese_paciente":[],
+    "responsavel_paciente":[],
+    "dentistas":[],
+    "especialidades":[],
+    "consultas":[]
+    
+}
