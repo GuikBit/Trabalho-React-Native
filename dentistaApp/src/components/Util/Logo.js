@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, View, Image, Dimensions} from 'react-native'
-import img from '../img/img4.png'
+import img from '../img/odonto.png'
 import globalStyle from '../../../globalStyle'
 
 
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
 
     },  img: {
         width: width,
-        height: (630/1130) * width,
+        height: (475/950) * width,
 
     }
 })

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View, Dimensions} from 'react-native'
+import { StyleSheet, Text, View, Dimensions, ScrollView} from 'react-native'
 import { userAuth } from '../../components/Auth/Auth'
 import globalStyle from '../../../globalStyle'
 import { TextInput, Button} from "react-native-paper";
@@ -29,7 +29,7 @@ const Login = ({navigation, route}) => {
         }
     }
   return (
-    <View style={globalStyle.container}>
+    <ScrollView style={globalStyle.container}>
 
             <Logo style={styles.topo}/>
 
@@ -44,31 +44,32 @@ const Login = ({navigation, route}) => {
                 }
                 <TextInput
                     mode="outlined"
-                    label="Login"
-                    placeholder="Digite o seu login"
-                    left={<TextInput.Icon icon="account-circle" color="#0CC0DF"/>}
-                    selectionColor="#0CC0DF"
-                    outlineColor="#0CC0DF"
-                    activeOutlineColor="#0CC0DF"
-                    activeUnderlineColor="#0CC0DF"
+                    label="Login"                    
+                    left={<TextInput.Icon icon="account-circle" color="#24AAE3" style={{paddingTop: 10}}/>}
+                    selectionColor="#24AAE3"
+                    outlineColor="#24AAE3"
+                    outlineStyle={globalStyle.inputRadius}
+                    activeOutlineColor="#24AAE3"                   
                     style={globalStyle.input}
-                    textColor="#0CC0DF"
+                    textColor="#24AAE3"
                     value={obj.login}
-                    labelColor="#ae8fba"
+                    labelColor="#24AAE3"
                     onChangeText={(e)=> setObj({...obj, login: e})}
+                    
                 />
 
                 <TextInput
                     mode="outlined"
-                    label="Password"
+                    label="Senha"
                     secureTextEntry
-                    right={<TextInput.Icon icon="eye" color="#0CC0DF"/>}
-                    left={<TextInput.Icon icon="key" color="#0CC0DF"/>}
-                    selectionColor="#0CC0DF"
-                    outlineColor="#0CC0DF"
-                    activeOutlineColor="#0CC0DF"
+                    right={<TextInput.Icon icon="eye" color="#24AAE3" style={{paddingTop: 10}}/>}
+                    left={<TextInput.Icon icon="key" color="#24AAE3" style={{paddingTop: 10}}/>}
+                    selectionColor="#24AAE3"
+                    outlineColor="#24AAE3"
+                    outlineStyle={globalStyle.inputRadius}
+                    activeOutlineColor="#24AAE3"                  
                     style={globalStyle.input}
-                    textColor="#0CC0DF"
+                    textColor="#24AAE3"
                     value={obj.senha}
                     onChangeText={(e)=> setObj({...obj, senha: e})}
                     
@@ -77,16 +78,16 @@ const Login = ({navigation, route}) => {
             
             <View style={styles.acoes}>
                 
-                <Button icon="account-plus" textColor="#0CC0DF" mode="contained" labelStyle={globalStyle.label} onPress={() => { navigation.navigate('Cadastro') }} style={globalStyle.btn}>
+                <Button icon="account-plus" textColor="white" mode="contained" labelStyle={globalStyle.label} onPress={() => { navigation.navigate('Cadastro') }} style={globalStyle.btn}>
                     Cadastrar
                 </Button>
                 
-                <Button icon="login" textColor="#0CC0DF" mode="contained" labelStyle={globalStyle.label} onPress={ callLogar } style={globalStyle.btn}>
+                <Button icon="login" textColor="white" mode="contained" labelStyle={globalStyle.label} onPress={ callLogar } style={globalStyle.btn}>
                     Logar
                 </Button>
             
             </View>
-        </View>
+        </ScrollView>
   )
 }
 
@@ -99,15 +100,16 @@ const styles = StyleSheet.create({
     }, acoes: {
         flexDirection: 'row',
         justifyContent: 'space-around',
-        marginTop: 100,
+        marginVertical: 100,
 
     }, login: {
-        width: width - 50,
+        marginHorizontal: 20,
         height: 150,
         justifyContent: 'space-around',
-        alignSelf: 'center',
         marginTop: 130
+
     }, label:{
         fontSize: 22
-    }
+    
+    }, 
 })
