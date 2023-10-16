@@ -16,6 +16,8 @@ import Home from './src/view/Home/Home.js';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
+const isLogged = true; //booleano que retorna se existe um usuário logado ou n
+
 export default function App() {
   return (
     <View style={styles.container}>
@@ -40,13 +42,20 @@ const TabNavigator = () => {
 const StackNavigator = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Cadastro" component={Cadastro} />
-        <Stack.Screen name="BottomTab" component={TabNavigator} />
-        <Stack.Screen name="Novo Paciente" component={NovoPaciente} />
-        <Stack.Screen name="Nova Consulta" component={NovaConsulta} />
-        <Stack.Screen name="Novo Dentista" component={NovoDentista} />
+      <Stack.Navigator>
+        {isLogged ? (
+          <>
+            <Stack.Screen name="BottomTab" component={TabNavigator} />
+            <Stack.Screen name="Novo Paciente" component={NovoPaciente} />
+            <Stack.Screen name="Nova Consulta" component={NovaConsulta} />
+            <Stack.Screen name="Novo Dentista" component={NovoDentista} />
+          </>
+        ) : (
+          <>
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Cadastro" component={Cadastro} />
+          </>
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );
