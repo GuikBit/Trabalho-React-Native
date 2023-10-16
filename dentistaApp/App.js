@@ -31,10 +31,13 @@ export default function App() {
 
 const TabNavigator = () => {
   return (
-    <Tab.Navigator>
-      <Tab.Screen name="Home" component={Home} />
+    <Tab.Navigator
+      initialRouteName="Home"
+      screenOptions={{ headerShown: false }}
+    >
       <Tab.Screen name="Dashboard" component={Dashboard} />
-      <Tab.Screen name="Pagamento" component={Pagamento} />
+      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="NovoPaciente" component={NovoPaciente} />
     </Tab.Navigator>
   );
 };
@@ -45,8 +48,12 @@ const StackNavigator = () => {
       <Stack.Navigator>
         {isLogged ? (
           <>
-            <Stack.Screen name="BottomTab" component={TabNavigator} />
-            <Stack.Screen name="Novo Paciente" component={NovoPaciente} />
+            <Stack.Screen
+              name="BottomTab"
+              component={TabNavigator}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen name="Pagamento" component={Pagamento} />
             <Stack.Screen name="Nova Consulta" component={NovaConsulta} />
             <Stack.Screen name="Novo Dentista" component={NovoDentista} />
           </>

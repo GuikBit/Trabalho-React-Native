@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   useFonts,
   Poppins_400Regular,

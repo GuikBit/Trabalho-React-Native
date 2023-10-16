@@ -1,14 +1,32 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import StyledText from '../../atoms/StyledText';
+import { Colors } from '../../global/GlobalStyles';
 
 const Home = () => {
   return (
-    <View>
-      <Text>Home</Text>
+    <View style={styles.outerContainer}>
+      <View style={styles.headerConatiner}>
+        <StyledText style={styles.headerText}>Olá, Zezim</StyledText>
+      </View>
     </View>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  outerContainer: {
+    padding: 15,
+    flex: 1,
+    backgroundColor: Colors.primaryBackground,
+  },
+  headerConatiner: {
+    flex: 0.1,
+    borderColor: 'red',
+    borderWidth: 1,
+  },
+  headerText: {
+    fontSize: 30,
+  },
+});
