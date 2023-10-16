@@ -3,9 +3,8 @@ import { StyleSheet, Text, View, Dimensions, ScrollView } from 'react-native';
 import { userAuth } from '../../components/Auth/Auth';
 import { TextInput, Button } from 'react-native-paper';
 import Logo from '../../components/Util/Logo';
-import globalStyle from '../../../assets/styles/globalStyle';
+import { Colors, Dimension } from '../../global/GlobalStyles';
 
-const width = Dimensions.get('screen').width;
 const Login = ({ navigation, route }) => {
   const [obj, setObj] = useState({ login: 'Admin', senha: '123' });
 
@@ -28,22 +27,18 @@ const Login = ({ navigation, route }) => {
     }
   };
   return (
-    <ScrollView style={globalStyle.container}>
+    <ScrollView>
       <Logo style={styles.topo} />
 
       <View style={styles.login}>
         {newUser == true && (
-          <View style={globalStyle.successContainer}>
-            <Text style={globalStyle.success}>
-              Usuário cadastrado com sucesso!
-            </Text>
+          <View>
+            <Text>Usuário cadastrado com sucesso!</Text>
           </View>
         )}
         {newUser == false && (
-          <View style={globalStyle.dangerContainer}>
-            <Text style={globalStyle.danger}>
-              Não foi possivel salvar o usuário!
-            </Text>
+          <View>
+            <Text>Não foi possivel salvar o usuário!</Text>
           </View>
         )}
         <TextInput
@@ -52,18 +47,16 @@ const Login = ({ navigation, route }) => {
           left={
             <TextInput.Icon
               icon="account-circle"
-              color="#24AAE3"
+              color={Colors.primary}
               style={{ paddingTop: 10 }}
             />
           }
-          selectionColor="#24AAE3"
-          outlineColor="#24AAE3"
-          outlineStyle={globalStyle.inputRadius}
-          activeOutlineColor="#24AAE3"
-          style={globalStyle.input}
-          textColor="#24AAE3"
+          selectionColor={Colors.primary}
+          outlineColor={Colors.primary}
+          activeOutlineColor={Colors.primary}
+          textColor={Colors.primary}
           value={obj.login}
-          labelColor="#24AAE3"
+          labelColor={Colors.primary}
           onChangeText={(e) => setObj({ ...obj, login: e })}
         />
 
@@ -74,23 +67,21 @@ const Login = ({ navigation, route }) => {
           right={
             <TextInput.Icon
               icon="eye"
-              color="#24AAE3"
+              color={Colors.primary}
               style={{ paddingTop: 10 }}
             />
           }
           left={
             <TextInput.Icon
               icon="key"
-              color="#24AAE3"
+              color={Colors.primary}
               style={{ paddingTop: 10 }}
             />
           }
-          selectionColor="#24AAE3"
-          outlineColor="#24AAE3"
-          outlineStyle={globalStyle.inputRadius}
-          activeOutlineColor="#24AAE3"
-          style={globalStyle.input}
-          textColor="#24AAE3"
+          selectionColor={Colors.primary}
+          outlineColor={Colors.primary}
+          activeOutlineColor={Colors.primary}
+          textColor={Colors.primary}
           value={obj.senha}
           onChangeText={(e) => setObj({ ...obj, senha: e })}
         />
@@ -101,11 +92,9 @@ const Login = ({ navigation, route }) => {
           icon="account-plus"
           textColor="white"
           mode="contained"
-          labelStyle={globalStyle.label}
           onPress={() => {
             navigation.navigate('Cadastro');
           }}
-          style={globalStyle.btn}
         >
           Cadastrar
         </Button>
@@ -114,9 +103,7 @@ const Login = ({ navigation, route }) => {
           icon="login"
           textColor="white"
           mode="contained"
-          labelStyle={globalStyle.label}
           onPress={callLogar}
-          style={globalStyle.btn}
         >
           Logar
         </Button>

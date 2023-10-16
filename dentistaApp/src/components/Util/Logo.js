@@ -1,9 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import img from '../../../assets/img/odonto.png';
-
-const width = Dimensions.get('screen').width;
-const height = Dimensions.get('screen').height;
+import { Colors, Dimension } from '../../global/GlobalStyles';
 
 const Logo = () => {
   return (
@@ -29,7 +27,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   img: {
-    width: width,
-    height: (475 / 950) * width,
+    width: Dimension.width,
+    height: (475 / 950) * Dimension.width,
   },
 });

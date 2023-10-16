@@ -1,7 +1,6 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import globalStyle from '../../../assets/styles/globalStyle';
 import Login from '../../view/Login/Login.js';
 import Cadastro from '../../view/Cadastro/Cadastro.js';
 import NovaConsulta from '../../view/Consulta/NovaConsulta.js';
@@ -16,10 +15,7 @@ const Navigator = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName="Login"
-        screenOptions={globalStyle.navigation}
-      >
+      <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Cadastro" component={Cadastro} />
         <Stack.Screen name="Home" component={Home} />

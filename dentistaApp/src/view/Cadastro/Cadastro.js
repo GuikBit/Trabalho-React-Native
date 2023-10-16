@@ -7,16 +7,13 @@ import {
   ActivityIndicator,
   MD2Colors,
 } from 'react-native-paper';
-import globalStyle from '../../../assets/styles/globalStyle';
 import CadastroUser from './Utils/CadastroUser';
-
-const width = Dimensions.get('screen').width;
-const height = Dimensions.get('screen').height;
+import { Dimension, Colors } from '../../global/GlobalStyles';
 
 const Cadastro = () => {
   return (
-    <ScrollView style={globalStyle.container}>
-      <Text style={globalStyle.titulo}>Novo Usuário</Text>
+    <ScrollView style={styles.container}>
+      <Text style={styles.titulo}>Novo Usuário</Text>
       <View>
         <CadastroUser />
       </View>
@@ -26,4 +23,15 @@ const Cadastro = () => {
 
 export default Cadastro;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#e6eef2', //Cor de Fundo 16181b
+    height: Dimension.height,
+  },
+  titulo: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: Colors.primary,
+    marginVertical: 15,
+  },
+});

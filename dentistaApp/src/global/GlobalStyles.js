@@ -10,7 +10,7 @@ export const Colors = {
   secondaryBackground: '#16181b',
 };
 
-export const Dimensions = {
+export const Dimension = {
   width: width,
   height: height,
 };
