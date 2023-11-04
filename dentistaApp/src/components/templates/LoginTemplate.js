@@ -5,9 +5,10 @@ import { Colors, Dimension } from '../../global/GlobalStyles';
 import { AuthProvider } from '../../Auth/Auth';
 import Logo from '../../components/atoms/Logo';
 import Mensagens from '../../components/molecules/Mensagens';
-import LoginTemplate from '../../components/templates/LoginTemplate';
+import LoginButtons from '../organisms/LoginButtons';
+import LoginInputs from '../organisms/LoginInputs';
 
-const Login = ({ navigation, route }) => {
+const LoginTemplate = () => {
   const [obj, setObj] = useState({ login: 'Admin', senha: '123' });
 
   const { login } = userAuth();
@@ -22,37 +23,23 @@ const Login = ({ navigation, route }) => {
 
   const callLogar = () => {
     if (login(obj.login, obj.senha)) {
-      navigation.navigate('Tela Inicial');
+      navigation.navigate('Home');
       {
         /* navigation.reset({ index: 0, routes: {nome: 'Tela Inicial'} })*/
       }
     }
   };
+
   return (
-    <ScrollView>
-      <LoginTemplate />
-    </ScrollView>
+    <View>
+      <Logo style={styles.topo} />
+      <LoginInputs setObj={setObj} obj={obj} newUser={newUser} />
+
+      <LoginButtons callLogar={callLogar} />
+    </View>
   );
 };
 
-export default Login;
+export default LoginTemplate;
 
-const styles = StyleSheet.create({
-  texto: {
-    color: 'black',
-  },
-  acoes: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginVertical: 100,
-  },
-  login: {
-    marginHorizontal: 20,
-    height: 150,
-    justifyContent: 'space-around',
-    marginTop: 130,
-  },
-  label: {
-    fontSize: 22,
-  },
-});
+const styles = StyleSheet.create({});
