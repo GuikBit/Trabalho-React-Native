@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Dimensions, ScrollView } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import { Colors, Dimension } from '../../global/GlobalStyles';
-import { AuthProvider } from '../../Auth/Auth';
+import { AuthProvider, userAuth } from '../../Auth/Auth';
 import Logo from '../../components/atoms/Logo';
 import Mensagens from '../../components/molecules/Mensagens';
 import LoginButtons from '../organisms/LoginButtons';
 import LoginInputs from '../organisms/LoginInputs';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 const LoginTemplate = () => {
   const [obj, setObj] = useState({ login: 'Admin', senha: '123' });
@@ -15,11 +16,14 @@ const LoginTemplate = () => {
 
   const [newUser, setNewuser] = useState();
 
-  useEffect(() => {
-    if (route.params?.criado) {
-      setNewuser = true;
-    }
-  }, [route.params?.criado]);
+  const route = useRoute();
+  const navigation = useNavigation();
+
+  // useEffect(() => {
+  //   if (route.params?.criado) {
+  //     setNewuser = true;
+  //   }
+  // }, [route.params?.criado]);
 
   const callLogar = () => {
     if (login(obj.login, obj.senha)) {

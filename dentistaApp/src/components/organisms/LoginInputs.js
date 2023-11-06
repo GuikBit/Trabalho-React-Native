@@ -24,9 +24,14 @@ const LoginInputs = ({ newUser, setObj, obj }) => {
         }
         selectionColor={Colors.secondary}
         outlineColor={Colors.secondary}
-        outlineStyle={globalStyle.inputRadius}
+        outlineStyle={{ borderRadius: 8, borderWidth: 0.5 }}
         activeOutlineColor={Colors.secondary}
-        style={globalStyle.input}
+        style={{
+          height: 50,
+          fontSize: 22,
+          backgroundColor: '#FFFFFF',
+          color: '#24AAE3',
+        }}
         textColor={Colors.secondary}
         value={obj.login}
         labelColor={Colors.secondary}
@@ -53,9 +58,14 @@ const LoginInputs = ({ newUser, setObj, obj }) => {
         }
         selectionColor={Colors.secondary}
         outlineColor={Colors.secondary}
-        outlineStyle={globalStyle.inputRadius}
+        outlineStyle={{ borderRadius: 8, borderWidth: 0.5 }}
         activeOutlineColor={Colors.secondary}
-        style={globalStyle.input}
+        style={{
+          height: 50,
+          fontSize: 22,
+          backgroundColor: '#FFFFFF',
+          color: '#24AAE3',
+        }}
         textColor={Colors.secondary}
         value={obj.senha}
         onChangeText={(e) => setObj({ ...obj, senha: e })}

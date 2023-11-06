@@ -8,26 +8,6 @@ import Mensagens from '../../components/molecules/Mensagens';
 import LoginTemplate from '../../components/templates/LoginTemplate';
 
 const Login = ({ navigation, route }) => {
-  const [obj, setObj] = useState({ login: 'Admin', senha: '123' });
-
-  const { login } = userAuth();
-
-  const [newUser, setNewuser] = useState();
-
-  useEffect(() => {
-    if (route.params?.criado) {
-      setNewuser = true;
-    }
-  }, [route.params?.criado]);
-
-  const callLogar = () => {
-    if (login(obj.login, obj.senha)) {
-      navigation.navigate('Tela Inicial');
-      {
-        /* navigation.reset({ index: 0, routes: {nome: 'Tela Inicial'} })*/
-      }
-    }
-  };
   return (
     <ScrollView>
       <LoginTemplate />

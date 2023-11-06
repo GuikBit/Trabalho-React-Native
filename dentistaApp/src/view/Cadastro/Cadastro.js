@@ -1,21 +1,57 @@
 import React, { useState } from 'react';
 import { ScrollView, View, StyleSheet, Dimensions, Text } from 'react-native';
-import {
-  TextInput,
-  Button,
-  HelperText,
-  ActivityIndicator,
-  MD2Colors,
-} from 'react-native-paper';
-import CadastroUser from './Utils/CadastroUser';
-import { Dimension, Colors } from '../../global/GlobalStyles';
+// import globalStyle from '../../../globalStyle';
+import Stepper from 'react-native-stepper-ui';
+import { useNavigation } from '@react-navigation/native';
+import { TextInput } from 'react-native-paper';
+import CadastroPaciente from '../../components/templates/CadastroPaciente';
+import CadastroResponsavel from '../../components/templates/CadastroResponsavel';
+import CadastroEndereco from '../../components/templates/CadastroEndereco';
+import CadastroAnamnese from '../../components/templates/CadastroAnamnese';
 
-const Cadastro = () => {
+const width = Dimensions.get('screen').width;
+const height = Dimensions.get('screen').height;
+
+const Cadastro = ({ navigation, route }) => {
+  const [active, setActive] = useState(0);
+
+  const content = [
+    <CadastroPaciente subTitulo="Informações Pessoais" />,
+    <CadastroResponsavel subTitulo="Responsável" />,
+    <CadastroEndereco subTitulo="Endereço" />,
+    <CadastroAnamnese subTitulo="Anamnese" />,
+  ];
+
   return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.titulo}>Novo Usuário</Text>
-      <View>
-        <CadastroUser />
+    <ScrollView>
+      <View style={{ margin: 15 }}>
+        <TextInput.Icon
+          icon="chevron-left"
+          size={35}
+          color="#2070B4"
+          onPress={
+            route.params.interno !== true
+              ? () => {
+                  navigation.navigate('Login');
+                }
+              : () => {
+                  navigation.navigate('Lista Pacientes');
+                }
+          }
+        />
+        <Text style={[{ alignSelf: 'center' }]}>Novo Paciente</Text>
+      </View>
+      <View style={{ margin: 20 }}>
+        <Stepper
+          active={active}
+          content={content}
+          onBack={() => setActive((p) => p - 1)}
+          onFinish={() => alert('Finish')}
+          onNext={() => setActive((p) => p + 1)}
+          buttonStyle={styles.btn}
+          buttonTextStyle={styles.btnText}
+          stepStyle={styles.teste}
+        />
       </View>
     </ScrollView>
   );
@@ -24,14 +60,26 @@ const Cadastro = () => {
 export default Cadastro;
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#e6eef2', //Cor de Fundo 16181b
-    height: Dimension.height,
+  btnStepper: {
+    backgroundColor: '#16181b', //Cor de Fundo
+    borderColor: '#24AAE3', //Azul Claro
+    borderWidth: 1,
+    width: 155,
+    height: 45,
+    paddingTop: 5,
+    borderRadius: 50,
   },
-  titulo: {
-    fontSize: 30,
+  btn: {
+    marginTop: 20,
+    width: 100,
+    borderRadius: 50,
+  },
+  btnText: {
+    color: '#FFFFFF',
+    fontSize: 18,
     fontWeight: 'bold',
-    color: Colors.primary,
-    marginVertical: 15,
+  },
+  teste: {
+    backgroundColor: '#2070B4',
   },
 });
