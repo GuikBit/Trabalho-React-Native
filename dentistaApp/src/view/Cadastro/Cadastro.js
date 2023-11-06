@@ -12,8 +12,10 @@ import CadastroAnamnese from './Utils/CadastroAnamnese';
 const width = Dimensions.get('screen').width;
 const height = Dimensions.get('screen').height;
 
-const Cadastro = ({ navigation, route }) => {
+const Cadastro = ({ route }) => {
   const [active, setActive] = useState(0);
+
+  const navigation = useNavigation();
 
   const content = [
     <CadastroPaciente subTitulo="Informações Pessoais" />,
@@ -29,15 +31,16 @@ const Cadastro = ({ navigation, route }) => {
           icon="chevron-left"
           size={35}
           color="#2070B4"
-          onPress={
-            route.params.interno !== true
-              ? () => {
-                  navigation.navigate('Login');
-                }
-              : () => {
-                  navigation.navigate('Lista Pacientes');
-                }
-          }
+          onPress={() => navigation.navigate('Login')}
+          // onPress={
+          //   route.params.interno !== true
+          //     ? () => {
+          //         navigation.navigate('Login');
+          //       }
+          //     : () => {
+          //         navigation.navigate('Lista Pacientes');
+          //       }
+          // }
         />
         <Text style={[{ alignSelf: 'center' }]}>Novo Paciente</Text>
       </View>

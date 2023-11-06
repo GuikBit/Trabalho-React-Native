@@ -1,29 +1,17 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-import { Colors } from '../../global/GlobalStyles';
+import Header from './Utils/Header';
+import Body from './Utils/Body';
 
-const Home = () => {
+const Home = ({ navigation, route }) => {
   return (
-    <View style={styles.outerContainer}>
-      <View style={styles.headerConatiner}></View>
+    <View>
+      <Header />
+      <Body navigation={navigation} />
     </View>
   );
 };
 
 export default Home;
 
-const styles = StyleSheet.create({
-  outerContainer: {
-    padding: 15,
-    flex: 1,
-    backgroundColor: Colors.primaryBackground,
-  },
-  headerConatiner: {
-    flex: 0.1,
-    borderColor: 'red',
-    borderWidth: 1,
-  },
-  headerText: {
-    fontSize: 30,
-  },
-});
+const styles = StyleSheet.create({});
