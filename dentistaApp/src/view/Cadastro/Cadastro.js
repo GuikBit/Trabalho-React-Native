@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { ScrollView, View, StyleSheet, Dimensions, Text } from 'react-native';
-// import globalStyle from '../../../globalStyle';
+import globalStyle from '../../../globalStyle';
 import Stepper from 'react-native-stepper-ui';
 import { useNavigation } from '@react-navigation/native';
 import { TextInput } from 'react-native-paper';
-import CadastroPaciente from '../../components/templates/CadastroPaciente';
-import CadastroResponsavel from '../../components/templates/CadastroResponsavel';
-import CadastroEndereco from '../../components/templates/CadastroEndereco';
-import CadastroAnamnese from '../../components/templates/CadastroAnamnese';
+import CadastroPaciente from './Utils/CadastroPaciente';
+import CadastroResponsavel from './Utils/CadastroResponsavel';
+import CadastroEndereco from './Utils/CadastroEndereco';
+import CadastroAnamnese from './Utils/CadastroAnamnese';
 
 const width = Dimensions.get('screen').width;
 const height = Dimensions.get('screen').height;

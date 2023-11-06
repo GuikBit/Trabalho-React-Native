@@ -17,10 +17,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 
 const Stack = createNativeStackNavigator();
-// const Tab = createBottomTabNavigator();
-
-const isLogged = false; //booleano que retorna se existe um usuário logado ou n
-// const userType = 'dentista';
 
 export default function App() {
   return (
@@ -33,56 +29,24 @@ export default function App() {
   );
 }
 
-// const TabNavigator = () => {
-//   return (
-//     <Tab.Navigator
-//       initialRouteName="Home"
-//       screenOptions={{
-//         headerShown: false,
-//         tabBarItemStyle: {
-//           backgroundColor: Colors.secondaryBackground,
-//         },
-//       }}
-//     >
-//       <Tab.Screen name="Home" component={Home} />
-//       {userType === 'paciente' && (
-//         <Tab.Screen name="Perfil" component={UserProfile} />
-//       )}
-//       {userType === 'dentista' && (
-//         <>
-//           <Tab.Screen name="Dashboard" component={Dashboard} />
-//           <Tab.Screen name="Agenda" component={Agendamento} />
-//           {/* <Tab.Screen name='NovoPaciente' component={NovoPaciente} /> */}
-//         </>
-//       )}
-//     </Tab.Navigator>
-//   );
-// };
-
 const StackNavigator = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        {/* {isLogged ? (<> */}
-        {/* <Stack.Screen
-              name="Home"
-              component={Home}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen name="Dashboard" component={Dashboard} />
-            <Stack.Screen name="Perfil" component={UserProfile} />
-            <Stack.Screen name="Agenda" component={Agendamento} />
-            <Stack.Screen name="Pagamento" component={Pagamento} />
-            <Stack.Screen name="Novo Paciente" component={NovoPaciente} />
-            <Stack.Screen name="Nova Consulta" component={NovaConsulta} />
-            <Stack.Screen name="Novo Dentista" component={NovoDentista} /> */}
-        {/* {userType === 'admin' && ( */}
-        {/* )} */}
-        {/* <Stack.Screen name='Novo Paciente' component={NovoPaciente} /> */}
-        {/* </>) : (<> */}
+      <Stack.Navigator initialRouteName="Login">
+        <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen name="Dashboard" component={Dashboard} />
+        <Stack.Screen name="Perfil" component={UserProfile} />
+        <Stack.Screen name="Agenda" component={Agendamento} />
+        <Stack.Screen name="Pagamento" component={Pagamento} />
+        <Stack.Screen name="Novo Paciente" component={NovoPaciente} />
+        <Stack.Screen name="Nova Consulta" component={NovaConsulta} />
+        <Stack.Screen name="Novo Dentista" component={NovoDentista} />
         <Stack.Screen name="Login" component={Login} />
-        {/* <Stack.Screen name="Cadastro" component={Cadastro} /> */}
-        {/* </>)} */}
+        <Stack.Screen name="Cadastro" component={Cadastro} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, Dimensions } from 'react-native';
-import img from '../../../assets/img/odonto.png';
+import img from '../../assets/img/odonto.png';
 
 const width = Dimensions.get('screen').width;
 const height = Dimensions.get('screen').height;

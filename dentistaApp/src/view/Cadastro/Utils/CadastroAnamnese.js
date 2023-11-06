@@ -24,7 +24,7 @@ const CadastroAnamnese = ({ subTitulo }) => {
         placeholder="Qual?"
         left={
           <TextInput.Icon
-            icon={require('../../../assets/img/medication.png')}
+            icon={require('../../../../assets/img/medication.png')}
             color={cor}
             style={{ paddingTop: 10 }}
           />
@@ -45,7 +45,7 @@ const CadastroAnamnese = ({ subTitulo }) => {
         placeholder="Qual?"
         left={
           <TextInput.Icon
-            icon={require('../../../assets/img/medical-cotton-swab.png')}
+            icon={require('../../../../assets/img/medical-cotton-swab.png')}
             color={cor}
             style={{ paddingTop: 10 }}
           />
@@ -83,7 +83,7 @@ const CadastroAnamnese = ({ subTitulo }) => {
         placeholder="Qual?"
         left={
           <TextInput.Icon
-            icon={require('../../../assets/img/pill-off.png')}
+            icon={require('../../../../assets/img/pill-off.png')}
             color={cor}
             style={{ paddingTop: 10 }}
           />

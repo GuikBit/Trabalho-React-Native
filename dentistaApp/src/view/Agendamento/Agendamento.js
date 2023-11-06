@@ -1,17 +1,8 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
-import CardAgenda from "../../components/molecules/CardAgenda.js/CardAgenda";
+import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
 
 const Agendamento = () => {
-  return (
-    <View style={styles.outerContainer}>
-      <CardAgenda />
-      <CardAgenda />
-      <CardAgenda />
-      <CardAgenda />
-      <CardAgenda />
-    </View>
-  );
+  return <View style={styles.outerContainer}></View>;
 };
 
 export default Agendamento;

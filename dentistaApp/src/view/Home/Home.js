@@ -1,14 +1,11 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
-import StyledText from "../../components/atoms/StyledText";
-import { Colors } from "../../global/GlobalStyles";
+import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { Colors } from '../../global/GlobalStyles';
 
 const Home = () => {
   return (
     <View style={styles.outerContainer}>
-      <View style={styles.headerConatiner}>
-        <StyledText style={styles.headerText}>Olá, Zezim</StyledText>
-      </View>
+      <View style={styles.headerConatiner}></View>
     </View>
   );
 };
@@ -23,7 +20,7 @@ const styles = StyleSheet.create({
   },
   headerConatiner: {
     flex: 0.1,
-    borderColor: "red",
+    borderColor: 'red',
     borderWidth: 1,
   },
   headerText: {

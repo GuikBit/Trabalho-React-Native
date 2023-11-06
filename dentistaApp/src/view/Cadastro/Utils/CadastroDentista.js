@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Text, FlatList } from 'react-native';
 import { TextInput, Button, Modal, Searchbar } from 'react-native-paper';
-import globalStyle from '../../../../globalStyle';
+// import globalStyle from '../../../../globalStyle';
+
 import ModalEspec from '../../../components/Listagem/Cards/ModalEspec';
 
 const CadastroDentista = ({ subTitulo }) => {
