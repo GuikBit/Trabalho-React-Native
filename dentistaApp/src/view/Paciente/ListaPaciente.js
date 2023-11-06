@@ -15,14 +15,4 @@ const ListaPaciente = ({ navigation }) => {
 export default ListaPaciente;
 
 const styles = StyleSheet.create({
-  search: {
-    width: '94%',
-    backgroundColor: '#cfe7fc',
-  },
-  menu: {
-    backgroundColor: '#FFFFFF',
-    padding: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
 });

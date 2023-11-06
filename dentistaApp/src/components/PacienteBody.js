@@ -5,7 +5,7 @@ import { Searchbar, TextInput } from 'react-native-paper';
 import lista from '../Mock/lista';
 import CardConsulta from './Cards/CardConsulta';
 
-const UserBody = () => {
+const UserBody = ({navigation}) => {
   const [titulo, setTitulo] = useState('Histórico de Consultas');
   const [pesquisa, setPesquisa] = useState('');
   const [filtro, setFiltro] = useState([]);

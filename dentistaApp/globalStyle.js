@@ -19,12 +19,10 @@ export default StyleSheet.create({
   },
   btn: {
     backgroundColor: '#2070B4', //Cor de Fundo
-    borderColor: '#2070B4', //Azul Claro
     borderWidth: 1,
     width: 155,
-    height: 45,
-    paddingTop: 5,
     borderRadius: 50,
+    justifyContent: 'center'
   },
   btnList: {
     backgroundColor: '#2070B4', //Cor de Fundo
@@ -52,7 +50,7 @@ export default StyleSheet.create({
   },
   container: {
     backgroundColor: '#f2f8fd', //Cor de Fundo
-    height: height,
+    height: height - 36,
   },
   inputRadius: {
     borderRadius: 8,

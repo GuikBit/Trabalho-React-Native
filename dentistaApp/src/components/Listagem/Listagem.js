@@ -8,6 +8,7 @@ import {
   Portal,
   Modal,
   Checkbox,
+  FAB,
 } from 'react-native-paper';
 import globalStyle from '../../../globalStyle';
 import { SelectList } from 'react-native-dropdown-select-list';
@@ -103,28 +104,9 @@ const Lista = ({ navigation, titulo, lista }) => {
     <PaperProvider>
       <View style={globalStyle.container}>
         <View style={globalStyle.headerPesq}>
-          <View style={globalStyle.rowBetween}>
-            <Text>
-              <TextInput.Icon
-                icon="chevron-left"
-                size={35}
-                color="#2070B4"
-                onPress={() => {
-                  navigation.navigate('Home');
-                }}
-              />
-            </Text>
-
-            <Text style={globalStyle.titulo}>{titulo}</Text>
-            {/* <Button icon="plus" textColor="#FFFFFF" mode="contained" labelStyle={globalStyle.labelList} onPress={() => { navigation.navigate('Novo Paciente') }} style={globalStyle.btnList}/> */}
-            <Text>
-              <TextInput.Icon
-                icon="plus"
-                size={30}
-                color="#2070B4"
-                onPress={findByNovo}
-              />
-            </Text>
+          <View>
+                <TextInput.Icon icon="chevron-left" size={35} color="#2070B4"  onPress={()=> {navigation.navigate('Home')}}/>
+                <Text style={[globalStyle.titulo, {alignSelf: 'center'}]}>{ titulo }</Text>
           </View>
           {lista != null && (
             <>
@@ -142,6 +124,7 @@ const Lista = ({ navigation, titulo, lista }) => {
                     <TextInput
                       mode="outlined"
                       label="Data Inicio"
+                      placeholder='De' 
                       left={
                         <TextInput.Icon
                           icon="calendar-today"
@@ -162,6 +145,7 @@ const Lista = ({ navigation, titulo, lista }) => {
                     <TextInput
                       mode="outlined"
                       label="Data Fim"
+                      placeholder='Até' 
                       left={
                         <TextInput.Icon
                           icon="calendar"
@@ -266,6 +250,14 @@ const Lista = ({ navigation, titulo, lista }) => {
             </>
           )}
         />
+
+          <FAB
+            icon="plus"
+            style={styles.fab}
+            onPress={findByNovo}
+            color='#FFFFFF'
+            
+          />
       </View>
 
       <Modal visible={modalDent} contentContainerStyle={styleModalDent}>
@@ -387,5 +379,13 @@ const styles = StyleSheet.create({
   },
   btnModalVoltar: {
     backgroundColor: 'grey',
+  },
+  fab: {
+    position: 'absolute',
+    margin: 20,
+    right: 0,
+    bottom: 0,
+    backgroundColor: '#2070B4',
+    color:'#FFFFFF'
   },
 });

@@ -30,6 +30,8 @@ const NovaConsulta = ({ navigation }) => {
     horaConsulta: null,
     pagamento: null,
     tempoEstimado: false,
+    descrição: null,
+    pagamento: null,
   });
 
   const styleModal = {
