@@ -12,12 +12,12 @@ import {
 import globalStyle from '../../../globalStyle';
 import { SelectList } from 'react-native-dropdown-select-list';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import listaDentista from './Cards/listaDentista';
-import listaEspe from './Cards/listaEspe';
 import CardConsulta from '../Cards/CardConsulta';
 import ModalDentista from '../Modal/ModalDentista';
 import CardPaciente from '../Cards/CardPaciente';
 import ModalEspec from '../Modal/ModalEspec';
+import listaEspe from '../../Mock/listaEspe';
+import listaDentista from '../../Mock/listaDentista';
 
 const Lista = ({ navigation, titulo, lista }) => {
   const [filtro, setFiltro] = useState([]);

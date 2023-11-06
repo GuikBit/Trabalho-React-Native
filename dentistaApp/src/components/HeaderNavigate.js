@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-import globalStyle from '../../../globalStyle';
+import globalStyle from '../../globalStyle';
 import { TextInput } from 'react-native-paper';
 
 const HeaderNavigate = ({ titulo, onPress }) => {
