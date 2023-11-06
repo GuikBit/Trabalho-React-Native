@@ -42,7 +42,7 @@ const Cadastro = ({ route }) => {
           //       }
           // }
         />
-        <Text style={[{ alignSelf: 'center' }]}>Novo Paciente</Text>
+        <Text style={[globalStyle.titulo,{ alignSelf: 'center' }]}>Novo Paciente</Text>
       </View>
       <View style={{ margin: 20 }}>
         <Stepper
