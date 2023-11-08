@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AuthContext = createContext();
 
@@ -35,7 +36,6 @@ export const AuthProvider = ({ children }) => {
 
 // import { jwtDecode } from 'jwt-decode';
 // // import { apiPost } from '../apis';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // export const estaAutenticado = () => {
 //   const token = cookies.get('jwt_auth');
@@ -68,6 +68,29 @@ export const AuthProvider = ({ children }) => {
 //   const permissoes = ';' + localStorage.getItem('usuario_permissao') + ';';
 
 //   return permissoes.includes(';' + permissao + ';');
+// };
+
+// export const registrarUsuario = (usuario, senha, admin, sucesso, erro) => {
+//   apiPost(
+//     'usuario/criar' + (admin ? 'admin' : ''),
+//     { Email: usuario, Password: senha },
+//     (result) => {
+//       const token = result;
+//       const decoded = jwtDecode(token);
+
+//       const { unique_name, roles } = decoded;
+
+//       localStorage.setItem('usuario_nome', unique_name);
+//       localStorage.setItem('usuario_permissao', roles);
+
+//       cookies.set('jwt_auth', token, {
+//         expires: new Date(decoded.exp * 1000), //de segundos para milisegundos
+//       });
+
+//       sucesso(unique_name, roles);
+//     },
+//     erro
+//   );
 // };
 
 // export const registrarUsuario = (usuario, senha, admin, sucesso, erro) => {

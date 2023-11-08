@@ -8,11 +8,12 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { useGetById } from '../../service/Queries';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import { apiGetPorId } from '../../service/Api';
 
 const Login = ({}) => {
   const [obj, setObj] = useState({ login: 'Admin', senha: '123' });
 
-  // const { data } = useGetById(5);
+  const { data } = useGetById(5);
 
   const { login } = userAuth();
 
@@ -28,22 +29,12 @@ const Login = ({}) => {
   }, [route.params?.criado]);
 
   const callLogar = async () => {
-    if (login(obj.login, obj.senha)) {      
-      
-      await axios.get('https://eb0d-186-233-43-24.ngrok.io/v1/Home/1')
-        .then((response) => {
-          console.log(response.data)
-          navigation.navigate('Home');
-        })
-        .catch((error) => {
-          console.log(error)
-        });
-      // .catch((err) => console.log(err));
+    if (login(obj.login, obj.senha)) {
+      navigation.navigate('Home');
       {
         /* navigation.reset({ index: 0, routes: {nome: 'Tela Inicial'} })*/
       }
     }
-    
   };
 
   return (

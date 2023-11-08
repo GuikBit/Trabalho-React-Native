@@ -1,7 +1,7 @@
 import axios from 'axios';
 // import { estaAutenticado, getToken } from '../auth';
 
-const urlBase = 'http://localhost:5216/v1';
+const urlBase = 'https://999a-2804-14c-fc81-9a1f-a4f7-35db-554d-1664.ngrok.io';
 
 // const checarAutenticacao = (navigate, locationUrl) => {
 //   if (!estaAutenticado()) {
@@ -28,6 +28,21 @@ const urlBase = 'http://localhost:5216/v1';
 //       //   erro(error);
 //     });
 // };
+
+export async function apiGetAuth(id) {
+  const instance = axios.create({
+    baseURL: `${urlBase}`,
+    timeout: 1000,
+    headers: { Authorization: 'Bearer ' + getToken() },
+  });
+
+  try {
+    const response = await axios.get(`${urlBase}/v1/home/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 // export const apiAuthGetPorId = (
 //   url,
@@ -113,34 +128,27 @@ const urlBase = 'http://localhost:5216/v1';
 //     });
 // };
 
+export async function apiGetPorId(id) {
+  try {
+    const response = await axios.get(`${urlBase}/v1/home/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function apiPost(url, obj) {
+  try {
+    const response = await axios.get(`${urlBase}/v1/home/${url}`, obj);
+    // return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 // export const apiGet = (url, sucesso, erro) => {
 //   axios
 //     .get(`${urlBase}/${url}`)
-//     .then((result) => {
-//       sucesso(result.data);
-//     })
-//     .catch((error) => {
-//       erro(error);
-//     });
-// };
-
-export const apiGetPorId = async (url) => {
-  return await axios.get(`${urlBase}/${url}`).then(
-    (result) => {
-      result.data;
-      console.log(result.data);
-    }
-    // console.log(result.data)
-    //   sucesso(result.data);
-  );
-  // .catch((error) => {
-  //   //   erro(error);
-  // });
-};
-
-// export const apiPost = (url, objeto, sucesso, erro) => {
-//   axios
-//     .post(`${urlBase}/${url}`, objeto)
 //     .then((result) => {
 //       sucesso(result.data);
 //     })

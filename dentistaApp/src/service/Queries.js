@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { apiAuthGet, apiGet, apiGetPorId } from './Api';
+import { apiAuthGet, apiGet, apiGetPorId, apiPost } from './Api';
 
 // export const useGetPacienteAuth = () => {
 //   useQuery({
@@ -25,6 +25,16 @@ import { apiAuthGet, apiGet, apiGetPorId } from './Api';
 export function useGetById(id) {
   return useQuery({
     queryKey: ['getByIdPublic', id],
-    queryFn: () => apiGetPorId(`home/${id}`),
+    queryFn: async () => {
+      return await apiGetPorId(id);
+    },
+  });
+}
+
+export function usePostPaciente(paciente) {
+  return useMutation({
+    mutationFn: async () => {
+      return await apiPost('paciente', paciente);
+    },
   });
 }
