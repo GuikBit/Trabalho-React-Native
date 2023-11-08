@@ -5,6 +5,7 @@
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
+    "banco-tunnel": "npx ngrok http 7038",
     "ios": "expo start --ios",
     "web": "expo start --web"
   },
@@ -32,7 +33,10 @@
     "react-native-safe-area-context": "^4.7.2",
     "react-native-stepper-ui": "^0.0.9",
     "react-native-text-input-mask": "^3.2.0",
-    "react-native-vector-icons": "^10.0.0"
+    "react-native-vector-icons": "^10.0.0",
+    "react-native-web": "~0.19.6",
+    "react-dom": "18.2.0",
+    "@expo/webpack-config": "^19.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

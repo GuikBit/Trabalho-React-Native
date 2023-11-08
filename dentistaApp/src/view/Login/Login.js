@@ -27,17 +27,23 @@ const Login = ({}) => {
     }
   }, [route.params?.criado]);
 
-  const callLogar = () => {
-    if (login(obj.login, obj.senha)) {
-      navigation.navigate('Home');
-      axios
-        .get('http://localhost:5216/v1/home/1')
-        .then((response) => console.log(response.data));
+  const callLogar = async () => {
+    if (login(obj.login, obj.senha)) {      
+      
+      await axios.get('https://eb0d-186-233-43-24.ngrok.io/v1/Home/1')
+        .then((response) => {
+          console.log(response.data)
+          navigation.navigate('Home');
+        })
+        .catch((error) => {
+          console.log(error)
+        });
       // .catch((err) => console.log(err));
       {
         /* navigation.reset({ index: 0, routes: {nome: 'Tela Inicial'} })*/
       }
     }
+    
   };
 
   return (
