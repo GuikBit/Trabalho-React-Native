@@ -194,7 +194,11 @@ const NovaConsulta = ({ navigation }) => {
         </Button>
       </View>
 
-      <Modal visible={modalPaci} contentContainerStyle={styleModal}>
+      <Modal
+        onDismiss={hidePac}
+        visible={modalPaci}
+        contentContainerStyle={styleModal}
+      >
         <Searchbar
           style={globalStyle.search}
           placeholder="Pesquisar Paciente"
@@ -231,7 +235,11 @@ const NovaConsulta = ({ navigation }) => {
         </View>
       </Modal>
 
-      <Modal visible={modalDent} contentContainerStyle={styleModal}>
+      <Modal
+        onDismiss={hideDen}
+        visible={modalDent}
+        contentContainerStyle={styleModal}
+      >
         <Searchbar
           style={globalStyle.search}
           placeholder="Pesquisar Dentista"
@@ -268,7 +276,11 @@ const NovaConsulta = ({ navigation }) => {
         </View>
       </Modal>
 
-      <Modal visible={modalEspec} contentContainerStyle={styleModal}>
+      <Modal
+        onDismiss={hideEspec}
+        visible={modalEspec}
+        contentContainerStyle={styleModal}
+      >
         <Searchbar
           style={globalStyle.search}
           placeholder="Pesquisar Dentista"
@@ -318,7 +330,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.3,
     height: 500,
     margin: 15,
-    marginTop: 120,
+    // marginTop: 120,
     padding: 15,
     borderRadius: 15,
   },

@@ -5,9 +5,14 @@ import { Colors, Dimension } from '../../global/GlobalStyles';
 import { AuthProvider, userAuth } from '../../Auth/Auth';
 import Logo from '../../components/Logo';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { useGetById } from '../../service/Queries';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 
 const Login = ({}) => {
   const [obj, setObj] = useState({ login: 'Admin', senha: '123' });
+
+  // const { data } = useGetById(5);
 
   const { login } = userAuth();
 
@@ -25,6 +30,10 @@ const Login = ({}) => {
   const callLogar = () => {
     if (login(obj.login, obj.senha)) {
       navigation.navigate('Home');
+      axios
+        .get('http://localhost:5216/v1/home/1')
+        .then((response) => console.log(response.data));
+      // .catch((err) => console.log(err));
       {
         /* navigation.reset({ index: 0, routes: {nome: 'Tela Inicial'} })*/
       }

@@ -15,17 +15,21 @@ import ListaPaciente from './src/view/Paciente/ListaPaciente.js';
 import Paciente from './src/view/Paciente/Paciente.js';
 import Consulta from './src/view/Consulta/Consulta.js';
 import ListaConsulta from './src/view/Consulta/ListaConsulta.js';
-
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ListaDentista from './src/view/Dentista/ListaDentista.js';
+
 const Stack = createNativeStackNavigator();
+const queryClient = new QueryClient();
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <AuthProvider>
-        <StatusBar />
-        <StackNavigator />
-      </AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <StatusBar />
+          <StackNavigator />
+        </AuthProvider>
+      </QueryClientProvider>
     </View>
   );
 }
