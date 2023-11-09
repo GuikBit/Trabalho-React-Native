@@ -146,6 +146,15 @@ export function apiPost(url, obj) {
   }
 }
 
+export async function apiLogin(obj) {
+  try {
+    const response = await axios.post(`${urlBase}/v1/home/login`, obj);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 // export const apiGet = (url, sucesso, erro) => {
 //   axios
 //     .get(`${urlBase}/${url}`)

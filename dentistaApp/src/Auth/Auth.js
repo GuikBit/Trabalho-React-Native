@@ -1,34 +1,45 @@
 import { createContext, useContext, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useLogin } from '../service/Queries';
+import { any } from 'prop-types';
+import { apiLogin, apiPost } from '../service/Api';
+import { jwtDecode } from 'jwt-decode';
 
-const AuthContext = createContext();
-
-export const userAuth = () => {
-  return useContext(AuthContext);
-};
+export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({
+    login: 'matheus@email.com',
+    password: '1234567',
+  });
 
-  const login = (login, senha) => {
-    if ((login == 'Admin') & (senha == '123')) {
-      setUser({
-        nome: 'Gui',
-        login: 'Admin',
-        senha: '123',
-        token: 'hbvkaebwjdnwajiodamwd',
-      });
-      return true;
-    } else {
-      return false;
-    }
+  const login = async (login, senha) => {
+    const res = await apiLogin(user);
+    // console.log(res);
+
+    const token = res.result;
+    // const decodedToken = jwtDecode(token);
+
+    console.log(token);
+    // AsyncStorage.setItem();
+    // if ((login == 'Admin') & (senha == '123')) {
+    //   setUser({
+    //     nome: 'Gui',
+    //     login: 'Admin',
+    //     senha: '123',
+    //     token: 'hbvkaebwjdnwajiodamwd',
+    //   });
+    //   return true;
+    // } else {
+    //   return false;
+    // }
   };
   const logout = () => {
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={[user, setUser, login, logout]}>
       {children}
     </AuthContext.Provider>
   );

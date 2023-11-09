@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { apiAuthGet, apiGet, apiGetPorId, apiPost } from './Api';
+import { apiAuthGet, apiGet, apiGetPorId, apiLogin, apiPost } from './Api';
 import axios from 'axios';
 
 // export const useGetPacienteAuth = () => {
@@ -36,6 +36,14 @@ export function usePostPaciente() {
   return useMutation({
     mutationFn: (paciente) => {
       return apiPost('paciente', paciente);
+    },
+  });
+}
+
+export function useLogin() {
+  return useMutation({
+    mutationFn: (usuario) => {
+      return apiLogin('login', usuario);
     },
   });
 }
