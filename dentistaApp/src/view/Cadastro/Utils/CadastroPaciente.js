@@ -1,19 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
+import { GlobalContext, globalContext } from '../../../store/Context';
 
 const CadastroPaciente = ({ subTitulo }) => {
   const cor = '#2070B4';
 
-  const [user, setUser] = useState({
-    nome: null,
-    login: null,
-    senha: null,
-    email: null,
-    sexo: null,
-    dataNasc: null,
-    tel: null,
-  });
+  const [paciente, setPaciente] = useContext(GlobalContext);
 
   return (
     <View style={styles.cadastro}>
@@ -39,9 +32,9 @@ const CadastroPaciente = ({ subTitulo }) => {
           color: '#24AAE3',
         }}
         textColor={cor}
-        value={user.nome}
+        value={paciente.nome}
         labelColor={cor}
-        onChangeText={(e) => setUser({ ...user, nome: e })}
+        onChangeText={(e) => setPaciente({ ...paciente, nome: e })}
       />
       <TextInput
         mode="outlined"
@@ -64,9 +57,9 @@ const CadastroPaciente = ({ subTitulo }) => {
           color: '#24AAE3',
         }}
         textColor="#2070B4"
-        value={user.login}
+        value={paciente.login}
         labelColor="#2070B4"
-        onChangeText={(e) => setUser({ ...user, login: e })}
+        onChangeText={(e) => setPaciente({ ...paciente, login: e })}
       />
       <TextInput
         mode="outlined"
@@ -97,9 +90,9 @@ const CadastroPaciente = ({ subTitulo }) => {
           color: '#24AAE3',
         }}
         textColor={cor}
-        value={user.senha}
+        value={paciente.senha}
         labelColor={cor}
-        onChangeText={(e) => setUser({ ...user, senha: e })}
+        onChangeText={(e) => setPaciente({ ...paciente, senha: e })}
       />
       <TextInput
         mode="outlined"
@@ -118,15 +111,15 @@ const CadastroPaciente = ({ subTitulo }) => {
           color: '#24AAE3',
         }}
         textColor={cor}
-        value={user.email}
+        value={paciente.email}
         labelColor={cor}
-        onChangeText={(e) => setUser({ ...user, email: e })}
+        onChangeText={(e) => setPaciente({ ...paciente, email: e })}
       />
       {/* SEXO */}
 
       <TextInput
         mode="outlined"
-        label="Data de Nascimento"
+        label="CPF"
         left={
           <TextInput.Icon
             icon="calendar"
@@ -145,9 +138,9 @@ const CadastroPaciente = ({ subTitulo }) => {
           color: '#24AAE3',
         }}
         textColor={cor}
-        value={user.dataNasc}
+        value={paciente.cpf}
         labelColor={cor}
-        onChangeText={(e) => setUser({ ...user, dataNasc: e })}
+        onChangeText={(e) => setPaciente({ ...paciente, cpf: e })}
       />
       <TextInput
         mode="outlined"
@@ -166,9 +159,9 @@ const CadastroPaciente = ({ subTitulo }) => {
           color: '#24AAE3',
         }}
         textColor={cor}
-        value={user.tel}
+        value={paciente.telefone}
         labelColor={cor}
-        onChangeText={(e) => setUser({ ...user, tel: e })}
+        onChangeText={(e) => setPaciente({ ...paciente, telefone: e })}
       />
     </View>
   );

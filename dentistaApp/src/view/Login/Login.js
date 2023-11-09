@@ -13,7 +13,7 @@ import { apiGetPorId } from '../../service/Api';
 const Login = ({}) => {
   const [obj, setObj] = useState({ login: 'Admin', senha: '123' });
 
-  const { data } = useGetById(5);
+  const { data } = useGetById(7);
 
   const { login } = userAuth();
 
@@ -31,6 +31,7 @@ const Login = ({}) => {
   const callLogar = async () => {
     if (login(obj.login, obj.senha)) {
       navigation.navigate('Home');
+      // console.log(data);
       {
         /* navigation.reset({ index: 0, routes: {nome: 'Tela Inicial'} })*/
       }

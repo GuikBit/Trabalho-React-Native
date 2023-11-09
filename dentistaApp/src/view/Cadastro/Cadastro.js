@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { ScrollView, View, StyleSheet, Dimensions, Text } from 'react-native';
 import globalStyle from '../../../globalStyle';
 import Stepper from 'react-native-stepper-ui';
@@ -8,6 +8,9 @@ import CadastroPaciente from './Utils/CadastroPaciente';
 import CadastroResponsavel from './Utils/CadastroResponsavel';
 import CadastroEndereco from './Utils/CadastroEndereco';
 import CadastroAnamnese from './Utils/CadastroAnamnese';
+import { usePostPaciente } from '../../service/Queries';
+import { GlobalContext } from '../../store/Context';
+import axios from 'axios';
 
 const width = Dimensions.get('screen').width;
 const height = Dimensions.get('screen').height;
@@ -17,11 +20,21 @@ const Cadastro = ({ route }) => {
 
   const navigation = useNavigation();
 
+  const { mutate } = usePostPaciente();
+
+  const [paciente, setPaciente, limpaPaciente] = useContext(GlobalContext);
+
+  const handlePostPaciente = () => {
+    mutate(paciente);
+    limpaPaciente();
+    navigation.navigate('Login');
+  };
+
   const content = [
     <CadastroPaciente subTitulo="Informações Pessoais" />,
-    <CadastroResponsavel subTitulo="Responsável" />,
-    <CadastroEndereco subTitulo="Endereço" />,
-    <CadastroAnamnese subTitulo="Anamnese" />,
+    // <CadastroResponsavel subTitulo="Responsável" />,
+    // <CadastroEndereco subTitulo="Endereço" />,
+    // <CadastroAnamnese subTitulo="Anamnese" />,
   ];
 
   return (
@@ -42,14 +55,16 @@ const Cadastro = ({ route }) => {
           //       }
           // }
         />
-        <Text style={[globalStyle.titulo,{ alignSelf: 'center' }]}>Novo Paciente</Text>
+        <Text style={[globalStyle.titulo, { alignSelf: 'center' }]}>
+          Novo Paciente
+        </Text>
       </View>
       <View style={{ margin: 20 }}>
         <Stepper
           active={active}
           content={content}
           onBack={() => setActive((p) => p - 1)}
-          onFinish={() => alert('Finish')}
+          onFinish={handlePostPaciente}
           onNext={() => setActive((p) => p + 1)}
           buttonStyle={styles.btn}
           buttonTextStyle={styles.btnText}

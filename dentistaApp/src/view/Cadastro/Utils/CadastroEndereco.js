@@ -1,18 +1,21 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { TextInput, Button } from 'react-native-paper';
+import { GlobalContext } from '../../../store/Context';
 
-const CadastroEndereco = ({ subTitulo }) => {
+const CadastroPacipacienteereco = ({ subTitulo }) => {
   const cor = '#2070B4';
 
-  const [end, setEnd] = useState({
-    cep: null,
-    cidade: null,
-    bairro: null,
-    logradouro: null,
-    n: null,
-    complemento: null,
-  });
+  // const [paciente, setPaciente] = useState({
+  //   cep: null,
+  //   cidade: null,
+  //   bairro: null,
+  //   logradouro: null,
+  //   n: null,
+  //   complemento: null,
+  // });
+
+  const [paciente, setPaciente] = useContext(GlobalContext);
 
   return (
     <View style={styles.cadastro}>
@@ -38,9 +41,14 @@ const CadastroEndereco = ({ subTitulo }) => {
           color: '#24AAE3',
         }}
         textColor={cor}
-        value={end.cep}
+        value={paciente.endereco.cep}
         labelColor={cor}
-        onChangeText={(e) => setEnd({ ...end, cep: e })}
+        onChangeText={(e) =>
+          setPaciente({
+            ...paciente,
+            endereco: { ...paciente.endereco, cep: e },
+          })
+        }
       />
       <TextInput
         mode="outlined"
@@ -59,9 +67,14 @@ const CadastroEndereco = ({ subTitulo }) => {
           color: '#24AAE3',
         }}
         textColor={cor}
-        value={end.cidade}
+        value={paciente.endereco.cidade}
         labelColor={cor}
-        onChangeText={(e) => setEnd({ ...end, cidade: e })}
+        onChangeText={(e) =>
+          setPaciente({
+            ...paciente,
+            endereco: { ...paciente.endereco, cidade: e },
+          })
+        }
       />
       <TextInput
         mode="outlined"
@@ -80,19 +93,20 @@ const CadastroEndereco = ({ subTitulo }) => {
           color: '#24AAE3',
         }}
         textColor={cor}
-        value={end.bairro}
+        value={paciente.endereco.bairro}
         labelColor={cor}
-        onChangeText={(e) => setEnd({ ...end, bairro: e })}
+        onChangeText={(e) =>
+          setPaciente({
+            ...paciente,
+            endereco: { ...paciente.endereco, bairro: e },
+          })
+        }
       />
       <TextInput
         mode="outlined"
         label="Logradouro"
         left={
-          <TextInput.Icon
-            icon="map-legend"
-            color={cor}
-            style={{ paddingTop: 10 }}
-          />
+          <TextInput.Icon icon="map" color={cor} style={{ paddingTop: 10 }} />
         }
         selectionColor={cor}
         outlineColor={cor}
@@ -105,9 +119,14 @@ const CadastroEndereco = ({ subTitulo }) => {
           color: '#24AAE3',
         }}
         textColor={cor}
-        value={end.logradouro}
+        value={paciente.endereco.rua}
         labelColor={cor}
-        onChangeText={(e) => setEnd({ ...end, logradouro: e })}
+        onChangeText={(e) =>
+          setPaciente({
+            ...paciente,
+            endereco: { ...paciente.endereco, rua: e },
+          })
+        }
       />
       <TextInput
         mode="outlined"
@@ -130,9 +149,14 @@ const CadastroEndereco = ({ subTitulo }) => {
           color: '#24AAE3',
         }}
         textColor={cor}
-        value={end.n}
+        value={paciente.endereco.numero}
         labelColor={cor}
-        onChangeText={(e) => setEnd({ ...end, n: e })}
+        onChangeText={(e) =>
+          setPaciente({
+            ...paciente,
+            endereco: { ...paciente.endereco, numero: e },
+          })
+        }
       />
       <TextInput
         mode="outlined"
@@ -155,15 +179,20 @@ const CadastroEndereco = ({ subTitulo }) => {
           color: '#24AAE3',
         }}
         textColor={cor}
-        value={end.complemento}
+        value={paciente.endereco.complemento}
         labelColor={cor}
-        onChangeText={(e) => setEnd({ ...end, complemento: e })}
+        onChangeText={(e) =>
+          setPaciente({
+            ...paciente,
+            endereco: { ...paciente.endereco, complemento: e },
+          })
+        }
       />
     </View>
   );
 };
 
-export default CadastroEndereco;
+export default CadastroPacipacienteereco;
 
 const styles = StyleSheet.create({
   cadastro: {

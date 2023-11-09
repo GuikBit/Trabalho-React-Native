@@ -1,23 +1,26 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { TextInput, Button } from 'react-native-paper';
 import Icon from '@expo/vector-icons/FontAwesome';
+import { GlobalContext } from '../../../store/Context';
 
-const CadastroResponsavel = ({ subTitulo }) => {
+const CadastroPacipacienteonsavel = ({ subTitulo }) => {
   const cor = '#2070B4';
   const tam = 315;
 
-  const [addResp, setAddResp] = useState(false);
+  const [paciente, setPaciente] = useContext(GlobalContext);
 
-  const [resp, setResp] = useState({
-    nome: null,
-    cpf: null,
-    telefone: null,
-  });
+  // const [addPacipaciente, setAddPacipaciente] = useState(false);
 
-  function adicionarResp() {
-    setAddResp(true);
-  }
+  // const [paciente, setPaciente] = useState({
+  //   nome: null,
+  //   cpf: null,
+  //   telefone: null,
+  // });
+
+  // function adicionarPacipaciente() {
+  //   setAddPacipaciente(true);
+  // }
 
   return (
     <View style={styles.cadastro}>
@@ -43,9 +46,14 @@ const CadastroResponsavel = ({ subTitulo }) => {
           color: '#24AAE3',
         }}
         textColor={cor}
-        value={resp.nome}
+        value={paciente.responsavel.nome}
         labelColor={cor}
-        onChangeText={(e) => setResp({ ...resp, nome: e })}
+        onChangeText={(e) =>
+          setPaciente({
+            ...paciente,
+            responsavel: { ...paciente.responsavel, nome: e },
+          })
+        }
       />
       <TextInput
         mode="outlined"
@@ -68,9 +76,14 @@ const CadastroResponsavel = ({ subTitulo }) => {
           color: '#24AAE3',
         }}
         textColor={cor}
-        value={resp.cpf}
+        value={paciente.responsavel.cpf}
         labelColor={cor}
-        onChangeText={(e) => setResp({ ...resp, cpf: e })}
+        onChangeText={(e) =>
+          setPaciente({
+            ...paciente,
+            responsavel: { ...paciente.responsavel, cpf: e },
+          })
+        }
       />
       <TextInput
         mode="outlined"
@@ -89,11 +102,16 @@ const CadastroResponsavel = ({ subTitulo }) => {
           color: '#24AAE3',
         }}
         textColor={cor}
-        value={resp.telefone}
+        value={paciente.responsavel.telefone}
         labelColor={cor}
-        onChangeText={(e) => setResp({ ...resp, telefone: e })}
+        onChangeText={(e) =>
+          setPaciente({
+            ...paciente,
+            responsavel: { ...paciente.responsavel, telefone: e },
+          })
+        }
       />
-      {/* {addResp && 
+      {/* {addPacipaciente && 
           <View>
           <TextInput
           mode="outlined"
@@ -105,9 +123,9 @@ const CadastroResponsavel = ({ subTitulo }) => {
           activeOutlineColor={cor}                 
           style={globalStyle.input}
           textColor={cor}
-          value={resp.nome}
+          value={paciente.nome}
           labelColor={cor}
-          onChangeText={(e)=> setResp({...resp, nome: e})}
+          onChangeText={(e)=> setPaciente({...paciente, nome: e})}
                     
         />
         <TextInput
@@ -120,9 +138,9 @@ const CadastroResponsavel = ({ subTitulo }) => {
           activeOutlineColor={cor}                 
           style={globalStyle.input}
           textColor={cor}
-          value={resp.cpf}
+          value={paciente.cpf}
           labelColor={cor}
-          onChangeText={(e)=> setResp({...resp, cpf: e})}
+          onChangeText={(e)=> setPaciente({...paciente, cpf: e})}
                     
         />
         <TextInput
@@ -135,20 +153,20 @@ const CadastroResponsavel = ({ subTitulo }) => {
           activeOutlineColor={cor}                 
           style={globalStyle.input}
           textColor={cor}
-          value={resp.telefone}
+          value={paciente.telefone}
           labelColor={cor}
-          onChangeText={(e)=> setResp({...resp, telefone: e})}
+          onChangeText={(e)=> setPaciente({...paciente, telefone: e})}
                     
         />
         </View>} */}
-      <Text style={styles.add} onPress={adicionarResp}>
+      {/* <Text style={styles.add} onPress={adicionarPacipaciente}>
         <Icon name="plus" size={15} color="#2070B4" /> Adicionar
-      </Text>
+      </Text> */}
     </View>
   );
 };
 
-export default CadastroResponsavel;
+export default CadastroPacipacienteonsavel;
 
 const styles = StyleSheet.create({
   cadastro: {

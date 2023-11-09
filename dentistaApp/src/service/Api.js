@@ -1,7 +1,8 @@
 import axios from 'axios';
 // import { estaAutenticado, getToken } from '../auth';
 
-const urlBase = 'https://999a-2804-14c-fc81-9a1f-a4f7-35db-554d-1664.ngrok.io';
+const urlBase =
+  'https://2a03-2804-14c-fc81-9a1f-b50c-d09d-e71-a577.ngrok-free.app';
 
 // const checarAutenticacao = (navigate, locationUrl) => {
 //   if (!estaAutenticado()) {
@@ -137,10 +138,9 @@ export async function apiGetPorId(id) {
   }
 }
 
-export async function apiPost(url, obj) {
+export function apiPost(url, obj) {
   try {
-    const response = await axios.get(`${urlBase}/v1/home/${url}`, obj);
-    // return response.data;
+    axios.post(`${urlBase}/v1/home/${url}`, obj);
   } catch (error) {
     console.error(error);
   }

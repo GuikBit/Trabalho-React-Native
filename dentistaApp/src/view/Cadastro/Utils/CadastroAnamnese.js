@@ -1,19 +1,22 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { TextInput, Button, Switch } from 'react-native-paper';
+import { GlobalContext } from '../../../store/Context';
 
-const CadastroAnamnese = ({ subTitulo }) => {
+const CadastroPaciente = ({ subTitulo }) => {
   const cor = '#2070B4';
-  const [anamnese, setAnam] = useState({
-    doenca: null,
-    tratamento: null,
-    medicacao: null,
-    alergico: null,
-    hipertenso: false,
-    gravida: false,
-    excesso: false,
-    trauma: false,
-  });
+  // const [paciente, setPaciente] = useState({
+  //   problemaSaude: null,
+  //   tratamento: null,
+  //   medicacao: null,
+  //   alergico: null,
+  //   hipertenso: false,
+  //   gravida: false,
+  //   excesso: false,
+  //   trauma: false,
+  // });
+
+  const [paciente, setPaciente] = useContext(GlobalContext);
 
   return (
     <View style={styles.cadastro}>
@@ -35,9 +38,14 @@ const CadastroAnamnese = ({ subTitulo }) => {
         activeOutlineColor={cor}
         style={styles.input}
         textColor={cor}
-        value={anamnese.doenca}
+        value={paciente.anamnese.problemaSaude}
         labelColor={cor}
-        onChangeText={(e) => setAnam({ ...anamnese, cep: e })}
+        onChangeText={(e) =>
+          setPaciente({
+            ...paciente,
+            anamnese: { ...paciente.anamnese, problemaSaude: e },
+          })
+        }
       />
       <TextInput
         mode="outlined"
@@ -56,9 +64,14 @@ const CadastroAnamnese = ({ subTitulo }) => {
         activeOutlineColor={cor}
         style={styles.input}
         textColor={cor}
-        value={anamnese.tratamento}
+        value={paciente.anamnese.tratamento}
         labelColor={cor}
-        onChangeText={(e) => setAnam({ ...anamnese, cep: e })}
+        onChangeText={(e) =>
+          setPaciente({
+            ...paciente,
+            anamnese: { ...paciente.anamnese, tratamento: e },
+          })
+        }
       />
       <TextInput
         mode="outlined"
@@ -73,9 +86,14 @@ const CadastroAnamnese = ({ subTitulo }) => {
         activeOutlineColor={cor}
         style={styles.input}
         textColor={cor}
-        value={anamnese.medicacao}
+        value={paciente.anamnese.remedio}
         labelColor={cor}
-        onChangeText={(e) => setAnam({ ...anamnese, cep: e })}
+        onChangeText={(e) =>
+          setPaciente({
+            ...paciente,
+            anamnese: { ...paciente.anamnese, remedio: e },
+          })
+        }
       />
       <TextInput
         mode="outlined"
@@ -94,16 +112,27 @@ const CadastroAnamnese = ({ subTitulo }) => {
         activeOutlineColor={cor}
         style={styles.input}
         textColor={cor}
-        value={anamnese.alergico}
+        value={paciente.anamnese.alergia}
         labelColor={cor}
-        onChangeText={(e) => setAnam({ ...anamnese, cep: e })}
+        onChangeText={(e) =>
+          setPaciente({
+            ...paciente,
+            anamnese: { ...paciente.anamnese, alergia: e },
+          })
+        }
       />
       <View style={styles.switchs}>
         <Switch
           color="#2070B4"
-          value={anamnese.hipertenso}
+          value={paciente.anamnese.hipertenso}
           onValueChange={() =>
-            setAnam({ ...anamnese, hipertenso: !anamnese.hipertenso })
+            setPaciente({
+              ...paciente,
+              anamnese: {
+                ...paciente.anamnese,
+                hipertenso: !paciente.anamnese.hipertenso,
+              },
+            })
           }
         />
         <Text style={styles.texto}>Hipertenso?</Text>
@@ -111,9 +140,15 @@ const CadastroAnamnese = ({ subTitulo }) => {
       <View style={styles.switchs}>
         <Switch
           color="#2070B4"
-          value={anamnese.gravida}
+          value={paciente.anamnese.gravida}
           onValueChange={() =>
-            setAnam({ ...anamnese, gravida: !anamnese.gravida })
+            setPaciente({
+              ...paciente,
+              anamnese: {
+                ...paciente.anamnese,
+                gravida: !paciente.anamnese.gravida,
+              },
+            })
           }
         />
         <Text style={styles.texto}>Está Gestante?</Text>
@@ -121,9 +156,15 @@ const CadastroAnamnese = ({ subTitulo }) => {
       <View style={styles.switchs}>
         <Switch
           color="#2070B4"
-          value={anamnese.trauma}
+          value={paciente.anamnese.traumatismoFace}
           onValueChange={() =>
-            setAnam({ ...anamnese, trauma: !anamnese.trauma })
+            setPaciente({
+              ...paciente,
+              anamnese: {
+                ...paciente.anamnese,
+                traumatismoFace: !paciente.anamnese.traumatismoFace,
+              },
+            })
           }
         />
         <Text style={styles.texto}>Possui algum traumatismo na face?</Text>
@@ -131,9 +172,15 @@ const CadastroAnamnese = ({ subTitulo }) => {
       <View style={styles.switchs}>
         <Switch
           color="#2070B4"
-          value={anamnese.excesso}
+          value={paciente.anamnese.sangramentoExcessivo}
           onValueChange={() =>
-            setAnam({ ...anamnese, excesso: !anamnese.excesso })
+            setPaciente({
+              ...paciente,
+              anamnese: {
+                ...paciente.anamnese,
+                sangramentoExcessivo: !paciente.anamnese.sangramentoExcessivo,
+              },
+            })
           }
         />
         <Text style={styles.texto}>Possui sangramento excessivo?</Text>
@@ -142,7 +189,7 @@ const CadastroAnamnese = ({ subTitulo }) => {
   );
 };
 
-export default CadastroAnamnese;
+export default CadastroPaciente;
 
 const styles = StyleSheet.create({
   texto: {
