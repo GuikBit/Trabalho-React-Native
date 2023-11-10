@@ -5,7 +5,6 @@ import { Colors, Dimension } from '../../global/GlobalStyles';
 import { AuthContext, AuthProvider, userAuth } from '../../Auth/Auth';
 import Logo from '../../components/Logo';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { useGetById, useLogin } from '../../service/Queries';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { apiGetPorId } from '../../service/Api';

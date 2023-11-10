@@ -8,7 +8,7 @@ import HeaderGeral from '../../components/Listagem/HeaderGeral';
 import FiltroPacientes from '../../components/Listagem/FiltroPacientes';
 import LoadingOverlay from '../../components/LoadingOverlay/LoadingOverlay';
 import CardPaciente from '../../components/Cards/CardPaciente';
-import { useGetPacientesAuth } from '../../service/Queries';
+import { useGetPacientesAuth } from '../../service/queries/paciente';
 
 const ListaPaciente = ({ navigation }) => {
   const { data, isLoading } = useGetPacientesAuth();

@@ -8,10 +8,10 @@ import { PaperProvider } from 'react-native-paper';
 import HeaderGeral from '../../components/Listagem/HeaderGeral';
 import LoadingOverlay from '../../components/LoadingOverlay/LoadingOverlay';
 import CardPaciente from '../../components/Cards/CardPaciente';
-import { useGetPacientesAuth } from '../../service/Queries';
+import { useGetDentistasAuth } from '../../service/queries/Queries';
 
 const ListaDentista = ({ navigation }) => {
-  const { data, isLoading } = useGetPacientesAuth();
+  const { data, isLoading } = useGetDentistasAuth();
 
   const [filtro, setFiltro] = useState([]);
   const [pesquisa, setPesquisa] = useState('');
@@ -20,10 +20,10 @@ const ListaDentista = ({ navigation }) => {
     setPesquisa(e);
 
     if (e === '') {
-      setFiltro(lista);
+      setFiltro(data);
     } else {
       const pesquisaLowerCase = e.toLowerCase();
-      const filtro = lista.filter((user) => {
+      const filtro = data.filter((user) => {
         const nomeLowerCase = user.nome.toLowerCase();
         const pastaNuString = user.pastaNu.toString();
         return (

@@ -8,9 +8,9 @@ import CadastroPaciente from './Utils/CadastroPaciente';
 import CadastroResponsavel from './Utils/CadastroResponsavel';
 import CadastroEndereco from './Utils/CadastroEndereco';
 import CadastroAnamnese from './Utils/CadastroAnamnese';
-import { usePostPaciente } from '../../service/Queries';
 import { GlobalContext } from '../../store/Context';
 import axios from 'axios';
+import { usePostPaciente } from '../../service/queries/paciente';
 
 const width = Dimensions.get('screen').width;
 const height = Dimensions.get('screen').height;

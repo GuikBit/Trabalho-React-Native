@@ -4,7 +4,7 @@ import { TextInput, Button, Modal, Searchbar } from 'react-native-paper';
 import globalStyle from '../../../../globalStyle';
 import { GlobalContext } from '../../../store/Context';
 import { useNavigation } from '@react-navigation/core';
-import { usePostDentistaAuth } from '../../../service/Queries';
+import { usePostDentistaAuth } from '../../../service/queries/dentista';
 
 const CadastroDentista = ({ subTitulo }) => {
   const cor = '#2070B4';

@@ -9,9 +9,9 @@ import FiltroPacientes from '../../components/Listagem/FiltroPacientes';
 import HeaderGeral from '../../components/Listagem/HeaderGeral';
 import ModalDentista from '../../components/Modal/ModalDentista';
 import ModalEspec from '../../components/Modal/ModalEspec';
-import { useGetPacientesAuth } from '../../service/Queries';
 import CardConsulta from '../../components/Cards/CardConsulta';
 import LoadingOverlay from '../../components/LoadingOverlay/LoadingOverlay';
+import { useGetPacientesAuth } from '../../service/queries/paciente';
 
 const ListaConsulta = ({ navigation }) => {
   const { data, isLoading } = useGetPacientesAuth();

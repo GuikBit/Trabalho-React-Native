@@ -124,7 +124,7 @@ const Body = ({ navigation }) => {
                 cor="#24AAE3"
                 texto="Informações Pessoais"
                 acao={() => {
-                  navigation.navigate('Perfil');
+                  navigation.navigate('Paciente Details');
                 }}
               />
             </View>

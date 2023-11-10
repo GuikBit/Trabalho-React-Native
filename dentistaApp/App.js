@@ -17,9 +17,10 @@ import ListaConsulta from './src/view/Consulta/ListaConsulta.js';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ListaDentista from './src/view/Dentista/ListaDentista.js';
 import ContextProvider from './src/store/Context.js';
-import Perfil from './src/view/Perfil/Perfil.js';
 import ConsultaDetails from './src/view/Consulta/ConsultaDetails.js';
 import CadastroDentista from './src/view/Cadastro/Utils/CadastroDentista.js';
+import DentistaDetails from './src/view/Dentista/DentistaDetails.js';
+import PacienteDetails from './src/view/Paciente/PacienteDetails.js';
 
 const Stack = createNativeStackNavigator();
 const queryClient = new QueryClient();
@@ -53,7 +54,7 @@ const StackNavigator = () => {
 
         <Stack.Screen name="Paciente" component={Paciente} />
         <Stack.Screen name="Lista Pacientes" component={ListaPaciente} />
-        <Stack.Screen name="Perfil" component={Perfil} />
+        <Stack.Screen name="Paciente Details" component={PacienteDetails} />
 
         <Stack.Screen name="Consulta Details" component={ConsultaDetails} />
         <Stack.Screen name="Nova Consulta" component={NovaConsulta} />
@@ -62,6 +63,7 @@ const StackNavigator = () => {
 
         <Stack.Screen name="Cadastro Dentista" component={CadastroDentista} />
         <Stack.Screen name="Lista Dentista" component={ListaDentista} />
+        <Stack.Screen name="Dentista Details" component={DentistaDetails} />
       </Stack.Navigator>
     </NavigationContainer>
   );

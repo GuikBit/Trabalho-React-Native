@@ -13,13 +13,11 @@ import ModalPaciente from '../../components/Modal/ModalPaciente';
 const NovaConsulta = ({ navigation }) => {
   const cor = '#2070B4';
 
-  const [modalPaci, setModalPaci] = useState(false);
   const [modalEspec, setModalEspec] = useState(false);
   const [modalDent, setModalDent] = useState(false);
 
   const [pesquisa, setPesquisa] = useState('');
 
-  const hidePac = () => setModalPaci(false);
   const hideDen = () => setModalDent(false);
   const hideEspec = () => setModalEspec(false);
 
@@ -53,36 +51,6 @@ const NovaConsulta = ({ navigation }) => {
       />
 
       <View style={styles.conulta}>
-        <TextInput
-          mode="outlined"
-          label="Paciente"
-          left={
-            <TextInput.Icon
-              icon="account"
-              color={cor}
-              style={{ paddingTop: 10 }}
-            />
-          }
-          right={
-            <TextInput.Icon
-              icon="chevron-down"
-              color={cor}
-              style={{ paddingTop: 10 }}
-              onPress={() => {
-                setModalPaci(true);
-              }}
-            />
-          }
-          selectionColor={cor}
-          outlineColor={cor}
-          outlineStyle={globalStyle.inputRadius}
-          activeOutlineColor={cor}
-          style={globalStyle.input}
-          textColor={cor}
-          value={consulta.paciente}
-          labelColor={cor}
-          editable={false}
-        />
         <TextInput
           mode="outlined"
           label="Especialidade"
@@ -193,47 +161,6 @@ const NovaConsulta = ({ navigation }) => {
           Agendar Consulta
         </Button>
       </View>
-
-      <Modal
-        onDismiss={hidePac}
-        visible={modalPaci}
-        contentContainerStyle={styleModal}
-      >
-        <Searchbar
-          style={globalStyle.search}
-          placeholder="Pesquisar Paciente"
-          value={pesquisa}
-          onClearIconPress={() => setFiltro(lista)}
-          onChangeText={(e) => busca(e)}
-        />
-        <View style={styles.modalBody}>
-          <FlatList
-            data={lista}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => <ModalPaciente paciente={item} />}
-          />
-        </View>
-        <View style={[globalStyle.rowBetween, styles.acao]}>
-          <Button
-            onPress={() => {
-              setModalPaci(false);
-            }}
-            style={styles.btnModalVoltar}
-            textColor="#FFFFFF"
-            icon="arrow-left-bold"
-          >
-            Voltar
-          </Button>
-          <Button
-            onPress={() => {}}
-            style={styles.btnModalbtnSelecionar}
-            textColor="#FFFFFF"
-            icon="check"
-          >
-            Selecionar
-          </Button>
-        </View>
-      </Modal>
 
       <Modal
         onDismiss={hideDen}
