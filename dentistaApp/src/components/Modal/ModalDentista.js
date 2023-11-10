@@ -1,40 +1,113 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import React, { useState } from 'react';
-import { Card } from 'react-native-paper';
+import { Button, Card, Modal, Searchbar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import globalStyle from '../../../globalStyle';
+import listaDentista from '../../Mock/listaDentista';
 
-const ModalDentista = ({ dentista }) => {
+const ModalDentista = ({
+  modalDent,
+  styleModalDent,
+  setFiltro,
+  buscaUsuario,
+  hideDentis,
+  pesquisa,
+}) => {
   const [clicou, setClicou] = useState(false);
 
   return (
-    <Card
-      style={[
-        styles.card,
-        {
-          borderColor: clicou ? '#1d9c06' : 'grey',
-          borderWidth: clicou ? 1 : 0.3,
-        },
-      ]}
-      onPress={() => {
-        setClicou(!clicou);
-      }}
-    >
-      <View style={styles.header}>
-        <Text style={styles.nome}>{dentista.nome}</Text>
-      </View>
+    <Modal visible={modalDent} contentContainerStyle={styleModalDent}>
+      <Searchbar
+        style={styles.searchModal}
+        placeholder="Pesquisar Dentista"
+        value={pesquisa}
+        onClearIconPress={() => setFiltro(lista)}
+        onChangeText={(e) => buscaUsuario(e)}
+      />
+      <View style={styles.modalBodyDentista}>
+        <FlatList
+          data={listaDentista}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <Card
+              style={[
+                styles.card,
+                {
+                  borderColor: clicou ? '#1d9c06' : 'grey',
+                  borderWidth: clicou ? 1 : 0.3,
+                },
+              ]}
+              onPress={() => {
+                setClicou(!clicou);
+              }}
+            >
+              <View style={styles.header}>
+                <Text style={styles.nome}>{item.nome}</Text>
+              </View>
 
-      <View style={styles.body}>
-        <View style={styles.infoRow}>
-          <Text style={styles.texto}>
-            <Icon name="calendar" size={16} cor="#d1d1d1" /> {dentista.CRO}
-          </Text>
-          <Text style={styles.texto}>
-            <Icon name="address-card-o" size={16} cor="#d1d1d1" />{' '}
-            {dentista.dataNasc}
-          </Text>
-        </View>
+              <View style={styles.body}>
+                <View style={styles.infoRow}>
+                  <Text style={styles.texto}>
+                    <Icon name="calendar" size={16} cor="#d1d1d1" /> {item.CRO}
+                  </Text>
+                  <Text style={styles.texto}>
+                    <Icon name="address-card-o" size={16} cor="#d1d1d1" />{' '}
+                    {item.dataNasc}
+                  </Text>
+                </View>
+              </View>
+            </Card>
+          )}
+        />
       </View>
-    </Card>
+      <View style={[globalStyle.rowBetween, styles.acao]}>
+        <Button
+          onPress={hideDentis}
+          style={styles.btnModalVoltar}
+          textColor="#FFFFFF"
+          icon="arrow-left-bold"
+        >
+          Voltar
+        </Button>
+        <Button
+          onPress={hideDentis}
+          style={styles.btnModalbtnSelecionar}
+          textColor="#FFFFFF"
+          icon="check"
+        >
+          Selecionar
+        </Button>
+      </View>
+    </Modal>
+
+    // <Card
+    //   style={[
+    //     styles.card,
+    //     {
+    //       borderColor: clicou ? '#1d9c06' : 'grey',
+    //       borderWidth: clicou ? 1 : 0.3,
+    //     },
+    //   ]}
+    //   onPress={() => {
+    //     setClicou(!clicou);
+    //   }}
+    // >
+    //   <View style={styles.header}>
+    //     <Text style={styles.nome}>{dentista.nome}</Text>
+    //   </View>
+
+    //   <View style={styles.body}>
+    //     <View style={styles.infoRow}>
+    //       <Text style={styles.texto}>
+    //         <Icon name="calendar" size={16} cor="#d1d1d1" /> {dentista.CRO}
+    //       </Text>
+    //       <Text style={styles.texto}>
+    //         <Icon name="address-card-o" size={16} cor="#d1d1d1" />{' '}
+    //         {dentista.dataNasc}
+    //       </Text>
+    //     </View>
+    //   </View>
+    // </Card>
   );
 };
 
@@ -82,5 +155,54 @@ const styles = StyleSheet.create({
   texto: {
     fontSize: 18,
     color: '#7a7d7a',
+  },
+  search: {
+    marginHorizontal: 5,
+    backgroundColor: '#FFFFFF',
+    borderWidth: 0.5,
+    borderColor: '#2070B4',
+    marginTop: 15,
+  },
+  searchModal: {
+    marginHorizontal: 5,
+    backgroundColor: '#cfe7fc',
+  },
+  menu: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  inputConsulta: {
+    width: 150,
+    fontSize: 18,
+    height: 40,
+  },
+  acao: {},
+  modalBodyDentista: {
+    height: 340,
+    padding: 10,
+  },
+  modalBodyEspec: {
+    height: 225,
+    padding: 10,
+  },
+  modalTexto: {
+    fontSize: 22,
+    marginHorizontal: 25,
+    marginTop: 5,
+  },
+  btnModalbtnSelecionar: {
+    backgroundColor: '#2070B4',
+  },
+  btnModalVoltar: {
+    backgroundColor: 'grey',
+  },
+  fab: {
+    position: 'absolute',
+    margin: 20,
+    right: 0,
+    bottom: 0,
+    backgroundColor: '#2070B4',
+    color: '#FFFFFF',
   },
 });

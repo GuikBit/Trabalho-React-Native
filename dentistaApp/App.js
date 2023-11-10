@@ -13,12 +13,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import ListaPaciente from './src/view/Paciente/ListaPaciente.js';
 import Paciente from './src/view/Paciente/Paciente.js';
-import Consulta from './src/view/Consulta/Consulta.js';
 import ListaConsulta from './src/view/Consulta/ListaConsulta.js';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ListaDentista from './src/view/Dentista/ListaDentista.js';
 import ContextProvider from './src/store/Context.js';
 import Perfil from './src/view/Perfil/Perfil.js';
+import ConsultaDetails from './src/view/Consulta/ConsultaDetails.js';
 
 const Stack = createNativeStackNavigator();
 const queryClient = new QueryClient();
@@ -54,7 +54,7 @@ const StackNavigator = () => {
         <Stack.Screen name="Lista Pacientes" component={ListaPaciente} />
         <Stack.Screen name="Perfil" component={Perfil} />
 
-        <Stack.Screen name="Consulta" component={Consulta} />
+        <Stack.Screen name="Consulta Details" component={ConsultaDetails} />
         <Stack.Screen name="Nova Consulta" component={NovaConsulta} />
         <Stack.Screen name="Lista Consultas" component={ListaConsulta} />
         <Stack.Screen name="Pagamento" component={Pagamento} />
