@@ -1,23 +1,24 @@
 import { createContext, useState } from 'react';
 import { apiLogin, apiPost } from '../service/Api';
-import { setToken } from '../hooks/TokenStore';
+import { getToken, setToken } from '../hooks/TokenStore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({
-    login: 'matheus@email.com',
-    password: '1234567',
+    login: 'teste',
+    password: '123',
   });
 
   const [userLogged, setUserLogged] = useState({
     id: '',
-    nome: 'teste',
+    nome: '',
     email: '',
     login: '',
     role: '',
     cpf: '',
-    dataNascimento: '',
+    dataNasc: '',
     telefone: '',
     ativo: '',
   });
@@ -28,7 +29,6 @@ export const AuthProvider = ({ children }) => {
     const token = res.result;
     setToken(token);
 
-    console.log(res.usuario.nome);
     setUserLogged({
       ...userLogged,
       id: res.usuario.id,
@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }) => {
       login: res.usuario.login,
       role: res.usuario.role,
       cpf: res.usuario.cpf,
-      dataNascimento: res.usuario.dataNascimento,
+      dataNasc: res.usuario.dataNasc,
       telefone: res.usuario.telefone,
       ativo: res.usuario.ativo,
     });

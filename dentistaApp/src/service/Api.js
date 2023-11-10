@@ -1,8 +1,5 @@
 import axios from 'axios';
-// import { estaAutenticado, getToken } from '../auth';
-
-const urlBase =
-  'https://7951-2804-14c-fc81-9a1f-b50c-d09d-e71-a577.ngrok-free.app';
+import { getToken } from '../hooks/TokenStore';
 
 // const checarAutenticacao = (navigate, locationUrl) => {
 //   if (!estaAutenticado()) {
@@ -29,21 +26,6 @@ const urlBase =
 //       //   erro(error);
 //     });
 // };
-
-export async function apiGetAuth(id) {
-  const instance = axios.create({
-    baseURL: `${urlBase}`,
-    timeout: 1000,
-    headers: { Authorization: 'Bearer ' + getToken() },
-  });
-
-  try {
-    const response = await axios.get(`${urlBase}/v1/home/${id}`);
-    return response.data;
-  } catch (error) {
-    console.error(error);
-  }
-}
 
 // export const apiAuthGetPorId = (
 //   url,
@@ -129,7 +111,68 @@ export async function apiGetAuth(id) {
 //     });
 // };
 
-export async function apiGetPorId(id) {
+const urlBase =
+  'https://1cf3-2804-14c-fc81-9a1f-3e-eb65-5678-3072.ngrok-free.app';
+
+export async function apiGetAuth(url) {
+  const instance = axios.create({
+    baseURL: `${urlBase}`,
+    timeout: 1000,
+    headers: { Authorization: 'Bearer ' + (await getToken()) },
+  });
+
+  try {
+    const response = await instance.get(`/v1/${url}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function apiGetByIdAuth(url, id) {
+  const instance = axios.create({
+    baseURL: `${urlBase}`,
+    timeout: 1000,
+    headers: { Authorization: 'Bearer ' + (await getToken()) },
+  });
+
+  try {
+    const response = await instance.get(`/v1/${url}/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function apiPostAuth(url, objeto) {
+  const instance = axios.create({
+    baseURL: `${urlBase}`,
+    timeout: 1000,
+    headers: { Authorization: 'Bearer ' + (await getToken()) },
+  });
+
+  try {
+    instance.post(`/v1/${url}`, objeto);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function apiPutAuth(url, id, objeto) {
+  const instance = axios.create({
+    baseURL: `${urlBase}`,
+    timeout: 1000,
+    headers: { Authorization: 'Bearer ' + (await getToken()) },
+  });
+
+  try {
+    instance.put(`/v1/${url}/${id}`, objeto);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function apiGetById(id) {
   try {
     const response = await axios.get(`${urlBase}/v1/home/${id}`);
     return response.data;

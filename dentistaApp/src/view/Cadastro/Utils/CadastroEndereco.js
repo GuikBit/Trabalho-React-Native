@@ -3,7 +3,7 @@ import React, { useContext, useState } from 'react';
 import { TextInput, Button } from 'react-native-paper';
 import { GlobalContext } from '../../../store/Context';
 
-const CadastroPacipacienteereco = ({ subTitulo }) => {
+const CadastroEndereco = ({ subTitulo }) => {
   const cor = '#2070B4';
 
   // const [paciente, setPaciente] = useState({
@@ -192,7 +192,7 @@ const CadastroPacipacienteereco = ({ subTitulo }) => {
   );
 };
 
-export default CadastroPacipacienteereco;
+export default CadastroEndereco;
 
 const styles = StyleSheet.create({
   cadastro: {

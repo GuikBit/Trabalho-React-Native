@@ -3,7 +3,7 @@ import React, { useContext, useState } from 'react';
 import { TextInput, Button, Switch } from 'react-native-paper';
 import { GlobalContext } from '../../../store/Context';
 
-const CadastroPaciente = ({ subTitulo }) => {
+const CadastroAnamnese = ({ subTitulo }) => {
   const cor = '#2070B4';
   // const [paciente, setPaciente] = useState({
   //   problemaSaude: null,
@@ -189,7 +189,7 @@ const CadastroPaciente = ({ subTitulo }) => {
   );
 };
 
-export default CadastroPaciente;
+export default CadastroAnamnese;
 
 const styles = StyleSheet.create({
   texto: {

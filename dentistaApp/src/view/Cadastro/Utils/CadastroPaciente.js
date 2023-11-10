@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, ScrollView } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import { GlobalContext, globalContext } from '../../../store/Context';
 
@@ -9,7 +9,7 @@ const CadastroPaciente = ({ subTitulo }) => {
   const [paciente, setPaciente] = useContext(GlobalContext);
 
   return (
-    <View style={styles.cadastro}>
+    <ScrollView style={styles.cadastro}>
       <Text>{subTitulo}</Text>
       <TextInput
         mode="outlined"
@@ -30,6 +30,7 @@ const CadastroPaciente = ({ subTitulo }) => {
           fontSize: 22,
           backgroundColor: '#FFFFFF',
           color: '#24AAE3',
+          marginBottom: 10,
         }}
         textColor={cor}
         value={paciente.nome}
@@ -55,6 +56,7 @@ const CadastroPaciente = ({ subTitulo }) => {
           fontSize: 22,
           backgroundColor: '#FFFFFF',
           color: '#24AAE3',
+          marginBottom: 10,
         }}
         textColor="#2070B4"
         value={paciente.login}
@@ -88,6 +90,7 @@ const CadastroPaciente = ({ subTitulo }) => {
           fontSize: 22,
           backgroundColor: '#FFFFFF',
           color: '#24AAE3',
+          marginBottom: 10,
         }}
         textColor={cor}
         value={paciente.senha}
@@ -109,6 +112,7 @@ const CadastroPaciente = ({ subTitulo }) => {
           fontSize: 22,
           backgroundColor: '#FFFFFF',
           color: '#24AAE3',
+          marginBottom: 10,
         }}
         textColor={cor}
         value={paciente.email}
@@ -136,6 +140,7 @@ const CadastroPaciente = ({ subTitulo }) => {
           fontSize: 22,
           backgroundColor: '#FFFFFF',
           color: '#24AAE3',
+          marginBottom: 10,
         }}
         textColor={cor}
         value={paciente.cpf}
@@ -157,13 +162,40 @@ const CadastroPaciente = ({ subTitulo }) => {
           fontSize: 22,
           backgroundColor: '#FFFFFF',
           color: '#24AAE3',
+          marginBottom: 10,
         }}
         textColor={cor}
         value={paciente.telefone}
         labelColor={cor}
         onChangeText={(e) => setPaciente({ ...paciente, telefone: e })}
       />
-    </View>
+      <TextInput
+        mode="outlined"
+        label="Data de Nascimento"
+        left={
+          <TextInput.Icon
+            icon="calendar"
+            color={cor}
+            style={{ paddingTop: 10 }}
+          />
+        }
+        selectionColor={cor}
+        outlineColor={cor}
+        outlineStyle={{ borderRadius: 8, borderWidth: 0.5 }}
+        activeOutlineColor={cor}
+        style={{
+          height: 50,
+          fontSize: 22,
+          backgroundColor: '#FFFFFF',
+          color: '#24AAE3',
+          marginBottom: 10,
+        }}
+        textColor={cor}
+        value={paciente.dataNasc}
+        labelColor={cor}
+        onChangeText={(e) => setPaciente({ ...paciente, dataNasc: e })}
+      />
+    </ScrollView>
   );
 };
 
@@ -172,7 +204,8 @@ export default CadastroPaciente;
 const styles = StyleSheet.create({
   cadastro: {
     height: 550,
-    justifyContent: 'space-around',
-    marginHorizontal: 20,
+    // justifyContent: 'space-around',
+    // marginHorizontal: 20,
+    padding: 15,
   },
 });

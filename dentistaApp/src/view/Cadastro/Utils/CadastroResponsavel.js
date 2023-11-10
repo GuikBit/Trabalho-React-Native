@@ -4,7 +4,7 @@ import { TextInput, Button } from 'react-native-paper';
 import Icon from '@expo/vector-icons/FontAwesome';
 import { GlobalContext } from '../../../store/Context';
 
-const CadastroPacipacienteonsavel = ({ subTitulo }) => {
+const CadastroResponsavel = ({ subTitulo }) => {
   const cor = '#2070B4';
   const tam = 315;
 
@@ -166,7 +166,7 @@ const CadastroPacipacienteonsavel = ({ subTitulo }) => {
   );
 };
 
-export default CadastroPacipacienteonsavel;
+export default CadastroResponsavel;
 
 const styles = StyleSheet.create({
   cadastro: {

@@ -105,8 +105,17 @@ const Lista = ({ navigation, titulo, lista }) => {
       <View style={globalStyle.container}>
         <View style={globalStyle.headerPesq}>
           <View>
-                <TextInput.Icon icon="chevron-left" size={35} color="#2070B4"  onPress={()=> {navigation.navigate('Home')}}/>
-                <Text style={[globalStyle.titulo, {alignSelf: 'center'}]}>{ titulo }</Text>
+            <TextInput.Icon
+              icon="chevron-left"
+              size={35}
+              color="#2070B4"
+              onPress={() => {
+                navigation.navigate('Home');
+              }}
+            />
+            <Text style={[globalStyle.titulo, { alignSelf: 'center' }]}>
+              {titulo}
+            </Text>
           </View>
           {lista != null && (
             <>
@@ -124,7 +133,7 @@ const Lista = ({ navigation, titulo, lista }) => {
                     <TextInput
                       mode="outlined"
                       label="Data Inicio"
-                      placeholder='De' 
+                      placeholder="De"
                       left={
                         <TextInput.Icon
                           icon="calendar-today"
@@ -145,7 +154,7 @@ const Lista = ({ navigation, titulo, lista }) => {
                     <TextInput
                       mode="outlined"
                       label="Data Fim"
-                      placeholder='Até' 
+                      placeholder="Até"
                       left={
                         <TextInput.Icon
                           icon="calendar"
@@ -251,13 +260,12 @@ const Lista = ({ navigation, titulo, lista }) => {
           )}
         />
 
-          <FAB
-            icon="plus"
-            style={styles.fab}
-            onPress={findByNovo}
-            color='#FFFFFF'
-            
-          />
+        <FAB
+          icon="plus"
+          style={styles.fab}
+          onPress={findByNovo}
+          color="#FFFFFF"
+        />
       </View>
 
       <Modal visible={modalDent} contentContainerStyle={styleModalDent}>
@@ -386,6 +394,6 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     backgroundColor: '#2070B4',
-    color:'#FFFFFF'
+    color: '#FFFFFF',
   },
 });

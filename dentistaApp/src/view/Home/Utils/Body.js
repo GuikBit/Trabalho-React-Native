@@ -13,7 +13,6 @@ const Body = ({ navigation }) => {
       <View style={styles.submenu}>
         {userLogged.role == 'Admin' && (
           <>
-            <Text> Visao de ADM</Text>
             <View style={styles.row}>
               <Acao
                 icone="account-group"
@@ -57,7 +56,6 @@ const Body = ({ navigation }) => {
 
         {userLogged.role == 'Dentista' && (
           <>
-            <Text> Visao do Dentista</Text>
             <View style={styles.row}>
               <Acao
                 icone="account-group"
@@ -92,7 +90,6 @@ const Body = ({ navigation }) => {
 
         {userLogged.role == 'Paciente' && (
           <>
-            <Text> Visao do usuário logado</Text>
             <View style={styles.row}>
               <Acao
                 icone="medical-bag"
@@ -118,7 +115,7 @@ const Body = ({ navigation }) => {
                 cor="#24AAE3"
                 texto="Informações Pessoais"
                 acao={() => {
-                  navigation.navigate('Novo Paciente');
+                  navigation.navigate('Perfil');
                 }}
               />
             </View>

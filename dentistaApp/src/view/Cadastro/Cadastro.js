@@ -32,9 +32,9 @@ const Cadastro = ({ route }) => {
 
   const content = [
     <CadastroPaciente subTitulo="Informações Pessoais" />,
-    // <CadastroResponsavel subTitulo="Responsável" />,
-    // <CadastroEndereco subTitulo="Endereço" />,
-    // <CadastroAnamnese subTitulo="Anamnese" />,
+    <CadastroResponsavel subTitulo="Responsável" />,
+    <CadastroEndereco subTitulo="Endereço" />,
+    <CadastroAnamnese subTitulo="Anamnese" />,
   ];
 
   return (
