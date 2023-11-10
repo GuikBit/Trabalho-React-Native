@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import img from '../../../../assets/img/odontoWhite.png';
 import { Image, StyleSheet, Text, View, Dimensions } from 'react-native';
 import Icon from '@expo/vector-icons/FontAwesome';
 import globalStyle from '../../../../globalStyle';
+import { AuthContext } from '../../../Auth/Auth';
 
 const width = Dimensions.get('screen').width;
 
 const Header = () => {
+  const { userLogged } = useContext(AuthContext);
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -23,7 +26,7 @@ const Header = () => {
         </View>
       </View>
       <View style={styles.menu}>
-        <Text style={styles.nome}>Bianca Machado </Text>
+        <Text style={styles.nome}>{userLogged.nome}</Text>
         <View style={globalStyle.rowAround}>
           <Text>Próxima Consulta</Text>
           <Text>Consultas em Aberto</Text>

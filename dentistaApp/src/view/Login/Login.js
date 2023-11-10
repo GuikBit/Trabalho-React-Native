@@ -13,9 +13,7 @@ import { apiGetPorId } from '../../service/Api';
 const Login = ({}) => {
   const [newUser, setNewuser] = useState();
 
-  const [user, setUser, login, logout] = useContext(AuthContext);
-
-  // const { mutate, data, isSuccess } = useLogin();
+  const { login, user, setUser } = useContext(AuthContext);
 
   const route = useRoute();
   const navigation = useNavigation();
@@ -28,16 +26,7 @@ const Login = ({}) => {
 
   const handleLogin = () => {
     login();
-    // mutate(user);
-    // if (isSuccess) {
-    // console.log(data);
-    // }
-    // if (login(user.login, user.senha)) {
-    //   navigation.navigate('Home');
-    //   {
-    //     /* navigation.reset({ index: 0, routes: {nome: 'Tela Inicial'} })*/
-    //   }
-    // }
+    navigation.navigate('Home');
   };
 
   return (

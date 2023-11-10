@@ -2,7 +2,7 @@ import axios from 'axios';
 // import { estaAutenticado, getToken } from '../auth';
 
 const urlBase =
-  'https://2a03-2804-14c-fc81-9a1f-b50c-d09d-e71-a577.ngrok-free.app';
+  'https://7951-2804-14c-fc81-9a1f-b50c-d09d-e71-a577.ngrok-free.app';
 
 // const checarAutenticacao = (navigate, locationUrl) => {
 //   if (!estaAutenticado()) {
