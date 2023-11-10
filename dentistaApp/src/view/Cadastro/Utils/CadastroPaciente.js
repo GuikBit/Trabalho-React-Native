@@ -1,12 +1,12 @@
 import React, { useContext, useState } from 'react';
 import { View, StyleSheet, Text, ScrollView } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
-import { GlobalContext, globalContext } from '../../../store/Context';
+import { GlobalContext } from '../../../store/Context';
 
 const CadastroPaciente = ({ subTitulo }) => {
   const cor = '#2070B4';
 
-  const [paciente, setPaciente] = useContext(GlobalContext);
+  const { paciente, setPaciente } = useContext(GlobalContext);
 
   return (
     <ScrollView style={styles.cadastro}>

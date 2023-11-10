@@ -19,6 +19,7 @@ import ListaDentista from './src/view/Dentista/ListaDentista.js';
 import ContextProvider from './src/store/Context.js';
 import Perfil from './src/view/Perfil/Perfil.js';
 import ConsultaDetails from './src/view/Consulta/ConsultaDetails.js';
+import CadastroDentista from './src/view/Cadastro/Utils/CadastroDentista.js';
 
 const Stack = createNativeStackNavigator();
 const queryClient = new QueryClient();
@@ -59,7 +60,7 @@ const StackNavigator = () => {
         <Stack.Screen name="Lista Consultas" component={ListaConsulta} />
         <Stack.Screen name="Pagamento" component={Pagamento} />
 
-        <Stack.Screen name="Novo Dentista" component={NovoDentista} />
+        <Stack.Screen name="Cadastro Dentista" component={CadastroDentista} />
         <Stack.Screen name="Lista Dentista" component={ListaDentista} />
       </Stack.Navigator>
     </NavigationContainer>

@@ -1,39 +1,26 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, Text, FlatList } from 'react-native';
+import React, { useContext, useState } from 'react';
+import { View, StyleSheet, Text, FlatList, ScrollView } from 'react-native';
 import { TextInput, Button, Modal, Searchbar } from 'react-native-paper';
-// import globalStyle from '../../../../globalStyle';
-
-import ModalEspec from '../../../components/Listagem/Cards/ModalEspec';
+import globalStyle from '../../../../globalStyle';
+import { GlobalContext } from '../../../store/Context';
+import { useNavigation } from '@react-navigation/core';
+import { usePostDentistaAuth } from '../../../service/Queries';
 
 const CadastroDentista = ({ subTitulo }) => {
   const cor = '#2070B4';
 
-  const [modalEspec, setModalEspec] = useState(false);
+  const { mutate } = usePostDentistaAuth();
+  const navigation = useNavigation();
 
-  const [pesquisa, setPesquisa] = useState('');
-
-  const [dentista, setDentista] = useState({
-    nome: null,
-    login: null,
-    senha: null,
-    email: null,
-    sexo: null,
-    dataNasc: null,
-    tel: null,
-    espec: null,
-  });
-
-  const styleModal = {
-    backgroundColor: '#FFFFFF',
-    marginHorizontal: 10,
-    padding: 10,
-    borderRadius: 15,
-    height: 650,
-    justifyContent: '',
+  const handleCadastro = () => {
+    mutate(dentista);
+    navigation.navigate('Home');
   };
 
+  const { dentista, setDentista } = useContext(GlobalContext);
+
   return (
-    <View style={[globalStyle.container, styles.cadastro]}>
+    <ScrollView style={[globalStyle.container, styles.cadastro]}>
       <Text style={globalStyle.subTitulo}>{subTitulo}</Text>
       <TextInput
         mode="outlined"
@@ -122,7 +109,7 @@ const CadastroDentista = ({ subTitulo }) => {
       {/* SEXO */}
       <TextInput
         mode="outlined"
-        label="Data Nascimento"
+        label="CPF"
         left={
           <TextInput.Icon
             icon="calendar"
@@ -136,9 +123,9 @@ const CadastroDentista = ({ subTitulo }) => {
         activeOutlineColor={cor}
         style={globalStyle.input}
         textColor={cor}
-        value={dentista.dataNasc}
+        value={dentista.cpf}
         labelColor={cor}
-        onChangeText={(e) => setDentista({ ...dentista, dataNasc: e })}
+        onChangeText={(e) => setDentista({ ...dentista, cpf: e })}
       />
       <TextInput
         mode="outlined"
@@ -152,13 +139,13 @@ const CadastroDentista = ({ subTitulo }) => {
         activeOutlineColor={cor}
         style={globalStyle.input}
         textColor={cor}
-        value={dentista.tel}
+        value={dentista.telefone}
         labelColor={cor}
-        onChangeText={(e) => setDentista({ ...dentista, tel: e })}
+        onChangeText={(e) => setDentista({ ...dentista, telefone: e })}
       />
       <TextInput
         mode="outlined"
-        label="CRO"
+        label="Data de Nascimento"
         left={
           <TextInput.Icon
             icon="badge-account-horizontal"
@@ -176,7 +163,43 @@ const CadastroDentista = ({ subTitulo }) => {
         labelColor={cor}
         onChangeText={(e) => setDentista({ ...dentista, dataNasc: e })}
       />
+
       <TextInput
+        mode="outlined"
+        label="Especialidade"
+        left={
+          <TextInput.Icon
+            icon="badge-account-horizontal"
+            color={cor}
+            style={{ paddingTop: 10 }}
+          />
+        }
+        selectionColor={cor}
+        outlineColor={cor}
+        outlineStyle={globalStyle.inputRadius}
+        activeOutlineColor={cor}
+        style={globalStyle.input}
+        textColor={cor}
+        value={dentista.especialidade.tipo}
+        labelColor={cor}
+        onChangeText={(e) =>
+          setDentista({
+            ...dentista,
+            especialidade: { ...dentista.especialidade, tipo: e },
+          })
+        }
+      />
+      <Button
+        icon="content-save"
+        textColor="#FFFFFF"
+        mode="contained"
+        labelStyle={globalStyle.label}
+        style={styles.btn}
+        onPress={handleCadastro}
+      >
+        Salvar Dentista
+      </Button>
+      {/* <TextInput
         mode="outlined"
         label="Especialidade"
         left={
@@ -205,20 +228,9 @@ const CadastroDentista = ({ subTitulo }) => {
         value={dentista.espec}
         labelColor={cor}
         editable={false}
-      />
+      /> */}
 
-      <Button
-        icon="content-save"
-        textColor="#FFFFFF"
-        mode="contained"
-        labelStyle={globalStyle.label}
-        style={styles.btn}
-        onPress={() => {}}
-      >
-        Salvar Dentista
-      </Button>
-
-      <Modal visible={modalEspec} contentContainerStyle={styleModal}>
+      {/* <Modal visible={modalEspec} contentContainerStyle={styleModal}>
         <Searchbar
           style={globalStyle.search}
           placeholder="Pesquisar Dentista"
@@ -253,8 +265,8 @@ const CadastroDentista = ({ subTitulo }) => {
             Selecionar
           </Button>
         </View>
-      </Modal>
-    </View>
+      </Modal> */}
+    </ScrollView>
   );
 };
 
@@ -262,7 +274,8 @@ export default CadastroDentista;
 
 const styles = StyleSheet.create({
   cadastro: {
-    justifyContent: 'space-around',
+    // justifyContent: 'space-around',
+    padding: 15,
   },
   btn: {
     backgroundColor: '#2070B4',

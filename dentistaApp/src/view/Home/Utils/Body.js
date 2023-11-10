@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React, { useContext } from 'react';
-import Acao from './Acao';
 import { ScrollView } from 'react-native';
 import globalStyle from '../../../../globalStyle';
 import { AuthContext } from '../../../Auth/Auth';
+import ButtonIcon from './ButtonIcon';
 
 const Body = ({ navigation }) => {
   const { userLogged } = useContext(AuthContext);
@@ -13,8 +13,8 @@ const Body = ({ navigation }) => {
       <View style={styles.submenu}>
         {userLogged.role == 'Admin' && (
           <>
-            <View style={styles.row}>
-              <Acao
+            <ScrollView horizontal={true} style={styles.row}>
+              <ButtonIcon
                 icone="account-group"
                 tam={35}
                 cor="#24AAE3"
@@ -23,7 +23,7 @@ const Body = ({ navigation }) => {
                   navigation.navigate('Lista Pacientes');
                 }}
               />
-              <Acao
+              <ButtonIcon
                 icone="medical-bag"
                 tam={35}
                 cor="#24AAE3"
@@ -32,7 +32,7 @@ const Body = ({ navigation }) => {
                   navigation.navigate('Lista Consultas');
                 }}
               />
-              <Acao
+              <ButtonIcon
                 icone="account-multiple"
                 tam={35}
                 cor="#24AAE3"
@@ -41,7 +41,7 @@ const Body = ({ navigation }) => {
                   navigation.navigate('Lista Dentista');
                 }}
               />
-              <Acao
+              <ButtonIcon
                 icone="monitor-dashboard"
                 tam={35}
                 cor="#24AAE3"
@@ -50,14 +50,23 @@ const Body = ({ navigation }) => {
                   navigation.navigate('Dashboard');
                 }}
               />
-            </View>
+              <ButtonIcon
+                icone="monitor-dashboard"
+                tam={35}
+                cor="#24AAE3"
+                texto="Cadastrar Dentista"
+                acao={() => {
+                  navigation.navigate('Cadastro Dentista');
+                }}
+              />
+            </ScrollView>
           </>
         )}
 
         {userLogged.role == 'Dentista' && (
           <>
             <View style={styles.row}>
-              <Acao
+              <ButtonIcon
                 icone="account-group"
                 tam={35}
                 cor="#24AAE3"
@@ -66,7 +75,7 @@ const Body = ({ navigation }) => {
                   navigation.navigate('Lista Pacientes');
                 }}
               />
-              <Acao
+              <ButtonIcon
                 icone="medical-bag"
                 tam={35}
                 cor="#24AAE3"
@@ -75,7 +84,7 @@ const Body = ({ navigation }) => {
                   navigation.navigate('Novo Paciente');
                 }}
               />
-              <Acao
+              <ButtonIcon
                 icone="monitor-dashboard"
                 tam={35}
                 cor="#24AAE3"
@@ -91,7 +100,7 @@ const Body = ({ navigation }) => {
         {userLogged.role == 'Paciente' && (
           <>
             <View style={styles.row}>
-              <Acao
+              <ButtonIcon
                 icone="medical-bag"
                 tam={35}
                 cor="#24AAE3"
@@ -100,7 +109,7 @@ const Body = ({ navigation }) => {
                   navigation.navigate('Nova Consulta');
                 }}
               />
-              <Acao
+              <ButtonIcon
                 icone="clipboard-text-clock"
                 tam={35}
                 cor="#24AAE3"
@@ -109,7 +118,7 @@ const Body = ({ navigation }) => {
                   navigation.navigate('Lista Consultas');
                 }}
               />
-              <Acao
+              <ButtonIcon
                 icone="account-details"
                 tam={35}
                 cor="#24AAE3"
@@ -132,7 +141,7 @@ const styles = StyleSheet.create({
   submenu: {},
   row: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    // justifyContent: 'space-around',
     margin: 10,
   },
   container: {

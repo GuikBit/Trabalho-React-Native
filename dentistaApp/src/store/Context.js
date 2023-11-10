@@ -32,6 +32,17 @@ function ContextProvider({ children }) {
     },
   });
 
+  const [dentista, setDentista] = useState({
+    nome: 'Dentista',
+    email: 'matheus@email.com',
+    login: 'dentista@email.com',
+    senha: '123',
+    telefone: '543243534',
+    cpf: '2134326546',
+    dataNasc: '12/04/1996',
+    especialidade: { tipo: 'Ortodontia', valorBase: 300 },
+  });
+
   const limpaPaciente = () => {
     setPaciente((paciente) => ({
       ...paciente,
@@ -45,22 +56,10 @@ function ContextProvider({ children }) {
     }));
   };
 
-  //   const cadastraPaciente = (obj) => {
-  //     const paciente = {
-  //       setNome: setPaciente({ ...paciente, nome: obj.nome }),
-  //     };
-
-  //     setPaciente({ ...paciente, login: obj.login });
-  //     setPaciente({ ...paciente, senha: obj.senha });
-  //     setPaciente({ ...paciente, email: obj.email });
-  //     setPaciente({ ...paciente, sexo: obj.sexo });
-  //     setPaciente({ ...paciente, dataNasc: obj.dataNasc });
-  //     setPaciente({ ...paciente, tel: obj.tel });
-  //     setPaciente({ ...paciente, responsavel: obj.responsavel.nome });
-  //   };
-
   return (
-    <GlobalContext.Provider value={[paciente, setPaciente, limpaPaciente]}>
+    <GlobalContext.Provider
+      value={{ paciente, setPaciente, limpaPaciente, dentista, setDentista }}
+    >
       {children}
     </GlobalContext.Provider>
   );
