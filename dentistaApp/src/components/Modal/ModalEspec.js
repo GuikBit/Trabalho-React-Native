@@ -15,7 +15,11 @@ const ModalEspec = ({
   const [clicou, setClicou] = useState(false);
 
   return (
-    <Modal visible={modalEspec} contentContainerStyle={styleModalEspec}>
+    <Modal
+      visible={modalEspec}
+      onDismiss={hideEspec}
+      contentContainerStyle={styleModalEspec}
+    >
       <Searchbar
         style={styles.searchModal}
         placeholder="Pesquisar Especialidade"

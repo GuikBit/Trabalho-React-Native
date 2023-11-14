@@ -9,14 +9,18 @@ import listaEspe from '../../Mock/listaEspe';
 import HeaderNavigate from '../../components/HeaderNavigate';
 import listaDentista from '../../Mock/listaDentista';
 import ModalPaciente from '../../components/Modal/ModalPaciente';
+import { useGetDentistasAuth } from '../../service/queries/dentista';
 
 const NovaConsulta = ({ navigation }) => {
   const cor = '#2070B4';
+
+  const { data, isLoading } = useGetDentistasAuth();
 
   const [modalEspec, setModalEspec] = useState(false);
   const [modalDent, setModalDent] = useState(false);
 
   const [pesquisa, setPesquisa] = useState('');
+  const [filtro, setFiltro] = useState([]);
 
   const hideDen = () => setModalDent(false);
   const hideEspec = () => setModalEspec(false);
@@ -31,6 +35,23 @@ const NovaConsulta = ({ navigation }) => {
     descrição: null,
     pagamento: null,
   });
+
+  function buscaUsuario(e) {
+    setPesquisa(e);
+
+    if (e === '') {
+      setFiltro(data);
+    } else {
+      const pesquisaLowerCase = e.toLowerCase();
+      const res = data.filter((user) => {
+        const nomeLowerCase = user.nome.toLowerCase();
+        // const pastaNuString = user.pastaNu.toString();
+        return nomeLowerCase.includes(pesquisaLowerCase);
+        // pastaNuString.includes(pesquisaLowerCase)
+      });
+      setFiltro(res);
+    }
+  }
 
   const styleModal = {
     backgroundColor: '#FFFFFF',
@@ -51,7 +72,7 @@ const NovaConsulta = ({ navigation }) => {
       />
 
       <View style={styles.conulta}>
-        <TextInput
+        {/* <TextInput
           mode="outlined"
           label="Especialidade"
           left={
@@ -80,7 +101,7 @@ const NovaConsulta = ({ navigation }) => {
           value={consulta.dentista}
           labelColor={cor}
           editable={false}
-        />
+        /> */}
         <TextInput
           mode="outlined"
           label="Dentista"
@@ -162,7 +183,17 @@ const NovaConsulta = ({ navigation }) => {
         </Button>
       </View>
 
-      <Modal
+      <ModalDentista
+        modalDent={modalDent}
+        hideDentis={hideDen}
+        buscaUsuario={buscaUsuario}
+        pesquisa={pesquisa}
+        styleModalDent={styleModal}
+        filtro={filtro}
+        setFiltro={setFiltro}
+      />
+
+      {/* <Modal
         onDismiss={hideDen}
         visible={modalDent}
         contentContainerStyle={styleModal}
@@ -201,48 +232,54 @@ const NovaConsulta = ({ navigation }) => {
             Selecionar
           </Button>
         </View>
-      </Modal>
+      </Modal> */}
 
-      <Modal
+      <ModalEspec
+        hideEspec={hideEspec}
+        pesquisa={pesquisa}
+        styleModalEspec={styleModal}
+        modalEspec={modalEspec}
+      />
+      {/* <Modal
         onDismiss={hideEspec}
         visible={modalEspec}
         contentContainerStyle={styleModal}
       >
         <Searchbar
           style={globalStyle.search}
-          placeholder="Pesquisar Dentista"
+          placeholder="Pesquisar Especialidade"
           value={pesquisa}
           onClearIconPress={() => setFiltro(lista)}
           onChangeText={(e) => buscaUsuario(e)}
+        /> */}
+      {/* <View style={styles.modalBody}>
+        <FlatList
+          data={listaEspe}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => <ModalEspec espec={item} />}
         />
-        <View style={styles.modalBody}>
-          <FlatList
-            data={listaEspe}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => <ModalEspec espec={item} />}
-          />
-        </View>
-        <View style={[globalStyle.rowBetween, styles.acao]}>
-          <Button
-            onPress={() => {
-              setModalEspec(false);
-            }}
-            style={styles.btnModalVoltar}
-            textColor="#FFFFFF"
-            icon="arrow-left-bold"
-          >
-            Voltar
-          </Button>
-          <Button
-            onPress={() => {}}
-            style={styles.btnModalbtnSelecionar}
-            textColor="#FFFFFF"
-            icon="check"
-          >
-            Selecionar
-          </Button>
-        </View>
-      </Modal>
+      </View>
+      <View style={[globalStyle.rowBetween, styles.acao]}>
+        <Button
+          onPress={() => {
+            setModalEspec(false);
+          }}
+          style={styles.btnModalVoltar}
+          textColor="#FFFFFF"
+          icon="arrow-left-bold"
+        >
+          Voltar
+        </Button>
+        <Button
+          onPress={() => {}}
+          style={styles.btnModalbtnSelecionar}
+          textColor="#FFFFFF"
+          icon="check"
+        >
+          Selecionar
+        </Button>
+      </View>
+      </Modal> */}
     </View>
   );
 };

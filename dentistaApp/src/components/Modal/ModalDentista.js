@@ -3,62 +3,59 @@ import React, { useState } from 'react';
 import { Button, Card, Modal, Searchbar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import globalStyle from '../../../globalStyle';
-import listaDentista from '../../Mock/listaDentista';
+import { useGetDentistasAuth } from '../../service/queries/dentista';
+import FiltroDentistas from '../Listagem/FiltroDentistas';
 
 const ModalDentista = ({
   modalDent,
   styleModalDent,
-  setFiltro,
   buscaUsuario,
   hideDentis,
   pesquisa,
+  filtro,
+  setFiltro,
 }) => {
-  const [clicou, setClicou] = useState(false);
+  const { data, isLoading } = useGetDentistasAuth();
 
   return (
-    <Modal visible={modalDent} contentContainerStyle={styleModalDent}>
-      <Searchbar
-        style={styles.searchModal}
-        placeholder="Pesquisar Dentista"
-        value={pesquisa}
-        onClearIconPress={() => setFiltro(lista)}
-        onChangeText={(e) => buscaUsuario(e)}
+    <Modal
+      visible={modalDent}
+      onDismiss={hideDentis}
+      contentContainerStyle={styleModalDent}
+    >
+      <FiltroDentistas
+        pesquisa={pesquisa}
+        buscaUsuario={buscaUsuario}
+        setFiltro={setFiltro}
+        data={data}
       />
       <View style={styles.modalBodyDentista}>
-        <FlatList
-          data={listaDentista}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <Card
-              style={[
-                styles.card,
-                {
-                  borderColor: clicou ? '#1d9c06' : 'grey',
-                  borderWidth: clicou ? 1 : 0.3,
-                },
-              ]}
-              onPress={() => {
-                setClicou(!clicou);
-              }}
-            >
-              <View style={styles.header}>
-                <Text style={styles.nome}>{item.nome}</Text>
-              </View>
-
-              <View style={styles.body}>
-                <View style={styles.infoRow}>
-                  <Text style={styles.texto}>
-                    <Icon name="calendar" size={16} cor="#d1d1d1" /> {item.CRO}
-                  </Text>
-                  <Text style={styles.texto}>
-                    <Icon name="address-card-o" size={16} cor="#d1d1d1" />{' '}
-                    {item.dataNasc}
-                  </Text>
+        {!isLoading && (
+          <FlatList
+            data={data}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <Card style={[styles.card]} onPress={() => {}}>
+                <View style={styles.header}>
+                  <Text style={styles.nome}>{item.nome}</Text>
                 </View>
-              </View>
-            </Card>
-          )}
-        />
+
+                <View style={styles.body}>
+                  <View style={styles.infoRow}>
+                    <Text style={styles.texto}>
+                      <Icon name="calendar" size={16} cor="#d1d1d1" />{' '}
+                      {item.dataNasc}
+                    </Text>
+                    <Text style={styles.texto}>
+                      <Icon name="address-card-o" size={16} cor="#d1d1d1" />{' '}
+                      {item.cpf}
+                    </Text>
+                  </View>
+                </View>
+              </Card>
+            )}
+          />
+        )}
       </View>
       <View style={[globalStyle.rowBetween, styles.acao]}>
         <Button

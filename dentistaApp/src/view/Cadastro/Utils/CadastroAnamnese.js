@@ -16,7 +16,7 @@ const CadastroAnamnese = ({ subTitulo }) => {
   //   trauma: false,
   // });
 
-  const [paciente, setPaciente] = useContext(GlobalContext);
+  const { paciente, setPaciente } = useContext(GlobalContext);
 
   return (
     <View style={styles.cadastro}>

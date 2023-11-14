@@ -4,17 +4,28 @@ import { Image, StyleSheet, Text, View, Dimensions } from 'react-native';
 import Icon from '@expo/vector-icons/FontAwesome';
 import globalStyle from '../../../../globalStyle';
 import { AuthContext } from '../../../Auth/Auth';
+import { TextInput } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
 
 const width = Dimensions.get('screen').width;
 
 const Header = () => {
   const { userLogged } = useContext(AuthContext);
 
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.top}>
-          <Image source={img} style={styles.img} />
+          {/* <Image source={img} style={styles.img} /> */}
+          <Icon
+            name="chevron-left"
+            size={30}
+            color="#ECECEC"
+            style={{ padding: 8 }}
+            onPress={() => navigation.navigate('Login')}
+          />
 
           <Icon
             name="cog"

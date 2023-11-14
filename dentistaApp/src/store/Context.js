@@ -43,6 +43,8 @@ function ContextProvider({ children }) {
     especialidade: { tipo: 'Ortodontia', valorBase: 300 },
   });
 
+  const [consulta, setConsulta] = useState({});
+
   const limpaPaciente = () => {
     setPaciente((paciente) => ({
       ...paciente,

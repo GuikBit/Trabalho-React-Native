@@ -1,14 +1,12 @@
 import { FlatList, StyleSheet, View } from 'react-native';
 import React, { useState } from 'react';
 import globalStyle from '../../../globalStyle';
-import Listagem from '../../components/Listagem/Listagem';
-import lista from '../../Mock/lista';
 import FiltroDentistas from '../../components/Listagem/FiltroDentistas';
 import { PaperProvider } from 'react-native-paper';
 import HeaderGeral from '../../components/Listagem/HeaderGeral';
 import LoadingOverlay from '../../components/LoadingOverlay/LoadingOverlay';
 import CardPaciente from '../../components/Cards/CardPaciente';
-import { useGetDentistasAuth } from '../../service/queries/Queries';
+import { useGetDentistasAuth } from '../../service/queries/dentista';
 
 const ListaDentista = ({ navigation }) => {
   const { data, isLoading } = useGetDentistasAuth();
@@ -23,15 +21,13 @@ const ListaDentista = ({ navigation }) => {
       setFiltro(data);
     } else {
       const pesquisaLowerCase = e.toLowerCase();
-      const filtro = data.filter((user) => {
+      const res = data.filter((user) => {
         const nomeLowerCase = user.nome.toLowerCase();
-        const pastaNuString = user.pastaNu.toString();
-        return (
-          nomeLowerCase.includes(pesquisaLowerCase) ||
-          pastaNuString.includes(pesquisaLowerCase)
-        );
+        // const pastaNuString = user.pastaNu.toString();
+        return nomeLowerCase.includes(pesquisaLowerCase);
+        // pastaNuString.includes(pesquisaLowerCase)
       });
-      setFiltro(filtro);
+      setFiltro(res);
     }
   }
 
@@ -44,6 +40,7 @@ const ListaDentista = ({ navigation }) => {
             pesquisa={pesquisa}
             buscaUsuario={buscaUsuario}
             setFiltro={setFiltro}
+            data={data}
           />
         </View>
         {isLoading ? (
@@ -51,7 +48,7 @@ const ListaDentista = ({ navigation }) => {
         ) : (
           <FlatList
             style={globalStyle.flatList}
-            data={filtro.length == 0 ? data : filtro}
+            data={pesquisa.length == 0 ? data : filtro}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
               <CardPaciente

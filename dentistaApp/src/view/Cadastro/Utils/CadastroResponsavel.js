@@ -8,7 +8,7 @@ const CadastroResponsavel = ({ subTitulo }) => {
   const cor = '#2070B4';
   const tam = 315;
 
-  const [paciente, setPaciente] = useContext(GlobalContext);
+  const { paciente, setPaciente } = useContext(GlobalContext);
 
   // const [addPacipaciente, setAddPacipaciente] = useState(false);
 

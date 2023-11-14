@@ -15,7 +15,7 @@ const CadastroEndereco = ({ subTitulo }) => {
   //   complemento: null,
   // });
 
-  const [paciente, setPaciente] = useContext(GlobalContext);
+  const { paciente, setPaciente } = useContext(GlobalContext);
 
   return (
     <View style={styles.cadastro}>

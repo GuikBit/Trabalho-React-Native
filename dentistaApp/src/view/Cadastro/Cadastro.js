@@ -12,9 +12,6 @@ import { GlobalContext } from '../../store/Context';
 import axios from 'axios';
 import { usePostPaciente } from '../../service/queries/paciente';
 
-const width = Dimensions.get('screen').width;
-const height = Dimensions.get('screen').height;
-
 const Cadastro = ({ route }) => {
   const [active, setActive] = useState(0);
 
@@ -22,7 +19,7 @@ const Cadastro = ({ route }) => {
 
   const { mutate } = usePostPaciente();
 
-  const [paciente, setPaciente, limpaPaciente] = useContext(GlobalContext);
+  const { paciente, setPaciente, limpaPaciente } = useContext(GlobalContext);
 
   const handlePostPaciente = () => {
     mutate(paciente);
@@ -45,15 +42,6 @@ const Cadastro = ({ route }) => {
           size={35}
           color="#2070B4"
           onPress={() => navigation.navigate('Login')}
-          // onPress={
-          //   route.params.interno !== true
-          //     ? () => {
-          //         navigation.navigate('Login');
-          //       }
-          //     : () => {
-          //         navigation.navigate('Lista Pacientes');
-          //       }
-          // }
         />
         <Text style={[globalStyle.titulo, { alignSelf: 'center' }]}>
           Novo Paciente
