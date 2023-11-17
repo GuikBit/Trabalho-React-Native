@@ -128,7 +128,7 @@ export default Body;
 
 const styles = StyleSheet.create({
   submenu:{
-    marginTop: 50
+    marginTop: 20
   },
   row: {
     flexDirection: 'row',

@@ -12,7 +12,7 @@ const AcaoPrincipal = ({titulo, acao}) => {
             style={styles.img}
             onPress={acao}
             />  
-            <Text style={styles.texto}>{titulo}</Text>          
+            {/* <Text style={styles.texto}>{titulo}</Text>           */}
         </View>
 
     </View>
@@ -31,19 +31,19 @@ const styles = StyleSheet.create({
         elevation: 5
 
     }, consulta: {
-        width: 90,
-        height: 70,
+        width: 95,
+        height: 65,
         borderRadius: 50,
         backgroundColor: "#FFFFFF",
         justifyContent: 'center',
         alignItems: 'center',
-        bottom: 40,
+        bottom: 0,
         
     }, texto: {
         position: 'absolute',
         color: "#FFFFFF",
         fontWeight: 'bold',
-        bottom: -24,
+        bottom: 0,
         fontSize: 15
     }
 })
