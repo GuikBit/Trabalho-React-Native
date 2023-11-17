@@ -12,6 +12,7 @@ import ModalEspec from '../../components/Modal/ModalEspec';
 import CardConsulta from '../../components/Cards/CardConsulta';
 import LoadingOverlay from '../../components/LoadingOverlay/LoadingOverlay';
 import { useGetPacientesAuth } from '../../service/queries/paciente';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const ListaConsulta = ({ navigation }) => {
   const { data, isLoading } = useGetPacientesAuth();
@@ -54,7 +55,11 @@ const ListaConsulta = ({ navigation }) => {
   return (
     <PaperProvider>
       <View style={globalStyle.container}>
-        <View style={globalStyle.headerPesq}>
+      <LinearGradient        
+        colors={["#2e86c9", "#24aae3"]}
+        style={globalStyle.headerPesq}
+        start={ {x: 0.3, y: 0.1} } 
+        >
           <HeaderGeral titulo="Consultas" />
           <FiltroConsultas
             setDataFim={setDataFim}
@@ -67,8 +72,8 @@ const ListaConsulta = ({ navigation }) => {
             dataInicio={dataInicio}
             pesquisa={pesquisa}
           />
-        </View>
-
+        </LinearGradient>
+       
         {isLoading ? (
           <LoadingOverlay />
         ) : (

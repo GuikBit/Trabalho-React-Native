@@ -9,8 +9,10 @@ import FiltroPacientes from '../../components/Listagem/FiltroPacientes';
 import LoadingOverlay from '../../components/LoadingOverlay/LoadingOverlay';
 import CardPaciente from '../../components/Cards/CardPaciente';
 import { useGetPacientesAuth } from '../../service/queries/paciente';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const ListaPaciente = ({ navigation }) => {
+  
   const { data, isLoading } = useGetPacientesAuth();
 
   const [filtro, setFiltro] = useState([]);
@@ -38,14 +40,20 @@ const ListaPaciente = ({ navigation }) => {
   return (
     <PaperProvider>
       <View style={globalStyle.container}>
-        <View style={globalStyle.headerPesq}>
+      <LinearGradient        
+        colors={["#2e86c9", "#24aae3"]}
+        style={globalStyle.headerPesq}
+        start={ {x: 0.3, y: 0.1} } 
+        >
           <HeaderGeral titulo="Pacientes" />
           <FiltroPacientes
             pesquisa={pesquisa}
             buscaUsuario={buscaUsuario}
             setFiltro={setFiltro}
           />
-        </View>
+
+        </LinearGradient>
+        
         {isLoading ? (
           <LoadingOverlay />
         ) : (

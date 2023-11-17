@@ -4,46 +4,53 @@ import { ScrollView } from 'react-native';
 import globalStyle from '../../../../globalStyle';
 import { AuthContext } from '../../../Auth/Auth';
 import ButtonIcon from './ButtonIcon';
+import Dashboard from '../../Dashboard/Dashboard';
+import { LineChart, ProgressChart } from 'react-native-chart-kit';
+import { Dimension } from '../../../global/GlobalStyles';
+
 
 const Body = ({ navigation }) => {
   const { userLogged } = useContext(AuthContext);
 
   return (
-    <ScrollView style={globalStyle.container}>
+    <ScrollView style={{marginBottom: 65}}>
       <View style={styles.submenu}>
         {userLogged.role == 'Admin' && (
           <>
-            <ScrollView horizontal={true} style={styles.row}>
-              <ButtonIcon
+          {/* <View style={styles.row}>
+            <ButtonIcon
                 icone="account-group"
-                tam={35}
+                tam={40}
                 cor="#24AAE3"
-                texto="Pacientes"
+                texto="Todos Pacientes"
                 acao={() => {
                   navigation.navigate('Lista Pacientes');
                 }}
               />
               <ButtonIcon
                 icone="medical-bag"
-                tam={35}
+                tam={40}
                 cor="#24AAE3"
-                texto="Consultas"
+                texto="Listar Consultas"
                 acao={() => {
                   navigation.navigate('Lista Consultas');
                 }}
               />
               <ButtonIcon
                 icone="account-multiple"
-                tam={35}
+                tam={40}
                 cor="#24AAE3"
-                texto="Dentistas"
+                texto="Todos Dentistas"
                 acao={() => {
                   navigation.navigate('Lista Dentista');
                 }}
               />
-              <ButtonIcon
+              
+          </View>
+          <View style={styles.row}>
+            <ButtonIcon
                 icone="monitor-dashboard"
-                tam={35}
+                tam={40}
                 cor="#24AAE3"
                 texto="DashBoard"
                 acao={() => {
@@ -52,49 +59,27 @@ const Body = ({ navigation }) => {
               />
               <ButtonIcon
                 icone="monitor-dashboard"
-                tam={35}
+                tam={40}
                 cor="#24AAE3"
                 texto="Cadastrar Dentista"
                 acao={() => {
                   navigation.navigate('Cadastro Dentista');
                 }}
               />
-            </ScrollView>
-          </>
-        )}
-
-        {userLogged.role == 'Dentista' && (
-          <>
-            <View style={styles.row}>
-              <ButtonIcon
-                icone="account-group"
-                tam={35}
-                cor="#24AAE3"
-                texto="Pacientes"
-                acao={() => {
-                  navigation.navigate('Lista Pacientes');
-                }}
-              />
-              <ButtonIcon
-                icone="medical-bag"
-                tam={35}
-                cor="#24AAE3"
-                texto="Minhas Consultas"
-                acao={() => {
-                  navigation.navigate('Novo Paciente');
-                }}
-              />
               <ButtonIcon
                 icone="monitor-dashboard"
-                tam={35}
+                tam={40}
                 cor="#24AAE3"
-                texto="Meu DashBoard"
+                texto="Cadastrar Admin"
                 acao={() => {
-                  navigation.navigate('Dashboard');
+                  navigation.navigate('Cadastro Dentista');
                 }}
               />
-            </View>
+          </View> */}
+          <Dashboard />
           </>
+          
+          
         )}
 
         {userLogged.role == 'Paciente' && (
@@ -102,7 +87,7 @@ const Body = ({ navigation }) => {
             <View style={styles.row}>
               <ButtonIcon
                 icone="medical-bag"
-                tam={35}
+                tam={40}
                 cor="#24AAE3"
                 texto="Agendar Consulta"
                 acao={() => {
@@ -111,7 +96,7 @@ const Body = ({ navigation }) => {
               />
               <ButtonIcon
                 icone="clipboard-text-clock"
-                tam={35}
+                tam={40}
                 cor="#24AAE3"
                 texto="Histórico Consultas"
                 acao={() => {
@@ -120,7 +105,7 @@ const Body = ({ navigation }) => {
               />
               <ButtonIcon
                 icone="account-details"
-                tam={35}
+                tam={40}
                 cor="#24AAE3"
                 texto="Informações Pessoais"
                 acao={() => {
@@ -132,16 +117,21 @@ const Body = ({ navigation }) => {
         )}
       </View>
     </ScrollView>
-  );
-};
+    );
+  };
+    
+
+
+  
 
 export default Body;
 
 const styles = StyleSheet.create({
-  submenu: {},
+  submenu:{
+    marginTop: 50
+  },
   row: {
     flexDirection: 'row',
-    // justifyContent: 'space-around',
     margin: 10,
   },
   container: {

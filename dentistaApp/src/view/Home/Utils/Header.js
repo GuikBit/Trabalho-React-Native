@@ -6,6 +6,7 @@ import globalStyle from '../../../../globalStyle';
 import { AuthContext } from '../../../Auth/Auth';
 import { TextInput } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const width = Dimensions.get('screen').width;
 
@@ -15,10 +16,14 @@ const Header = () => {
   const navigation = useNavigation();
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
+    <LinearGradient        
+        colors={["#2e86c9", "#24aae3"]}
+        style={styles.header}
+        start={ {x: 0.3, y: 0.1} } 
+        >
+        
         <View style={styles.top}>
-          {/* <Image source={img} style={styles.img} /> */}
+          
           <Icon
             name="chevron-left"
             size={30}
@@ -35,21 +40,12 @@ const Header = () => {
             onPress={() => {}}
           />
         </View>
-      </View>
-      <View style={styles.menu}>
-        <Text style={styles.nome}>{userLogged.nome}</Text>
-        <View style={globalStyle.rowAround}>
-          <Text>Próxima Consulta</Text>
-          <Text>Consultas em Aberto</Text>
-          <Text>Teste</Text>
+
+        <View style={styles.menu}>
+          <Text style={styles.nome}>{userLogged.nome}</Text>
+          
         </View>
-        <View style={globalStyle.rowAround}>
-          <Text>Teste</Text>
-          <Text>Teste</Text>
-          <Text>Teste</Text>
-        </View>
-      </View>
-    </View>
+      </LinearGradient>
   );
 };
 
@@ -58,16 +54,14 @@ export default Header;
 const styles = StyleSheet.create({
   header: {
     height: 200,
-    backgroundColor: '#2070B4',
-  },
-  container: {
-    backgroundColor: '#f2f8fd',
-    height: 'auto',
+    borderBottomLeftRadius: 15,
+    borderBottomRightRadius: 15,
+    
   },
   menu: {
     backgroundColor: '#FFFFFF',
-    height: 180,
-    top: -100,
+    height: 110,
+    bottom: -20,
     marginHorizontal: 15,
     borderRadius: 8,
     elevation: 5,
@@ -76,18 +70,8 @@ const styles = StyleSheet.create({
     width: 'auto',
     paddingTop: 3,
     height: ((475 / 950) * width) / 4,
-    backgroundColor: '#2070B4',
     flexDirection: 'row',
     justifyContent: 'space-between',
-  },
-  img: {
-    width: width / 5,
-    height: ((475 / 950) * width) / 5,
-  },
-  btn: {
-    width: 50,
-    height: 50,
-    backgroundColor: 'black',
   },
   conf: {
     margin: 8,

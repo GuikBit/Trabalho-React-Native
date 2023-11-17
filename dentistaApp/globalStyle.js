@@ -50,16 +50,17 @@ export default StyleSheet.create({
   },
   container: {
     backgroundColor: '#f2f8fd', //Cor de Fundo
-    height: height - 36,
+    //height: height - 36,
+    flex: 1
   },
   inputRadius: {
     borderRadius: 8,
     borderWidth: 0.5,
   },
   titulo: {
-    fontSize: 30,
+    fontSize: 36,
     fontWeight: 'bold',
-    color: '#2070B4',
+    color: '#FFFFFF',
   },
   subTitulo: {
     fontSize: 25,

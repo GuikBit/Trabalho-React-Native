@@ -7,6 +7,7 @@ import HeaderGeral from '../../components/Listagem/HeaderGeral';
 import LoadingOverlay from '../../components/LoadingOverlay/LoadingOverlay';
 import CardPaciente from '../../components/Cards/CardPaciente';
 import { useGetDentistasAuth } from '../../service/queries/dentista';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const ListaDentista = ({ navigation }) => {
   const { data, isLoading } = useGetDentistasAuth();
@@ -34,7 +35,11 @@ const ListaDentista = ({ navigation }) => {
   return (
     <PaperProvider>
       <View style={globalStyle.container}>
-        <View style={globalStyle.headerPesq}>
+      <LinearGradient        
+        colors={["#2e86c9", "#24aae3"]}
+        style={globalStyle.headerPesq}
+        start={ {x: 0.3, y: 0.1} } 
+        >
           <HeaderGeral titulo="Dentistas" />
           <FiltroDentistas
             pesquisa={pesquisa}
@@ -42,7 +47,8 @@ const ListaDentista = ({ navigation }) => {
             setFiltro={setFiltro}
             data={data}
           />
-        </View>
+        </LinearGradient>
+
         {isLoading ? (
           <LoadingOverlay />
         ) : (

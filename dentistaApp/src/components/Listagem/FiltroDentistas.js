@@ -18,4 +18,12 @@ const FiltroDentistas = ({ setFiltro, buscaUsuario, pesquisa, data }) => {
 
 export default FiltroDentistas;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  search: {
+    marginHorizontal: 5,
+    backgroundColor: '#FFFFFF',
+    borderWidth: 0.5,
+    borderColor: '#2070B4',
+    marginTop: 15,
+  },
+});

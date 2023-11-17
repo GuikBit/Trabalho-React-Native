@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
   inputConsulta: {
     width: 150,
     fontSize: 18,
-    height: 40,
+    height: 35,
   },
   search: {
     marginHorizontal: 5,

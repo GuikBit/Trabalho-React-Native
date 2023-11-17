@@ -8,7 +8,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { apiGetPorId } from '../../service/Api';
-
+import { LinearGradient } from 'expo-linear-gradient';
 const Login = ({}) => {
   const [newUser, setNewuser] = useState();
 
@@ -103,7 +103,12 @@ const Login = ({}) => {
       </View>
 
       <View style={styles.acoes}>
-        <Button
+      <LinearGradient      
+        colors={["#2e86c9", "#24aae3"]}
+        style={styles.buttons}
+        start={ {x: 0.3, y: 0.1} } 
+        >
+          <Button
           icon="account-plus"
           textColor="white"
           mode="contained"
@@ -116,6 +121,13 @@ const Login = ({}) => {
           Cadastrar
         </Button>
 
+        </LinearGradient>
+        
+        <LinearGradient      
+        colors={["#2e86c9", "#24aae3"]}
+        style={styles.buttons}
+        start={ {x: 0.3, y: 0.1} } 
+        >
         <Button
           icon="login"
           textColor="white"
@@ -126,6 +138,8 @@ const Login = ({}) => {
         >
           Logar
         </Button>
+        </LinearGradient>
+        
       </View>
     </ScrollView>
   );
@@ -152,10 +166,12 @@ const styles = StyleSheet.create({
     fontSize: 22,
   },
   buttons: {
-    backgroundColor: Colors.secondary,
+    //backgroundColor: Colors.secondary,
+    backgroundColor: "transparent",
     width: 155,
-    // height: 45,
-    padding: 5,
+     height: 45,
+     justifyContent: 'center',
+    //padding: 5,
     borderRadius: 50,
   },
 });

@@ -9,7 +9,7 @@ const CadastroPaciente = ({ subTitulo }) => {
   const { paciente, setPaciente } = useContext(GlobalContext);
 
   return (
-    <ScrollView style={styles.cadastro}>
+    <View style={styles.cadastro}>
       <Text>{subTitulo}</Text>
       <TextInput
         mode="outlined"
@@ -195,7 +195,7 @@ const CadastroPaciente = ({ subTitulo }) => {
         labelColor={cor}
         onChangeText={(e) => setPaciente({ ...paciente, dataNasc: e })}
       />
-    </ScrollView>
+    </View>
   );
 };
 
@@ -203,9 +203,9 @@ export default CadastroPaciente;
 
 const styles = StyleSheet.create({
   cadastro: {
-    height: 550,
-    // justifyContent: 'space-around',
-    // marginHorizontal: 20,
+    height: 620,
+    justifyContent: 'space-around',
+    
     padding: 15,
   },
 });

@@ -1,25 +1,38 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { TextInput, Button, IconButton } from 'react-native-paper';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const ButtonIcon = ({ icone, tam, cor, texto, acao }) => {
   const [prim, seg] = texto.split(' ');
   return (
-    <View style={styles.view}>
-      <TouchableOpacity style={styles.acao} onPress={acao}>
-        <TextInput.Icon
-          icon={icone}
-          iconColor={cor}
-          size={tam}
-          style={styles.img}
-          onPress={acao}
-        />
-      </TouchableOpacity>
-      <Text style={styles.texto}>{prim}</Text>
-      {seg && <Text style={styles.texto}>{seg}</Text>}
+    <View style={styles.view}>      
+        <TouchableOpacity style={styles.card} onPress={acao}>
+          <View style={styles.cardBody}>
+            <TextInput.Icon
+              icon={icone}
+              iconColor={cor}
+              size={tam}
+              onTouchCancel={true}
+              style={styles.img}
+            />
+
+            <View style={styles.titulo}>
+              <Text style={styles.texto}>{prim}</Text>
+              {seg && <Text style={styles.texto}>{seg}</Text>}
+            </View>
+
+             
+            </View>
+          
+        </TouchableOpacity>
+         
+        
+        
     </View>
   );
 };
+
 
 export default ButtonIcon;
 
@@ -30,21 +43,41 @@ const styles = StyleSheet.create({
     margin: 12,
   },
   acao: {
-    width: 57,
-    height: 57,
+    width: 100,
+    height: 100,
     margin: 10,
-    elevation: 5,
-    borderRadius: 50,
-    backgroundColor: '#24AAE3',
+    borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
   },
   texto: {
-    color: '#24AAE3',
+    color: '#2070b4',
     fontSize: 18,
     fontWeight: '500',
   },
   img: {
-    backgroundColor: '#FFFFFF',
+    top: -20
+  }, 
+  card: {
+    width: 110,
+    height: 110,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#2e86c9",
+    backgroundColor: "#f2f8fd",
+
   },
+  cardBody:{
+    width: 110,
+    height: 110,
+    width: 'auto',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  }, 
+  titulo:{
+    alignItems: 'center',
+    justifyContent: 'center',
+    bottom: -20
+  }
 });
