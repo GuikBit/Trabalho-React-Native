@@ -112,7 +112,7 @@ import { getToken } from '../hooks/TokenStore';
 // };
 
 const urlBase =
-  'https://3ca4-186-233-35-172.ngrok-free.app';
+  'https://fc29-186-233-43-86.ngrok-free.app';
 
 export async function apiGetAuth(url) {
   const instance = axios.create({

@@ -1,18 +1,21 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import React, { useState } from 'react';
 import { Button, Card, Modal, Searchbar } from 'react-native-paper';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import globalStyle from '../../../globalStyle';
-import listaEspe from '../../Mock/listaEspe';
+import FiltroDentistas from '../Listagem/FiltroDentistas';
+import { useGetDentistasAuth } from '../../service/queries/dentista';
 
 const ModalEspec = ({
-  hideEspec,
-  pesquisa,
   modalEspec,
   styleModalEspec,
-  setFiltro,
   buscaUsuario,
+  hideEspec,
+  pesquisa,
+  filtro,
+  setFiltro,
 }) => {
-  const [clicou, setClicou] = useState(false);
+  const { data, isLoading } = useGetDentistasAuth;
 
   return (
     <Modal
@@ -20,39 +23,39 @@ const ModalEspec = ({
       onDismiss={hideEspec}
       contentContainerStyle={styleModalEspec}
     >
-      <Searchbar
-        style={styles.searchModal}
-        placeholder="Pesquisar Especialidade"
-        value={pesquisa}
-        onClearIconPress={() => setFiltro(lista)}
-        onChangeText={(e) => buscaUsuario(e)}
-        iconColor="#2070B4"
-        rippleColor="#2070B4"
+      <FiltroDentistas
+        pesquisa={pesquisa}
+        buscaUsuario={buscaUsuario}
+        setFiltro={setFiltro}
+        data={data}
       />
+      <View style={styles.modalBodyDentista}>
+        {!isLoading && (
+          <FlatList
+            data={data}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <Card style={[styles.card]} onPress={() => {}}>
+                <View style={styles.header}>
+                  <Text style={styles.nome}>{item.nome}</Text>
+                </View>
 
-      <View style={styles.modalBodyEspec}>
-        <FlatList
-          data={listaEspe}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => {
-            <Card
-              style={[
-                styles.card,
-                {
-                  borderColor: clicou ? '#1d9c06' : 'grey',
-                  borderWidth: clicou ? 1 : 0.3,
-                },
-              ]}
-              onPress={() => {
-                setClicou(!clicou);
-              }}
-            >
-              <View style={styles.header}>
-                <Text style={styles.espec}>{item.espec}</Text>
-              </View>
-            </Card>;
-          }}
-        />
+                <View style={styles.body}>
+                  <View style={styles.infoRow}>
+                    <Text style={styles.texto}>
+                      <Icon name="calendar" size={16} cor="#d1d1d1" />{' '}
+                      {item.dataNasc}
+                    </Text>
+                    <Text style={styles.texto}>
+                      <Icon name="address-card-o" size={16} cor="#d1d1d1" />{' '}
+                      {item.cpf}
+                    </Text>
+                  </View>
+                </View>
+              </Card>
+            )}
+          />
+        )}
       </View>
       <View style={[globalStyle.rowBetween, styles.acao]}>
         <Button
@@ -74,20 +77,6 @@ const ModalEspec = ({
       </View>
     </Modal>
 
-    // <Card
-    //   style={[
-    //     styles.card,
-    //     {
-    //       borderColor: clicou ? '#1d9c06' : 'grey',
-    //       borderWidth: clicou ? 1 : 0.3,
-    //     },
-    //   ]}
-    //   onPress={() => {
-    //     setClicou(!clicou);
-    //   }}
-    // >
-    //   <Text style={styles.espec}>{espec.espec}</Text>
-    // </Card>
   );
 };
 
@@ -95,29 +84,46 @@ export default ModalEspec;
 
 const styles = StyleSheet.create({
   card: {
-    height: 50,
-    width: 'auto',
-    marginHorizontal: 50,
+    height: 80,
+    marginHorizontal: 15,
     marginVertical: 8,
     borderRadius: 10,
-    elevation: 2,
-    padding: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderLeftWidth: 5,
+    elevation: 10,
+    borderWidth: 0.3,
     backgroundColor: '#FFFFFF',
+    //borderColor:'#db736e',
+    borderLeftWidth: 5,
+    padding: 8,
+    paddingHorizontal: 15,
   },
-  view: {
-    height: 50,
-    width: 'auto',
+  header: {
+    borderBottomColor: '#CCCED2',
+    borderBottomWidth: 0.5,
+    paddingBottom: 5,
   },
-  espec: {
+  nome: {
     flexDirection: 'row',
     alignSelf: 'center',
     color: '#7a7d7a',
     fontSize: 20,
     fontWeight: 'bold',
-    justifyContent: 'center',
+  },
+  body: {
+    height: 70,
+  },
+  dataNasc: {
+    color: '#7a7d7a',
+    fontSize: 18,
+    marginTop: 5,
+  },
+  infoRow: {
+    flexDirection: 'row',
+    marginTop: 10,
+    justifyContent: 'space-around',
+  },
+  texto: {
+    fontSize: 18,
+    color: '#7a7d7a',
   },
   search: {
     marginHorizontal: 5,
@@ -142,7 +148,7 @@ const styles = StyleSheet.create({
   },
   acao: {},
   modalBodyDentista: {
-    height: 340,
+    height: 520,
     padding: 10,
   },
   modalBodyEspec: {

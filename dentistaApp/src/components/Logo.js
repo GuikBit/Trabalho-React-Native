@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
   topo: {
     alignSelf: 'center',
     flexDirection: 'row',
+    marginTop: 50
   },
   fontLarge: {
     fontSize: 80,

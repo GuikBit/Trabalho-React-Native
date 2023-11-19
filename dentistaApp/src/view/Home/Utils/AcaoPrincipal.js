@@ -12,7 +12,7 @@ const AcaoPrincipal = ({titulo, acao}) => {
             style={styles.img}
             onPress={acao}
             />  
-            {/* <Text style={styles.texto}>{titulo}</Text>           */}
+           
         </View>
 
     </View>

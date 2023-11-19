@@ -40,6 +40,7 @@ function ContextProvider({ children }) {
     telefone: '543243534',
     cpf: '2134326546',
     dataNasc: '12/04/1996',
+    cro: '432143',
     especialidade: { tipo: 'Ortodontia', valorBase: 300 },
   });
 
@@ -47,14 +48,32 @@ function ContextProvider({ children }) {
 
   const limpaPaciente = () => {
     setPaciente((paciente) => ({
-      ...paciente,
       nome: '',
-      senha: '',
       email: '',
       login: '',
+      senha: '',
       telefone: '',
       cpf: '',
       dataNasc: '',
+      responsavel: { nome: '', cpf: '', telefone: '' },
+      endereco: {
+        rua: '',
+        bairro: '',
+        cidade: '',
+        cep: '',
+        numero: '',
+        complemento: '',
+      },
+      anamnese: {
+        problemaSaude: '',
+        tratamento: '',
+        remedio: '',
+        alergia: '',
+        sangramentoExcessivo: false,
+        hipertensao: false,
+        gravida: false,
+        traumatismoFace: false,
+      },
     }));
   };
 

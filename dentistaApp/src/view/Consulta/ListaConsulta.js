@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Listagem from '../../components/Listagem/Listagem';
 import globalStyle from '../../../globalStyle';
 import lista from '../../Mock/lista';
-import { Button, Modal, PaperProvider, Searchbar } from 'react-native-paper';
+import { Button, Modal, PaperProvider, FAB } from 'react-native-paper';
 import FiltroConsultas from '../../components/Listagem/FiltroConsultas';
 import FiltroPacientes from '../../components/Listagem/FiltroPacientes';
 import HeaderGeral from '../../components/Listagem/HeaderGeral';
@@ -77,6 +77,7 @@ const ListaConsulta = ({ navigation }) => {
         {isLoading ? (
           <LoadingOverlay />
         ) : (
+          <>
           <FlatList
             style={globalStyle.flatList}
             data={filtro.length == 0 ? data : filtro}
@@ -90,6 +91,14 @@ const ListaConsulta = ({ navigation }) => {
               />
             )}
           />
+          <FAB
+              icon="plus"
+              color='#FFFFFF'
+              style={styles.fab}
+              onPress={() => {navigation.navigate('Nova Consulta')}}
+          />
+          </>
+          
         )}
       </View>
 
@@ -163,7 +172,7 @@ const styles = StyleSheet.create({
     margin: 20,
     right: 0,
     bottom: 0,
-    backgroundColor: '#2070B4',
+    backgroundColor: '#2D8ACD',
     color: '#FFFFFF',
   },
   styleModalEspec: {

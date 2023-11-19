@@ -1,7 +1,7 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import React, { useState } from 'react';
 import globalStyle from '../../globalStyle';
-import { Searchbar, TextInput } from 'react-native-paper';
+import { Searchbar, TextInput, FAB } from 'react-native-paper';
 import lista from '../Mock/lista';
 import CardConsulta from './Cards/CardConsulta';
 
@@ -25,7 +25,7 @@ const UserBody = ({navigation}) => {
     }
   }
   return (
-    <View style={[styles.body, globalStyle.container]}>
+    <View style={styles.body}>
       <View style={styles.boxTitulo}>
         <Text style={styles.titulo}>{titulo}</Text>
 
@@ -56,6 +56,12 @@ const UserBody = ({navigation}) => {
           />
         )}
       />
+      <FAB
+        icon="account-details"
+        color='#FFFFFF'
+        style={styles.fab}
+        onPress={() => {navigation.navigate("Cadastro", {id: user.id})}}
+      />
     </View>
   );
 };
@@ -65,6 +71,7 @@ export default UserBody;
 const styles = StyleSheet.create({
   body: {
     top: -80,
+   height: 657
   },
   titulo: {
     color: '#2070B4',
@@ -82,5 +89,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     width: 140,
     height: 40,
+  }, 
+  fab: {
+    position: 'absolute',
+    margin: 20,
+    right: 0,
+    bottom: 0,
+    backgroundColor: '#2D8ACD',
+    color: '#FFFFFF',
   },
 });

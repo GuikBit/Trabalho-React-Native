@@ -9,6 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { apiGetPorId } from '../../service/Api';
 import { LinearGradient } from 'expo-linear-gradient';
+import globalStyle from '../../../globalStyle';
 const Login = ({}) => {
   const [newUser, setNewuser] = useState();
 
@@ -29,7 +30,7 @@ const Login = ({}) => {
   };
 
   return (
-    <ScrollView>
+    <ScrollView style={globalStyle.container}>
       <Logo style={styles.topo} />
       <View style={styles.login}>
         {newUser == true && (
@@ -113,7 +114,7 @@ const Login = ({}) => {
           textColor="white"
           mode="contained"
           onPress={() => {
-            navigation.navigate('Cadastro');
+            navigation.navigate('Cadastro', interno=false);
           }}
           style={styles.buttons}
           labelStyle={{ fontSize: 20 }}
@@ -174,4 +175,5 @@ const styles = StyleSheet.create({
     //padding: 5,
     borderRadius: 50,
   },
+  
 });

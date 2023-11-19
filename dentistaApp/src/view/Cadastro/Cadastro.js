@@ -9,8 +9,9 @@ import CadastroResponsavel from './Utils/CadastroResponsavel';
 import CadastroEndereco from './Utils/CadastroEndereco';
 import CadastroAnamnese from './Utils/CadastroAnamnese';
 import { GlobalContext } from '../../store/Context';
-import axios from 'axios';
+import Icon from '@expo/vector-icons/FontAwesome';
 import { usePostPaciente } from '../../service/queries/paciente';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const Cadastro = ({ route }) => {
   const [active, setActive] = useState(0);
@@ -24,8 +25,19 @@ const Cadastro = ({ route }) => {
   const handlePostPaciente = () => {
     mutate(paciente);
     limpaPaciente();
-    navigation.navigate('Login');
+    verificaRetorno();
   };
+
+  function verificaRetorno (){
+    if(route.params.interno == true){
+      navigation.navigate('Lista Pacientes')
+    }
+    else{
+      navigation.navigate('Login')
+    }
+    
+    
+  }
 
   const content = [
     <CadastroPaciente subTitulo="Informações Pessoais" />,
@@ -35,18 +47,29 @@ const Cadastro = ({ route }) => {
   ];
 
   return (
-    <ScrollView>
-      <View style={{ margin: 15 }}>
-        <TextInput.Icon
-          icon="chevron-left"
-          size={35}
-          color="#2070B4"
-          onPress={() => navigation.navigate('Login')}
-        />
-        <Text style={[globalStyle.titulo, { alignSelf: 'center' }]}>
-          Novo Paciente
-        </Text>
-      </View>
+    <ScrollView style={globalStyle.container}>
+      <LinearGradient      
+        colors={["#2e86c9", "#24aae3"]}
+        style={globalStyle.headerPesq}
+        start={ {x: 0.3, y: 0.1} } 
+        >
+          
+        <View style={{ flexDirection: 'row'}}>
+          <Icon
+              name="chevron-left"
+              size={30}
+              color="#ECECEC"
+              style={{ padding: 8 }}
+              onPress={verificaRetorno}
+          />
+          <View style={styles.titulo}>
+            <Text style={[globalStyle.titulo]}>
+              Novo Paciente
+            </Text>
+          </View>
+        </View>
+      </LinearGradient>
+      
       <View style={{ margin: 20 }}>
         <Stepper
           active={active}
@@ -87,5 +110,9 @@ const styles = StyleSheet.create({
   },
   teste: {
     backgroundColor: '#2070B4',
-  },
+  }, 
+  titulo: {
+    width: "80%",
+    alignItems: 'center',
+  }
 });

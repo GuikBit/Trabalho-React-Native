@@ -5,8 +5,11 @@ import globalStyle from '../../../globalStyle';
 import { useNavigation } from '@react-navigation/core';
 import Icon from '@expo/vector-icons/FontAwesome';
 
-const HeaderGeral = ({ titulo }) => {
+const HeaderGeral = ({ titulo, route }) => {
   const navigation = useNavigation();
+
+
+
   return (
     <View style={styles.nav}>
       <View>

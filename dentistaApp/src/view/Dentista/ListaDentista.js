@@ -2,7 +2,7 @@ import { FlatList, StyleSheet, View } from 'react-native';
 import React, { useState } from 'react';
 import globalStyle from '../../../globalStyle';
 import FiltroDentistas from '../../components/Listagem/FiltroDentistas';
-import { PaperProvider } from 'react-native-paper';
+import { PaperProvider, FAB } from 'react-native-paper';
 import HeaderGeral from '../../components/Listagem/HeaderGeral';
 import LoadingOverlay from '../../components/LoadingOverlay/LoadingOverlay';
 import CardPaciente from '../../components/Cards/CardPaciente';
@@ -52,6 +52,7 @@ const ListaDentista = ({ navigation }) => {
         {isLoading ? (
           <LoadingOverlay />
         ) : (
+          <>
           <FlatList
             style={globalStyle.flatList}
             data={pesquisa.length == 0 ? data : filtro}
@@ -60,11 +61,19 @@ const ListaDentista = ({ navigation }) => {
               <CardPaciente
                 usuario={item}
                 onPress={() => {
-                  navigation.navigate('Dentista', { id: item.id });
+                  navigation.navigate('Novo Dentista', { dentista: item.id });
                 }}
               />
             )}
           />
+          <FAB
+              icon="plus"
+              color='#FFFFFF'
+              style={styles.fab}
+              onPress={() => navigation.navigate("Novo Dentista")}
+          />
+          
+          </>
         )}
       </View>
     </PaperProvider>
@@ -120,7 +129,7 @@ const styles = StyleSheet.create({
     margin: 20,
     right: 0,
     bottom: 0,
-    backgroundColor: '#2070B4',
+    backgroundColor: '#2D8ACD',
     color: '#FFFFFF',
   },
 });

@@ -4,9 +4,10 @@ import { Image, StyleSheet, Text, View, Dimensions } from 'react-native';
 import Icon from '@expo/vector-icons/FontAwesome';
 import globalStyle from '../../../../globalStyle';
 import { AuthContext } from '../../../Auth/Auth';
-import { TextInput } from 'react-native-paper';
+import { Button } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Colors } from '../../../global/GlobalStyles';
 
 const width = Dimensions.get('screen').width;
 
@@ -14,6 +15,10 @@ const Header = () => {
   const { userLogged } = useContext(AuthContext);
 
   const navigation = useNavigation();
+
+  const handleLogout = () =>{
+
+  }
 
   return (
     <LinearGradient        
@@ -43,8 +48,18 @@ const Header = () => {
 
         <View style={styles.menu}>
           <Text style={styles.nome}>{userLogged.nome}</Text>
-          
+          <Button
+              icon="login"
+              textColor={Colors.secondary}
+              mode="contained"
+              onPress={handleLogout}
+              style={styles.buttons}
+              labelStyle={{ fontSize: 20 }}
+            >
+              Sair
+            </Button>
         </View>
+        
       </LinearGradient>
   );
 };
@@ -82,5 +97,15 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     alignSelf: 'center',
     margin: 10,
+  },
+  buttons: {
+    backgroundColor: "#FFFFFF",
+    
+    width: 100,
+    height: 30,
+    justifyContent: 'center',
+    borderRadius: 50,
+    borderWidth: 1,
+    borderColor: Colors.secondary,
   },
 });

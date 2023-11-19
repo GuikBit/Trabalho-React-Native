@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import globalStyle from '../../../globalStyle';
 import listUser from '../../Mock/lista';
 import Listagem from '../../components/Listagem/Listagem';
-import { PaperProvider } from 'react-native-paper';
+import { PaperProvider, FAB } from 'react-native-paper';
 import HeaderGeral from '../../components/Listagem/HeaderGeral';
 import FiltroPacientes from '../../components/Listagem/FiltroPacientes';
 import LoadingOverlay from '../../components/LoadingOverlay/LoadingOverlay';
@@ -57,6 +57,7 @@ const ListaPaciente = ({ navigation }) => {
         {isLoading ? (
           <LoadingOverlay />
         ) : (
+          <>
           <FlatList
             style={globalStyle.flatList}
             data={filtro.length == 0 ? data : filtro}
@@ -65,11 +66,19 @@ const ListaPaciente = ({ navigation }) => {
               <CardPaciente
                 usuario={item}
                 onPress={() => {
-                  navigation.navigate('Paciente', { id: item.id });
+                  navigation.navigate('Paciente Details', { id: item.id });
                 }}
               />
             )}
           />
+
+          <FAB
+              icon="plus"
+              color='#FFFFFF'
+              style={styles.fab}
+              onPress={() => {navigation.navigate("Cadastro",{interno: true})}}
+          />
+          </>
         )}
       </View>
     </PaperProvider>
@@ -125,7 +134,7 @@ const styles = StyleSheet.create({
     margin: 20,
     right: 0,
     bottom: 0,
-    backgroundColor: '#2070B4',
+    backgroundColor: '#2D8ACD',
     color: '#FFFFFF',
   },
 });

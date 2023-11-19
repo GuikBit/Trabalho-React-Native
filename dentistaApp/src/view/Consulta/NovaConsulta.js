@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View, ScrollView } from 'react-native';
 import React, { useState } from 'react';
 import globalStyle from '../../../globalStyle';
 import { Button, Modal, Searchbar, TextInput } from 'react-native-paper';
@@ -10,6 +10,8 @@ import HeaderNavigate from '../../components/HeaderNavigate';
 import listaDentista from '../../Mock/listaDentista';
 import ModalPaciente from '../../components/Modal/ModalPaciente';
 import { useGetDentistasAuth } from '../../service/queries/dentista';
+import { LinearGradient } from 'expo-linear-gradient';
+import Icon from '@expo/vector-icons/FontAwesome';
 
 const NovaConsulta = ({ navigation }) => {
   const cor = '#2070B4';
@@ -18,12 +20,13 @@ const NovaConsulta = ({ navigation }) => {
 
   const [modalEspec, setModalEspec] = useState(false);
   const [modalDent, setModalDent] = useState(false);
-
+  const [modalPac, setModalPac] = useState(false);
   const [pesquisa, setPesquisa] = useState('');
   const [filtro, setFiltro] = useState([]);
 
   const hideDen = () => setModalDent(false);
   const hideEspec = () => setModalEspec(false);
+  const hidePac = () => setModalPac(false);
 
   const [consulta, setConsulta] = useState({
     paciente: null,
@@ -64,15 +67,62 @@ const NovaConsulta = ({ navigation }) => {
 
   return (
     <View style={globalStyle.container}>
-      <HeaderNavigate
-        titulo="Nova Consulta"
-        onPress={() => {
-          navigation.navigate('Lista Consultas');
-        }}
-      />
 
+      <LinearGradient   
+        colors={["#2e86c9", "#24aae3"]}
+        style={globalStyle.headerPesq}
+        start={ {x: 0.3, y: 0.1} } 
+        >
+          
+        <View style={{ flexDirection: 'row'}}>
+          <Icon
+              name="chevron-left"
+              size={30}
+              color="#ECECEC"
+              style={{ padding: 8 }}
+              onPress={()=> {navigation.navigate("Lista Consultas")}}
+          />
+          <View style={styles.titulo}>
+            <Text style={[globalStyle.titulo]}>
+             Nova Consulta
+            </Text>
+          </View>
+        </View>
+      </LinearGradient>
+      
+      <ScrollView>
       <View style={styles.conulta}>
-        {/* <TextInput
+      <TextInput
+          mode="outlined"
+          label="Paciente"
+          left={
+            <TextInput.Icon
+              icon="account"
+              color={cor}
+              style={{ paddingTop: 10 }}
+            />
+          }
+          right={
+            <TextInput.Icon
+              icon="chevron-down"
+              color={cor}
+              style={{ paddingTop: 10 }}
+              onPress={() => {
+                setModalPac(true);
+              }}
+            />
+          }
+          selectionColor={cor}
+          outlineColor={cor}
+          outlineStyle={globalStyle.inputRadius}
+          activeOutlineColor={cor}
+          style={globalStyle.input}
+          textColor={cor}
+          value={consulta.dentista}
+          labelColor={cor}
+          editable={false}
+        />
+        <TextInput
           mode="outlined"
           label="Especialidade"
           left={
@@ -101,7 +151,7 @@ const NovaConsulta = ({ navigation }) => {
           value={consulta.dentista}
           labelColor={cor}
           editable={false}
-        /> */}
+        />
         <TextInput
           mode="outlined"
           label="Dentista"
@@ -182,6 +232,8 @@ const NovaConsulta = ({ navigation }) => {
           Agendar Consulta
         </Button>
       </View>
+      </ScrollView>
+   
 
       <ModalDentista
         modalDent={modalDent}
@@ -193,93 +245,20 @@ const NovaConsulta = ({ navigation }) => {
         setFiltro={setFiltro}
       />
 
-      {/* <Modal
-        onDismiss={hideDen}
-        visible={modalDent}
-        contentContainerStyle={styleModal}
-      >
-        <Searchbar
-          style={globalStyle.search}
-          placeholder="Pesquisar Dentista"
-          value={pesquisa}
-          onClearIconPress={() => setFiltro(lista)}
-          onChangeText={(e) => buscaUsuario(e)}
-        />
-        <View style={styles.modalBody}>
-          <FlatList
-            data={listaDentista}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => <ModalDentista dentista={item} />}
-          />
-        </View>
-        <View style={[globalStyle.rowBetween, styles.acao]}>
-          <Button
-            onPress={() => {
-              setModalDent(false);
-            }}
-            style={styles.btnModalVoltar}
-            textColor="#FFFFFF"
-            icon="arrow-left-bold"
-          >
-            Voltar
-          </Button>
-          <Button
-            onPress={() => {}}
-            style={styles.btnModalbtnSelecionar}
-            textColor="#FFFFFF"
-            icon="check"
-          >
-            Selecionar
-          </Button>
-        </View>
-      </Modal> */}
-
       <ModalEspec
         hideEspec={hideEspec}
         pesquisa={pesquisa}
         styleModalEspec={styleModal}
         modalEspec={modalEspec}
       />
-      {/* <Modal
-        onDismiss={hideEspec}
-        visible={modalEspec}
-        contentContainerStyle={styleModal}
-      >
-        <Searchbar
-          style={globalStyle.search}
-          placeholder="Pesquisar Especialidade"
-          value={pesquisa}
-          onClearIconPress={() => setFiltro(lista)}
-          onChangeText={(e) => buscaUsuario(e)}
-        /> */}
-      {/* <View style={styles.modalBody}>
-        <FlatList
-          data={listaEspe}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <ModalEspec espec={item} />}
-        />
-      </View>
-      <View style={[globalStyle.rowBetween, styles.acao]}>
-        <Button
-          onPress={() => {
-            setModalEspec(false);
-          }}
-          style={styles.btnModalVoltar}
-          textColor="#FFFFFF"
-          icon="arrow-left-bold"
-        >
-          Voltar
-        </Button>
-        <Button
-          onPress={() => {}}
-          style={styles.btnModalbtnSelecionar}
-          textColor="#FFFFFF"
-          icon="check"
-        >
-          Selecionar
-        </Button>
-      </View>
-      </Modal> */}
+
+      <ModalPaciente 
+        hidePac={hidePac}
+        pesquisa={pesquisa}
+        styleModalPac={styleModal}
+        modalPac={modalPac}
+      />
+      
     </View>
   );
 };
@@ -294,7 +273,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.3,
     height: 500,
     margin: 15,
-    // marginTop: 120,
+    marginTop: 120,
     padding: 15,
     borderRadius: 15,
   },
@@ -320,5 +299,8 @@ const styles = StyleSheet.create({
   modalBody: {
     height: 510,
     padding: 10,
-  },
+  },titulo: {
+    width: "80%",
+    alignItems: 'center',
+  }
 });

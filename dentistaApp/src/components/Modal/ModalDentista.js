@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
   },
   acao: {},
   modalBodyDentista: {
-    height: 340,
+    height: 520,
     padding: 10,
   },
   modalBodyEspec: {

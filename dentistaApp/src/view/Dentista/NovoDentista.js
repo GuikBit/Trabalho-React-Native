@@ -1,27 +1,47 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import globalStyle from '../../../globalStyle';
 import { View, StyleSheet, Text, FlatList, ScrollView } from 'react-native';
 import { TextInput, Button, Modal, Searchbar } from 'react-native-paper';
 import ModalEspec from '../../components/Modal/ModalEspec';
+import { LinearGradient } from 'expo-linear-gradient';
+import Icon from '@expo/vector-icons/FontAwesome';
+import { useNavigation } from '@react-navigation/core';
+import { usePostDentistaAuth } from '../../service/queries/dentista';
+import { GlobalContext } from '../../store/Context';
 
-const NovoDentista = ({ navigation }) => {
+const NovoDentista = ({item}) => {
   const cor = '#2070B4';
-
+  const titulo = "Novo Dentista";
   const [modalEspec, setModalEspec] = useState(false);
-
+  const { mutate } = usePostDentistaAuth();
+  const navigation = useNavigation();
   const [pesquisa, setPesquisa] = useState('');
+  const { dentista, setDentista } = useContext(GlobalContext);
+  // const [dentista, setDentista] = useState({
+  //   nome: null,
+  //   login: null,
+  //   senha: null,
+  //   email: null,
+  //   sexo: null,
+  //   dataNasc: null,
+  //   tel: null,
+  //   cro: null,
+  //   espec: null,
+  // });
+  
+  useEffect(()=> {
+    if(item != null)
+    {
+      titulo = "Detalhes Dentista";
+    }
+  }, []);
 
-  const [dentista, setDentista] = useState({
-    nome: null,
-    login: null,
-    senha: null,
-    email: null,
-    sexo: null,
-    dataNasc: null,
-    tel: null,
-    cro: null,
-    espec: null,
-  });
+  const handleCadastro = () => {
+    mutate(dentista);
+    navigation.navigate('Lista Dentista');
+  };
+
+  
 
   const styleModal = {
     backgroundColor: '#FFFFFF',
@@ -33,13 +53,29 @@ const NovoDentista = ({ navigation }) => {
   };
 
   return (
-    <View style={globalStyle.container}>
-      <HeaderNavigate
-        titulo="Novo Dentista"
-        onPress={() => {
-          navigation.navigate('Lista Dentista');
-        }}
-      />
+    <ScrollView style={globalStyle.container}>
+      <LinearGradient      
+        colors={["#2e86c9", "#24aae3"]}
+        style={globalStyle.headerPesq}
+        start={ {x: 0.3, y: 0.1} } 
+        >
+          
+        <View style={{ flexDirection: 'row'}}>
+          <Icon
+              name="chevron-left"
+              size={30}
+              color="#ECECEC"
+              style={{ padding: 8 }}
+              onPress={()=> {navigation.navigate("Lista Dentista")}}
+          />
+          <View style={styles.titulo}>
+            <Text style={[globalStyle.titulo]}>
+              {titulo}
+            </Text>
+          </View>
+        </View>
+      </LinearGradient>
+     
       <View style={styles.cadastro}>
         <TextInput
           mode="outlined"
@@ -166,9 +202,9 @@ const NovoDentista = ({ navigation }) => {
           activeOutlineColor={cor}
           style={globalStyle.input}
           textColor={cor}
-          value={dentista.tel}
+          value={dentista.telefone}
           labelColor={cor}
-          onChangeText={(e) => setDentista({ ...dentista, tel: e })}
+          onChangeText={(e) => setDentista({ ...dentista, telefone: e })}
         />
         <TextInput
           mode="outlined"
@@ -216,21 +252,28 @@ const NovoDentista = ({ navigation }) => {
           activeOutlineColor={cor}
           style={globalStyle.input}
           textColor={cor}
-          value={dentista.espec}
+          value={dentista.especialidade.tipo}
           labelColor={cor}
           editable={false}
         />
-
-        <Button
+        <LinearGradient      
+        colors={["#2e86c9", "#24aae3"]}
+        style={styles.btn}
+        start={ {x: 0.3, y: 0.1} } 
+        >
+          <Button
           icon="content-save"
-          textColor="#FFFFFF"
+          textColor="white"
           mode="contained"
-          labelStyle={globalStyle.label}
+          onPress={handleCadastro}
           style={styles.btn}
-          onPress={() => {}}
+          labelStyle={{ fontSize: 20 }}
         >
           Salvar Dentista
         </Button>
+
+        </LinearGradient>
+        
       </View>
 
       <Modal visible={modalEspec} contentContainerStyle={styleModal}>
@@ -269,7 +312,7 @@ const NovoDentista = ({ navigation }) => {
           </Button>
         </View>
       </Modal>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -281,15 +324,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderColor: '#2070B4',
     borderWidth: 0.3,
-    height: 650,
+    height: 700,
     margin: 15,
-    marginTop: 60,
+    marginTop: 20,
     padding: 15,
     borderRadius: 15,
   },
   btn: {
-    backgroundColor: '#2070B4',
-    marginTop: 20,
+     backgroundColor: 'transparent',
+    // backgroundColor: '#2070B4',
+    // marginTop: 20,
+    borderRadius: 15
   },
   modalBody: {
     height: 320,
@@ -300,5 +345,8 @@ const styles = StyleSheet.create({
   },
   btnModalVoltar: {
     backgroundColor: 'grey',
-  },
+  },titulo: {
+    width: "80%",
+    alignItems: 'center',
+  }
 });

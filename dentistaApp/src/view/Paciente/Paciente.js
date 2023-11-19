@@ -7,8 +7,9 @@ import PacienteBody from '../../components/PacienteBody';
 const Paciente = ({ navigation }) => {
   return (
     <View style={globalStyle.container}>
-      <PacienteBody navigation={navigation} />
       <PacienteHeader navigation={navigation} />
+      <PacienteBody navigation={navigation} />
+      
     </View>
   );
 };
