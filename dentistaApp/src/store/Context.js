@@ -45,7 +45,31 @@ function ContextProvider({ children }) {
     especialidade: { tipo: 'Ortodontia', valorBase: 300 },
   });
 
-  const [consulta, setConsulta] = useState({});
+  const [consulta, setConsulta] = useState({
+    paciente: {
+      nome: '',
+      email: '',
+      login: '',
+      senha: '',
+      telefone: '',
+      cpf: '',
+      dataNasc: '',
+    },
+    dentista: {
+      nome: '',
+      email: '',
+      login: '',
+      senha: '',
+      telefone: '',
+      cpf: '',
+      dataNasc: '',
+      cro: '',
+    },
+    dataConsulta: '',
+    horaConsulta: '',
+    pagamento: null,
+    procedimentoConsulta: '',
+  });
 
   const limpaPaciente = () => {
     setPaciente({
@@ -104,6 +128,8 @@ function ContextProvider({ children }) {
         dentista,
         setDentista,
         buscaCep,
+        consulta,
+        setConsulta,
       }}
     >
       {children}

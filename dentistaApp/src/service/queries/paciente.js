@@ -25,3 +25,12 @@ export function usePostPaciente() {
     },
   });
 }
+
+export function useGetConsultaByPacienteIdAuth(id) {
+  return useQuery({
+    queryKey: ['getConsultaByPacienteIdAuth', id],
+    queryFn: async () => {
+      return await apiGetByIdAuth('paciente/consultas', id);
+    },
+  });
+}

@@ -1,10 +1,11 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Button, Card, Modal, Searchbar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import globalStyle from '../../../globalStyle';
 import { useGetDentistasAuth } from '../../service/queries/dentista';
 import FiltroDentistas from '../Listagem/FiltroDentistas';
+import { GlobalContext } from '../../store/Context';
 
 const ModalDentista = ({
   modalDent,
@@ -16,6 +17,7 @@ const ModalDentista = ({
   setFiltro,
 }) => {
   const { data, isLoading } = useGetDentistasAuth();
+  const { consulta, setConsulta } = useContext(GlobalContext);
 
   return (
     <Modal
@@ -35,7 +37,13 @@ const ModalDentista = ({
             data={data}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
-              <Card style={[styles.card]} onPress={() => {}}>
+              <Card
+                style={[styles.card]}
+                onPress={() => {
+                  setConsulta({ ...consulta, dentista: item });
+                  hideDentis();
+                }}
+              >
                 <View style={styles.header}>
                   <Text style={styles.nome}>{item.nome}</Text>
                 </View>

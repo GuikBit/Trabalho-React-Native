@@ -4,14 +4,14 @@ import NovoDentista from './NovoDentista';
 import globalStyle from '../../../globalStyle';
 import { useNavigation } from '@react-navigation/core';
 
-const DentistaDetails = ({route}) => {
+const DentistaDetails = ({ route }) => {
   const navigation = useNavigation();
-  useEffect(()=>{
-    navigation.navigate("Novo Dentista")
-  })
+  // useEffect(()=>{
+  //   navigation.navigate("Novo Dentista")
+  // })
   return (
     <View style={globalStyle.container}>
-      {/* <NovoDentista /> */}
+      <Text>DentistaDetails</Text>
     </View>
   );
 };

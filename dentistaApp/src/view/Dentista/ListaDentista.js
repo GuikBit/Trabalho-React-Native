@@ -1,5 +1,5 @@
 import { FlatList, StyleSheet, View } from 'react-native';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import globalStyle from '../../../globalStyle';
 import FiltroDentistas from '../../components/Listagem/FiltroDentistas';
 import { PaperProvider, FAB } from 'react-native-paper';
@@ -8,9 +8,11 @@ import LoadingOverlay from '../../components/LoadingOverlay/LoadingOverlay';
 import CardPaciente from '../../components/Cards/CardPaciente';
 import { useGetDentistasAuth } from '../../service/queries/dentista';
 import { LinearGradient } from 'expo-linear-gradient';
+import { AuthContext } from '../../Auth/Auth';
 
 const ListaDentista = ({ navigation }) => {
   const { data, isLoading } = useGetDentistasAuth();
+  const { userLogged } = useContext(AuthContext);
 
   const [filtro, setFiltro] = useState([]);
   const [pesquisa, setPesquisa] = useState('');
@@ -61,7 +63,10 @@ const ListaDentista = ({ navigation }) => {
                 <CardPaciente
                   usuario={item}
                   onPress={() => {
-                    navigation.navigate('Novo Dentista', { dentista: item.id });
+                    if (userLogged.role == 'Dentista')
+                      navigation.navigate('Dentista Details', {
+                        dentista: item.id,
+                      });
                   }}
                 />
               )}
