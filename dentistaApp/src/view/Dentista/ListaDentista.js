@@ -35,10 +35,10 @@ const ListaDentista = ({ navigation }) => {
   return (
     <PaperProvider>
       <View style={globalStyle.container}>
-      <LinearGradient        
-        colors={["#2e86c9", "#24aae3"]}
-        style={globalStyle.headerPesq}
-        start={ {x: 0.3, y: 0.1} } 
+        <LinearGradient
+          colors={['#2e86c9', '#24aae3']}
+          style={globalStyle.headerPesq}
+          start={{ x: 0.3, y: 0.1 }}
         >
           <HeaderGeral titulo="Dentistas" />
           <FiltroDentistas
@@ -53,26 +53,25 @@ const ListaDentista = ({ navigation }) => {
           <LoadingOverlay />
         ) : (
           <>
-          <FlatList
-            style={globalStyle.flatList}
-            data={pesquisa.length == 0 ? data : filtro}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-              <CardPaciente
-                usuario={item}
-                onPress={() => {
-                  navigation.navigate('Novo Dentista', { dentista: item.id });
-                }}
-              />
-            )}
-          />
-          <FAB
+            <FlatList
+              style={globalStyle.flatList}
+              data={pesquisa.length == 0 ? data : filtro}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => (
+                <CardPaciente
+                  usuario={item}
+                  onPress={() => {
+                    navigation.navigate('Novo Dentista', { dentista: item.id });
+                  }}
+                />
+              )}
+            />
+            <FAB
               icon="plus"
-              color='#FFFFFF'
+              color="#FFFFFF"
               style={styles.fab}
-              onPress={() => navigation.navigate("Novo Dentista")}
-          />
-          
+              onPress={() => navigation.navigate('Novo Dentista')}
+            />
           </>
         )}
       </View>

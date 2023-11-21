@@ -7,6 +7,7 @@ import {
   apiPost,
   apiPostAuth,
 } from '../Api';
+import { cepApi } from '../ViaCepApi';
 
 export function useGetByIdPublic(id) {
   return useQuery({
@@ -24,3 +25,12 @@ export function useLogin() {
     },
   });
 }
+
+// export function useGetViaCep(cep) {
+//   return useQuery({
+//     queryKey: ['getCep', cep],
+//     queryFn: async () => {
+//       return await cepApi(cep);
+//     },
+//   });
+// }

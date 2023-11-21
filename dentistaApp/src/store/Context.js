@@ -1,4 +1,5 @@
 import { createContext, useState } from 'react';
+import { cepApi } from '../service/ViaCepApi';
 
 export const GlobalContext = createContext({});
 
@@ -16,8 +17,8 @@ function ContextProvider({ children }) {
       rua: 'teste',
       bairro: 'teste',
       cidade: 'teste',
-      cep: '43534645',
-      numero: 'teste',
+      cep: '',
+      numero: '',
       complemento: 'teste',
     },
     anamnese: {
@@ -47,7 +48,8 @@ function ContextProvider({ children }) {
   const [consulta, setConsulta] = useState({});
 
   const limpaPaciente = () => {
-    setPaciente((paciente) => ({
+    setPaciente({
+      ...paciente,
       nome: '',
       email: '',
       login: '',
@@ -74,12 +76,35 @@ function ContextProvider({ children }) {
         gravida: false,
         traumatismoFace: false,
       },
-    }));
+    });
+  };
+
+  const buscaCep = async (cep) => {
+    const data = await cepApi(cep);
+    console.log(data);
+    setPaciente((current) => {
+      const endereco = { ...current.endereco };
+
+      endereco.bairro = data.bairro;
+      endereco.cep = data.cep;
+      endereco.cidade = data.localidade;
+      endereco.complemento = data.complemento;
+      endereco.rua = data.logradouro;
+
+      return { ...current, endereco };
+    });
   };
 
   return (
     <GlobalContext.Provider
-      value={{ paciente, setPaciente, limpaPaciente, dentista, setDentista }}
+      value={{
+        paciente,
+        setPaciente,
+        limpaPaciente,
+        dentista,
+        setDentista,
+        buscaCep,
+      }}
     >
       {children}
     </GlobalContext.Provider>

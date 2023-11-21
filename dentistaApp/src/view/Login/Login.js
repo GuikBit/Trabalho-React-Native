@@ -26,6 +26,7 @@ const Login = ({}) => {
 
   const handleLogin = () => {
     login();
+
     navigation.navigate('Home');
   };
 
@@ -104,43 +105,41 @@ const Login = ({}) => {
       </View>
 
       <View style={styles.acoes}>
-      <LinearGradient      
-        colors={["#2e86c9", "#24aae3"]}
-        style={styles.buttons}
-        start={ {x: 0.3, y: 0.1} } 
+        <LinearGradient
+          colors={['#2e86c9', '#24aae3']}
+          style={styles.buttons}
+          start={{ x: 0.3, y: 0.1 }}
         >
           <Button
-          icon="account-plus"
-          textColor="white"
-          mode="contained"
-          onPress={() => {
-            navigation.navigate('Cadastro', interno=false);
-          }}
-          style={styles.buttons}
-          labelStyle={{ fontSize: 20 }}
-        >
-          Cadastrar
-        </Button>
+            icon="account-plus"
+            textColor="white"
+            mode="contained"
+            onPress={() => {
+              navigation.navigate('Cadastro', (interno = false));
+            }}
+            style={styles.buttons}
+            labelStyle={{ fontSize: 20 }}
+          >
+            Cadastrar
+          </Button>
+        </LinearGradient>
 
-        </LinearGradient>
-        
-        <LinearGradient      
-        colors={["#2e86c9", "#24aae3"]}
-        style={styles.buttons}
-        start={ {x: 0.3, y: 0.1} } 
-        >
-        <Button
-          icon="login"
-          textColor="white"
-          mode="contained"
-          onPress={handleLogin}
+        <LinearGradient
+          colors={['#2e86c9', '#24aae3']}
           style={styles.buttons}
-          labelStyle={{ fontSize: 20 }}
+          start={{ x: 0.3, y: 0.1 }}
         >
-          Logar
-        </Button>
+          <Button
+            icon="login"
+            textColor="white"
+            mode="contained"
+            onPress={handleLogin}
+            style={styles.buttons}
+            labelStyle={{ fontSize: 20 }}
+          >
+            Logar
+          </Button>
         </LinearGradient>
-        
       </View>
     </ScrollView>
   );
@@ -168,12 +167,11 @@ const styles = StyleSheet.create({
   },
   buttons: {
     //backgroundColor: Colors.secondary,
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent',
     width: 155,
-     height: 45,
-     justifyContent: 'center',
+    height: 45,
+    justifyContent: 'center',
     //padding: 5,
     borderRadius: 50,
   },
-  
 });

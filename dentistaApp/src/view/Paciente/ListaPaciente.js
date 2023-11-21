@@ -12,7 +12,6 @@ import { useGetPacientesAuth } from '../../service/queries/paciente';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const ListaPaciente = ({ navigation }) => {
-  
   const { data, isLoading } = useGetPacientesAuth();
 
   const [filtro, setFiltro] = useState([]);
@@ -22,16 +21,14 @@ const ListaPaciente = ({ navigation }) => {
     setPesquisa(e);
 
     if (e === '') {
-      setFiltro(lista);
+      setFiltro(data);
     } else {
       const pesquisaLowerCase = e.toLowerCase();
-      const filtro = lista.filter((user) => {
+      const filtro = data.filter((user) => {
         const nomeLowerCase = user.nome.toLowerCase();
-        const pastaNuString = user.pastaNu.toString();
-        return (
-          nomeLowerCase.includes(pesquisaLowerCase) ||
-          pastaNuString.includes(pesquisaLowerCase)
-        );
+        // const pastaNuString = user.pastaNu.toString();
+        return nomeLowerCase.includes(pesquisaLowerCase);
+        // pastaNuString.includes(pesquisaLowerCase)
       });
       setFiltro(filtro);
     }
@@ -40,10 +37,10 @@ const ListaPaciente = ({ navigation }) => {
   return (
     <PaperProvider>
       <View style={globalStyle.container}>
-      <LinearGradient        
-        colors={["#2e86c9", "#24aae3"]}
-        style={globalStyle.headerPesq}
-        start={ {x: 0.3, y: 0.1} } 
+        <LinearGradient
+          colors={['#2e86c9', '#24aae3']}
+          style={globalStyle.headerPesq}
+          start={{ x: 0.3, y: 0.1 }}
         >
           <HeaderGeral titulo="Pacientes" />
           <FiltroPacientes
@@ -51,33 +48,34 @@ const ListaPaciente = ({ navigation }) => {
             buscaUsuario={buscaUsuario}
             setFiltro={setFiltro}
           />
-
         </LinearGradient>
-        
+
         {isLoading ? (
           <LoadingOverlay />
         ) : (
           <>
-          <FlatList
-            style={globalStyle.flatList}
-            data={filtro.length == 0 ? data : filtro}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-              <CardPaciente
-                usuario={item}
-                onPress={() => {
-                  navigation.navigate('Paciente Details', { id: item.id });
-                }}
-              />
-            )}
-          />
+            <FlatList
+              style={globalStyle.flatList}
+              data={filtro.length == 0 ? data : filtro}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => (
+                <CardPaciente
+                  usuario={item}
+                  onPress={() => {
+                    navigation.navigate('Paciente Details', { id: item.id });
+                  }}
+                />
+              )}
+            />
 
-          <FAB
+            <FAB
               icon="plus"
-              color='#FFFFFF'
+              color="#FFFFFF"
               style={styles.fab}
-              onPress={() => {navigation.navigate("Cadastro",{interno: true})}}
-          />
+              onPress={() => {
+                navigation.navigate('Cadastro', { interno: true });
+              }}
+            />
           </>
         )}
       </View>

@@ -13,9 +13,10 @@ import CardConsulta from '../../components/Cards/CardConsulta';
 import LoadingOverlay from '../../components/LoadingOverlay/LoadingOverlay';
 import { useGetPacientesAuth } from '../../service/queries/paciente';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useGetConsultasAuth } from '../../service/queries/consulta';
 
 const ListaConsulta = ({ navigation }) => {
-  const { data, isLoading } = useGetPacientesAuth();
+  const { data, isLoading } = useGetConsultasAuth();
 
   const [filtro, setFiltro] = useState([]);
   const [pesquisa, setPesquisa] = useState('');
@@ -37,16 +38,14 @@ const ListaConsulta = ({ navigation }) => {
     setPesquisa(e);
 
     if (e === '') {
-      setFiltro(lista);
+      setFiltro(data);
     } else {
       const pesquisaLowerCase = e.toLowerCase();
-      const filtro = lista.filter((user) => {
+      const filtro = data.filter((user) => {
         const nomeLowerCase = user.nome.toLowerCase();
-        const pastaNuString = user.pastaNu.toString();
-        return (
-          nomeLowerCase.includes(pesquisaLowerCase) ||
-          pastaNuString.includes(pesquisaLowerCase)
-        );
+        // const pastaNuString = user.pastaNu.toString();
+        return nomeLowerCase.includes(pesquisaLowerCase);
+        // pastaNuString.includes(pesquisaLowerCase)
       });
       setFiltro(filtro);
     }
@@ -55,10 +54,10 @@ const ListaConsulta = ({ navigation }) => {
   return (
     <PaperProvider>
       <View style={globalStyle.container}>
-      <LinearGradient        
-        colors={["#2e86c9", "#24aae3"]}
-        style={globalStyle.headerPesq}
-        start={ {x: 0.3, y: 0.1} } 
+        <LinearGradient
+          colors={['#2e86c9', '#24aae3']}
+          style={globalStyle.headerPesq}
+          start={{ x: 0.3, y: 0.1 }}
         >
           <HeaderGeral titulo="Consultas" />
           <FiltroConsultas
@@ -73,32 +72,33 @@ const ListaConsulta = ({ navigation }) => {
             pesquisa={pesquisa}
           />
         </LinearGradient>
-       
+
         {isLoading ? (
           <LoadingOverlay />
         ) : (
           <>
-          <FlatList
-            style={globalStyle.flatList}
-            data={filtro.length == 0 ? data : filtro}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-              <CardConsulta
-                consulta={item}
-                onPress={() => {
-                  navigation.navigate('Consulta Details', { id: item.id });
-                }}
-              />
-            )}
-          />
-          <FAB
+            <FlatList
+              style={globalStyle.flatList}
+              data={filtro.length == 0 ? data : filtro}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => (
+                <CardConsulta
+                  consulta={item}
+                  onPress={() => {
+                    navigation.navigate('Consulta Details', { id: item.id });
+                  }}
+                />
+              )}
+            />
+            <FAB
               icon="plus"
-              color='#FFFFFF'
+              color="#FFFFFF"
               style={styles.fab}
-              onPress={() => {navigation.navigate('Nova Consulta')}}
-          />
+              onPress={() => {
+                navigation.navigate('Nova Consulta');
+              }}
+            />
           </>
-          
         )}
       </View>
 

@@ -1,26 +1,48 @@
 import { StyleSheet, View, Text } from 'react-native';
 import { Card } from 'react-native-paper';
-import React from 'react';
+import React, { useContext } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { Colors } from '../../global/GlobalStyles';
+import { AuthContext } from '../../Auth/Auth';
 
 const CardConsulta = ({ consulta, onPress }) => {
+  const { userLogged } = useContext(AuthContext);
+
   return (
     <Card style={styles.card} onPress={onPress}>
       <View style={styles.header}>
-        <Text style={styles.nome}>{consulta.nome}</Text>
+        <Text style={styles.nome}>{consulta.dataConsulta}</Text>
+        <Text style={styles.nome}>{consulta.horaConsulta}</Text>
       </View>
 
       <View style={styles.body}>
         <View style={styles.infoRow}>
-          <Text style={styles.texto}>
-            <Icon name="user-md" size={18} /> Dr Generico da Silva
-          </Text>
-          <Text style={styles.texto}>
+          {userLogged.role == 'Paciente' && (
+            <Text style={styles.texto}>
+              <Icon name="user-md" size={18} /> {consulta.dentista.nome}
+            </Text>
+          )}
+          {userLogged == 'Dentista' && (
+            <Text style={styles.texto}>
+              <Icon name="user-md" size={18} /> {consulta.paciente.nome}
+            </Text>
+          )}
+          {userLogged.role == 'Admin' && (
+            <>
+              <Text style={styles.texto}>
+                <Icon name="user-md" size={18} /> {consulta.dentista.nome}
+              </Text>
+              <Text style={styles.texto}>
+                <Icon name="user-md" size={18} /> {consulta.paciente.nome}
+              </Text>
+            </>
+          )}
+          {/* <Text style={styles.texto}>
             <Icon name="calendar" size={16} /> {consulta.dataNasc}
-          </Text>
-          <Text style={styles.texto}>
+          </Text> */}
+          {/* <Text style={styles.texto}>
             <Icon name="clock-o" size={16} /> 15:00
-          </Text>
+          </Text> */}
         </View>
       </View>
     </Card>
@@ -31,7 +53,7 @@ export default CardConsulta;
 
 const styles = StyleSheet.create({
   card: {
-    height: 110,
+    // height: 110,
     marginHorizontal: 15,
     marginVertical: 8,
     borderRadius: 10,
@@ -51,7 +73,8 @@ const styles = StyleSheet.create({
   nome: {
     flexDirection: 'row',
     alignSelf: 'center',
-    color: '#7a7d7a',
+    color: Colors.secondary,
+    // color: '#7a7d7a',
     fontSize: 20,
     fontWeight: 'bold',
   },

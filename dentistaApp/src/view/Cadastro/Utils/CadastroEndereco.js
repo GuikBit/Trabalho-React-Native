@@ -1,7 +1,8 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { TextInput, Button } from 'react-native-paper';
 import { GlobalContext } from '../../../store/Context';
+import { useGetViaCep } from '../../../service/queries/Queries';
 
 const CadastroEndereco = ({ subTitulo }) => {
   const cor = '#2070B4';
@@ -15,7 +16,37 @@ const CadastroEndereco = ({ subTitulo }) => {
   //   complemento: null,
   // });
 
-  const { paciente, setPaciente } = useContext(GlobalContext);
+  // const [cepObj, setCepObj] = useState({
+  //   cep: '',
+  //   logradouro: '',
+  //   complemento: '',
+  //   bairro: '',
+  //   localidade: '',
+  //   uf: '',
+  // });
+
+  // const handleCepApi = (cep) => {
+  //   const { data, isLoading } = useGetViaCep(cep);
+  //   if (!isLoading) {
+  //     setCepObj(data);
+  //   }
+
+  const [cep, setCep] = useState('');
+
+  const { paciente, setPaciente, buscaCep } = useContext(GlobalContext);
+
+  useEffect(() => {
+    console.log('executa quando o cep é alterado');
+    if (cep.length == 8) {
+      buscaCep(cep);
+    }
+  }, [
+    cep,
+    paciente.endereco.cidade,
+    paciente.endereco.rua,
+    paciente.endereco.bairro,
+    paciente.endereco.complemento,
+  ]);
 
   return (
     <View style={styles.cadastro}>
@@ -41,13 +72,14 @@ const CadastroEndereco = ({ subTitulo }) => {
           color: '#24AAE3',
         }}
         textColor={cor}
-        value={paciente.endereco.cep}
+        value={cep}
         labelColor={cor}
         onChangeText={(e) =>
-          setPaciente({
-            ...paciente,
-            endereco: { ...paciente.endereco, cep: e },
-          })
+          // setPaciente({
+          //   ...paciente,
+          //   endereco: { ...paciente.endereco, cep: e },
+          // });
+          setCep(e)
         }
       />
       <TextInput
