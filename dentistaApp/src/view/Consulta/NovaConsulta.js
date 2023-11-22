@@ -17,6 +17,7 @@ import { GlobalContext } from '../../store/Context';
 import MaskInput, { Masks } from 'react-native-mask-input';
 import { usePostConsultaAuth } from '../../service/queries/consulta';
 import { useNavigation } from '@react-navigation/native';
+import dayjs from 'dayjs';
 
 const NovaConsulta = () => {
   const cor = '#2070B4';
@@ -171,7 +172,13 @@ const NovaConsulta = () => {
             value={consulta.dataConsulta}
             labelColor={cor}
             onChangeText={(e) => {
-              setConsulta({ ...consulta, dataConsulta: e });
+              if (e.length == 10) {
+                const data = dayjs(e, 'DD/MM/YYYY').format('YYYY-MM-DD');
+                setConsulta({ ...consulta, dataConsulta: data });
+              }
+              if (e.length < 10) {
+                setConsulta({ ...consulta, dataConsulta: e });
+              }
             }}
           />
           <TextInput
