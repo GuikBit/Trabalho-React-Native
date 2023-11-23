@@ -11,7 +11,7 @@ const DentistaDetails = ({ route }) => {
   // })
   return (
     <View style={globalStyle.container}>
-      <Text>DentistaDetails</Text>
+      <NovoDentista  />
     </View>
   );
 };

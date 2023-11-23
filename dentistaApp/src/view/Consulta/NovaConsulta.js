@@ -1,26 +1,18 @@
-import { FlatList, StyleSheet, Text, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import React, { useContext, useState } from 'react';
 import globalStyle from '../../../globalStyle';
-import { Button, Modal, Searchbar, TextInput } from 'react-native-paper';
+import { Button, TextInput } from 'react-native-paper';
 import ModalDentista from '../../components/Modal/ModalDentista';
-import ModalEspec from '../../components/Modal/ModalEspec';
-import lista from '../../Mock/lista';
-import listaEspe from '../../Mock/listaEspe';
-import HeaderNavigate from '../../components/HeaderNavigate';
-import listaDentista from '../../Mock/listaDentista';
 import ModalPaciente from '../../components/Modal/ModalPaciente';
 import { useGetDentistasAuth } from '../../service/queries/dentista';
 import { LinearGradient } from 'expo-linear-gradient';
 import Icon from '@expo/vector-icons/FontAwesome';
 import { AuthContext } from '../../Auth/Auth';
 import { GlobalContext } from '../../store/Context';
-import MaskInput, { Masks } from 'react-native-mask-input';
 import { usePostConsultaAuth } from '../../service/queries/consulta';
 import { useNavigation } from '@react-navigation/native';
-import dayjs from 'dayjs';
-
+import { Colors } from '../../global/GlobalStyles'
 const NovaConsulta = () => {
-  const cor = '#2070B4';
 
   const navigation = useNavigation();
   const { data, isLoading } = useGetDentistasAuth();
@@ -53,9 +45,25 @@ const NovaConsulta = () => {
   }
 
   const handleNovaConsulta = () => {
+    console.log(consulta)
     mutate(consulta);
     navigation.navigate('Lista Consultas');
   };
+
+  const ajustaData = (num) => {
+    
+    const textoLimpo = num.replace(/\D/g, '');
+    const limite = textoLimpo.substring(0, 8);
+    const dataFormatada = limite.replace(/(\d{2})(\d{2})(\d{4})/, '$1/$2/$3');
+    setConsulta({ ...consulta, dataConsulta: dataFormatada })
+  }
+  const ajutaHora = (num) =>{
+
+    const textoLimpo = num.replace(/\D/g, '');
+    const limite = textoLimpo.substring(0, 4);
+    const horaFormatada = limite.replace(/(\d{2})(\d{2})/, '$1:$2');
+    setConsulta({ ...consulta, horaConsulta: horaFormatada })
+  }
 
   const styleModal = {
     backgroundColor: '#FFFFFF',
@@ -98,28 +106,28 @@ const NovaConsulta = () => {
               left={
                 <TextInput.Icon
                   icon="account"
-                  color={cor}
+                  color={Colors.secondary}
                   style={{ paddingTop: 10 }}
                 />
               }
               right={
                 <TextInput.Icon
                   icon="chevron-down"
-                  color={cor}
+                  color={Colors.secondary}
                   style={{ paddingTop: 10 }}
                   onPress={() => {
                     setModalPac(true);
                   }}
                 />
               }
-              selectionColor={cor}
-              outlineColor={cor}
+              selectionColor={Colors.secondary}
+              outlineColor={Colors.secondary}
               outlineStyle={globalStyle.inputRadius}
-              activeOutlineColor={cor}
+              activeOutlineColor={Colors.secondary}
               style={globalStyle.input}
-              textColor={cor}
+              textColor={Colors.secondary}
               value={consulta.paciente.nome}
-              labelColor={cor}
+              labelColor={Colors.secondary}
               editable={false}
             />
           )}
@@ -129,28 +137,28 @@ const NovaConsulta = () => {
             left={
               <TextInput.Icon
                 icon="account"
-                color={cor}
+                color={Colors.secondary}
                 style={{ paddingTop: 10 }}
               />
             }
             right={
               <TextInput.Icon
                 icon="chevron-down"
-                color={cor}
+                color={Colors.secondary}
                 style={{ paddingTop: 10 }}
                 onPress={() => {
                   setModalDent(true);
                 }}
               />
             }
-            selectionColor={cor}
-            outlineColor={cor}
+            selectionColor={Colors.secondary}
+            outlineColor={Colors.secondary}
             outlineStyle={globalStyle.inputRadius}
-            activeOutlineColor={cor}
+            activeOutlineColor={Colors.secondary}
             style={globalStyle.input}
-            textColor={cor}
+            textColor={Colors.secondary}
             value={consulta.dentista.nome}
-            labelColor={cor}
+            labelColor={Colors.secondary}
             editable={false}
           />
           <TextInput
@@ -159,47 +167,52 @@ const NovaConsulta = () => {
             left={
               <TextInput.Icon
                 icon="calendar"
-                color={cor}
+                color={Colors.secondary}
                 style={{ paddingTop: 10 }}
               />
             }
-            selectionColor={cor}
-            outlineColor={cor}
+            keyboardType='numeric'
+            selectionColor={Colors.secondary}
+            outlineColor={Colors.secondary}
             outlineStyle={globalStyle.inputRadius}
-            activeOutlineColor={cor}
+            activeOutlineColor={Colors.secondary}
             style={globalStyle.input}
-            textColor={cor}
+            textColor={Colors.secondary}
             value={consulta.dataConsulta}
-            labelColor={cor}
-            onChangeText={(e) => {
-              if (e.length == 10) {
-                const data = dayjs(e, 'DD/MM/YYYY').format('YYYY-MM-DD');
-                setConsulta({ ...consulta, dataConsulta: data });
-              }
-              if (e.length < 10) {
-                setConsulta({ ...consulta, dataConsulta: e });
-              }
-            }}
+            labelColor={Colors.secondary}
+            maxLength={10}
+            // onChangeText={(e) => {
+            //    if (e.length == 8) {
+            //     const data = dayjs(e, 'YYYY-MM-DD').format('DD/MM/YYYY');
+            //     setConsulta({ ...consulta, dataConsulta: data });
+            //    }
+            //    if (e.length <= 9) {
+            //     setConsulta({ ...consulta, dataConsulta: e });
+            //   }
+            // }}
+            onChangeText={ajustaData}
           />
+           
           <TextInput
             mode="outlined"
             label="Hora"
             left={
               <TextInput.Icon
                 icon="clock-time-eight-outline"
-                color={cor}
+                color={Colors.secondary}
                 style={{ paddingTop: 10 }}
               />
             }
-            selectionColor={cor}
-            outlineColor={cor}
+            keyboardType='numeric'
+            selectionColor={Colors.secondary}
+            outlineColor={Colors.secondary}
             outlineStyle={globalStyle.inputRadius}
-            activeOutlineColor={cor}
+            activeOutlineColor={Colors.secondary}
             style={globalStyle.input}
-            textColor={cor}
+            textColor={Colors.secondary}
             value={consulta.horaConsulta}
-            labelColor={cor}
-            onChangeText={(e) => setConsulta({ ...consulta, horaConsulta: e })}
+            labelColor={Colors.secondary}
+            onChangeText={ajutaHora}
           />
           <Button
             icon="content-save"

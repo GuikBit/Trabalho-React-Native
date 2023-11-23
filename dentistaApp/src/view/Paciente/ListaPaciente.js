@@ -64,9 +64,10 @@ const ListaPaciente = ({ navigation }) => {
                 <CardPaciente
                   usuario={item}
                   onPress={() => {
-                    if (userLogged.role == 'Paciente') {
-                      navigation.navigate('Paciente Details', { id: item.id });
-                    }
+                    // if (userLogged.role == 'Paciente') {
+                    //   navigation.navigate('Paciente Details', { id: item.id });
+                    // }
+                    navigation.navigate('Paciente Details', { id: item.id })
                   }}
                 />
               )}

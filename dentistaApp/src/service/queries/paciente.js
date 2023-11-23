@@ -13,8 +13,8 @@ export function useGetPacientesAuth() {
 export function useGetPacienteByIdAuth(id) {
   return useQuery({
     queryKey: ['getPacienteByIdAuth', id],
-    queryFn: async () => {
-      return await apiGetByIdAuth('paciente', id);
+    queryFn: () => {
+      return apiGetByIdAuth('paciente', id);
     },
   });
 }

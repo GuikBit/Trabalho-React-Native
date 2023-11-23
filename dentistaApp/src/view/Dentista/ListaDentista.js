@@ -63,10 +63,13 @@ const ListaDentista = ({ navigation }) => {
                 <CardPaciente
                   usuario={item}
                   onPress={() => {
-                    if (userLogged.role == 'Dentista')
-                      navigation.navigate('Dentista Details', {
-                        dentista: item.id,
-                      });
+                    // if (userLogged.role == 'Dentista')
+                    //   navigation.navigate('Dentista Details', {
+                    //     dentista: item.id,
+                    //   });
+                    navigation.navigate('Dentista Details', {
+                      dentista: item.id,
+                    })
                   }}
                 />
               )}

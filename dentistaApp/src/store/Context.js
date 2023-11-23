@@ -69,6 +69,7 @@ function ContextProvider({ children }) {
     horaConsulta: '',
     pagamento: null,
     procedimentoConsulta: '',
+    tempoPrevisto: ""
   });
 
   const limpaPaciente = () => {

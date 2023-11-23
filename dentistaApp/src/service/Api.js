@@ -21,7 +21,7 @@ import { getToken } from '../hooks/TokenStore';
 // };
 
 const urlBase =
-  'https://9be2-2804-14c-fc81-9a1f-edb8-fc98-e433-b59b.ngrok-free.app';
+  'https://5d91-186-233-35-166.ngrok-free.app';
 
 export async function apiGetAuth(url) {
   const instance = axios.create({
@@ -38,15 +38,16 @@ export async function apiGetAuth(url) {
   }
 }
 
-export async function apiGetByIdAuth(url, id) {
+export  function apiGetByIdAuth(url, id) {
   const instance = axios.create({
     baseURL: `${urlBase}`,
     timeout: 1000,
-    headers: { Authorization: 'Bearer ' + (await getToken()) },
+    headers: { Authorization: 'Bearer ' + (getToken()) },
   });
 
   try {
-    const response = await instance.get(`/v1/${url}/${id}`);
+    const response = instance.get(`/v1/${url}/${id}`);
+    console.log(response.data)
     return response.data;
   } catch (error) {
     console.error(error);
@@ -76,6 +77,34 @@ export async function apiPutAuth(url, id, objeto) {
 
   try {
     instance.put(`/v1/${url}/${id}`, objeto);
+  } catch (error) {
+    console.error(error);
+  }
+}
+export async function apiGetDashBords(url) {
+  const instance = axios.create({
+    baseURL: `${urlBase}`,
+    timeout: 1000,
+    headers: { Authorization: 'Bearer ' + (await getToken()) },
+  });
+
+  try {
+    const response = await instance.get(`/v1/${url}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+export async function apiGetDashBordsDentista(url, id) {
+  const instance = axios.create({
+    baseURL: `${urlBase}`,
+    timeout: 1000,
+    headers: { Authorization: 'Bearer ' + (await getToken()) },
+  });
+
+  try {
+    const response = await instance.get(`/v1/${url}/dentista/${id}`);
+    return response.data;
   } catch (error) {
     console.error(error);
   }

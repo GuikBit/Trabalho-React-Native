@@ -4,9 +4,11 @@ import { ActivityIndicator } from 'react-native-paper';
 import { Colors } from '../../global/GlobalStyles';
 
 const LoadingOverlay = () => {
-  return <ActivityIndicator animating={true} color={Colors.primary} />;
+  return <ActivityIndicator animating={true} color={Colors.primary} size={70} />;
 };
 
 export default LoadingOverlay;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+
+});

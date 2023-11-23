@@ -81,6 +81,9 @@ const Body = ({ navigation }) => {
           
           
         )}
+        {userLogged.role == "Dentista" && (
+          <Dashboard />
+        )}
 
         {userLogged.role == 'Paciente' && (
           <>
@@ -128,7 +131,7 @@ export default Body;
 
 const styles = StyleSheet.create({
   submenu:{
-    marginTop: 20
+    marginTop: 10
   },
   row: {
     flexDirection: 'row',
