@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, ScrollView} from 'react-native'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { BarChart, LineChart, PieChart, ProgressChart } from 'react-native-chart-kit'
 import { Colors, Dimension } from '../../global/GlobalStyles'
 import { AuthContext } from '../../Auth/Auth'
@@ -7,11 +7,9 @@ import { useGetAllDashbords } from '../../service/queries/dashbords'
 import LoadingOverlay from '../../components/LoadingOverlay/LoadingOverlay'
 
 const Dashboard = () => {
-  const { userLogged } = useContext(AuthContext);
 
   const { data, isLoading } = useGetAllDashbords();
   
-
   return (
     <ScrollView >
       
@@ -69,8 +67,6 @@ const Dashboard = () => {
             style={{
               marginVertical: 10,
               borderRadius: 16,
-
-              
             }}
             chartConfig={styles.chatConfig}
           />
@@ -90,7 +86,7 @@ const Dashboard = () => {
          
         ):(
           <ProgressChart
-            data={[0.4, 0.6, 0.8]}
+            data= {data.qtdPorEspec}
             width={Dimension.width - 20}
             height={220}
             style={{
@@ -104,8 +100,6 @@ const Dashboard = () => {
         )}
         
       </View>
-
-      
     </ScrollView>
     
 

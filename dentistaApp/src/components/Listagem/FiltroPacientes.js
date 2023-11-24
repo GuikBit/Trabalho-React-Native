@@ -2,14 +2,14 @@ import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { Searchbar } from 'react-native-paper';
 
-const FiltroPacientes = ({ setFiltro, buscaUsuario, pesquisa }) => {
+const FiltroPacientes = ({ setFiltro, buscaPaciente, pesquisa }) => {
   return (
     <Searchbar
       style={styles.search}
       placeholder="Pesquisar"
       value={pesquisa}
       onClearIconPress={() => setFiltro(lista)}
-      onChangeText={(e) => buscaUsuario(e)}
+      onChangeText={(e) => buscaPaciente(e)}
       iconColor="#2070B4"
       rippleColor="#2070B4"
     />

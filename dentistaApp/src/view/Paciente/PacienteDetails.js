@@ -10,19 +10,23 @@ import LoadingOverlay from '../../components/LoadingOverlay/LoadingOverlay';
 const PacienteDetails = ({navigation, route}) => {
   
   const { data, isLoading } = useGetPacienteByIdAuth(route.params.id);
-  //console.log(data)
+ 
 
   return (
     <View style={globalStyle.container}>
-      {isLoading && (
-        <LoadingOverlay/>
+
+       {isLoading && (
+          <View style={[globalStyle.container, {justifyContent: 'center'}]}>
+          <LoadingOverlay/>
+        </View>
+        
       )}
       {!isLoading && (
         <>
         <PacienteHeader navigation={navigation} paciente={data}/>
         <PacienteBody navigation={navigation} />
         </>
-      )}
+      )} 
       
       
     </View>

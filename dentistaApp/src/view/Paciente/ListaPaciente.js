@@ -21,17 +21,17 @@ const ListaPaciente = ({ navigation }) => {
 
   function buscaUsuario(e) {
     setPesquisa(e);
-
+    
     if (e === '') {
       setFiltro(data);
     } else {
       const pesquisaLowerCase = e.toLowerCase();
       const filtro = data.filter((user) => {
         const nomeLowerCase = user.nome.toLowerCase();
-        // const pastaNuString = user.pastaNu.toString();
-        return nomeLowerCase.includes(pesquisaLowerCase);
-        // pastaNuString.includes(pesquisaLowerCase)
-      });
+        const pastaNuString = user.pastaNu.toString();
+        return (nomeLowerCase.includes(pesquisaLowerCase) ||
+                pastaNuString.includes(pesquisaLowerCase))
+        });
       setFiltro(filtro);
     }
   }
@@ -53,7 +53,9 @@ const ListaPaciente = ({ navigation }) => {
         </LinearGradient>
 
         {isLoading ? (
-          <LoadingOverlay />
+          <View style={[globalStyle.container, {justifyContent: 'center'}]}>
+            <LoadingOverlay/>
+          </View>
         ) : (
           <>
             <FlatList

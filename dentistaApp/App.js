@@ -21,6 +21,7 @@ import ConsultaDetails from './src/view/Consulta/ConsultaDetails.js';
 import CadastroDentista from './src/view/Cadastro/Utils/CadastroDentista.js';
 import DentistaDetails from './src/view/Dentista/DentistaDetails.js';
 import PacienteDetails from './src/view/Paciente/PacienteDetails.js';
+import Admin from './src/view/admin/Admin.js';
 
 const Stack = createNativeStackNavigator();
 const queryClient = new QueryClient();
@@ -65,6 +66,8 @@ const StackNavigator = () => {
         <Stack.Screen name="Novo Dentista" component={NovoDentista} />
         <Stack.Screen name="Lista Dentista" component={ListaDentista} />
         <Stack.Screen name="Dentista Details" component={DentistaDetails} />
+
+        <Stack.Screen name="Admin" component={Admin} />
       </Stack.Navigator>
     </NavigationContainer>
   );

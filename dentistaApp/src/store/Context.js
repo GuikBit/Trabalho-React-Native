@@ -42,7 +42,7 @@ function ContextProvider({ children }) {
     cpf: '2134326546',
     dataNasc: '12/04/1996',
     cro: '432143',
-    especialidade: { tipo: 'Ortodontia', valorBase: 300 },
+    especialidade: {},
   });
 
   const [consulta, setConsulta] = useState({
@@ -64,12 +64,13 @@ function ContextProvider({ children }) {
       cpf: '',
       dataNasc: '',
       cro: '',
+      especialidade: ''
     },
     dataConsulta: '',
     horaConsulta: '',
     pagamento: null,
     procedimentoConsulta: '',
-    tempoPrevisto: ""
+    tempoPrevisto: ''
   });
 
   const limpaPaciente = () => {

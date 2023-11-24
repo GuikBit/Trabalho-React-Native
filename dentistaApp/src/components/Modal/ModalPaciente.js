@@ -1,16 +1,17 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Button, Card, Modal, Searchbar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import globalStyle from '../../../globalStyle';
 import FiltroDentistas from '../Listagem/FiltroDentistas';
 import { useGetPacientesAuth } from '../../service/queries/paciente';
 import { GlobalContext } from '../../store/Context';
+import FiltroPacientes from '../Listagem/FiltroPacientes';
 
 const ModalPaciente = ({
   modalPac,
   styleModalPac,
-  buscaUsuario,
+  buscaPaciente,
   hidePac,
   pesquisa,
   filtro,
@@ -25,16 +26,18 @@ const ModalPaciente = ({
       onDismiss={hidePac}
       contentContainerStyle={styleModalPac}
     >
-      <FiltroDentistas
-        pesquisa={pesquisa}
-        buscaUsuario={buscaUsuario}
-        setFiltro={setFiltro}
-        data={data}
+      <FiltroPacientes 
+       pesquisa={pesquisa}
+       buscaPaciente={buscaPaciente}
+       setFiltro={setFiltro}
+       data={data}
       />
+
+      
       <View style={styles.modalBodyDentista}>
         {!isLoading && (
           <FlatList
-            data={data}
+            data={filtro.length == 0 ? data : filtro}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
               <Card
@@ -65,7 +68,7 @@ const ModalPaciente = ({
           />
         )}
       </View>
-      <View style={[globalStyle.rowBetween, styles.acao]}>
+      {/* <View style={[globalStyle.rowBetween, styles.acao]}>
         <Button
           onPress={hidePac}
           style={styles.btnModalVoltar}
@@ -82,7 +85,7 @@ const ModalPaciente = ({
         >
           Selecionar
         </Button>
-      </View>
+      </View> */}
     </Modal>
   );
 };
@@ -155,7 +158,7 @@ const styles = StyleSheet.create({
   },
   acao: {},
   modalBodyDentista: {
-    height: 520,
+    height: 460,
     padding: 10,
   },
   modalBodyEspec: {

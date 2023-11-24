@@ -24,5 +24,6 @@ export function usePostEspecAuth() {
     mutationFn: async (especialidade) => {
       return await apiPostAuth('especialidade', especialidade);
     },
-  });
+    
+  }, );
 }

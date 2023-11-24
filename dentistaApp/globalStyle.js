@@ -100,4 +100,5 @@ export default StyleSheet.create({
     margin: 15,
     backgroundColor: 'black',
   },
+
 });

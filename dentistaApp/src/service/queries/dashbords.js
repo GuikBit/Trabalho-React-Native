@@ -7,6 +7,7 @@ export function useGetAllDashbords() {
       queryFn: async () => {
         return await apiGetDashBords('dashbord');
       },
+      refetchInterval: 10000
     });
   }
 

@@ -12,7 +12,7 @@ const Menus = ({ navigation }) => {
         cor="#FFFFFF"
         texto="Admin"
         acao={() => {
-          navigation.navigate('Home');
+          navigation.navigate('Admin');
         }}
       />
       <Acao

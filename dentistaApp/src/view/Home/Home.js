@@ -10,6 +10,7 @@ const Home = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <Header />
+      
       <Body navigation={navigation} /> 
       
       <Footer navigation={navigation} />

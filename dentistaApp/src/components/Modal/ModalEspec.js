@@ -1,10 +1,12 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Button, Card, Modal, Searchbar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import globalStyle from '../../../globalStyle';
 import FiltroDentistas from '../Listagem/FiltroDentistas';
 import { useGetDentistasAuth } from '../../service/queries/dentista';
+import { useGetEspecAuth } from '../../service/queries/especialidade';
+import { GlobalContext } from '../../store/Context';
 
 const ModalEspec = ({
   modalEspec,
@@ -15,7 +17,8 @@ const ModalEspec = ({
   filtro,
   setFiltro,
 }) => {
-  const { data, isLoading } = useGetDentistasAuth;
+  const { data, isLoading } = useGetEspecAuth();
+  const { dentista, setDentista } = useContext(GlobalContext);
 
   return (
     <Modal
@@ -35,23 +38,11 @@ const ModalEspec = ({
             data={data}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
-              <Card style={[styles.card]} onPress={() => {}}>
-                <View style={styles.header}>
-                  <Text style={styles.nome}>{item.nome}</Text>
-                </View>
-
-                <View style={styles.body}>
-                  <View style={styles.infoRow}>
-                    <Text style={styles.texto}>
-                      <Icon name="calendar" size={16} cor="#d1d1d1" />{' '}
-                      {item.dataNasc}
-                    </Text>
-                    <Text style={styles.texto}>
-                      <Icon name="address-card-o" size={16} cor="#d1d1d1" />{' '}
-                      {item.cpf}
-                    </Text>
-                  </View>
-                </View>
+              <Card style={[styles.card]} onPress={() => {
+                setDentista({...dentista, especialidade: item})
+                hideEspec();
+              }}>
+                  <Text style={styles.nome}>{item.tipo}</Text>
               </Card>
             )}
           />
@@ -84,7 +75,7 @@ export default ModalEspec;
 
 const styles = StyleSheet.create({
   card: {
-    height: 80,
+    height: 50,
     marginHorizontal: 15,
     marginVertical: 8,
     borderRadius: 10,
@@ -95,15 +86,13 @@ const styles = StyleSheet.create({
     borderLeftWidth: 5,
     padding: 8,
     paddingHorizontal: 15,
+    justifyContent: 'center'
   },
   header: {
-    borderBottomColor: '#CCCED2',
-    borderBottomWidth: 0.5,
-    paddingBottom: 5,
   },
   nome: {
-    flexDirection: 'row',
     alignSelf: 'center',
+    justifyContent: 'center',
     color: '#7a7d7a',
     fontSize: 20,
     fontWeight: 'bold',

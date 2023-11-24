@@ -12,9 +12,13 @@ import { GlobalContext } from '../../store/Context';
 const NovoDentista = ({ item }) => {
   const cor = '#2070B4';
   const titulo = 'Novo Dentista';
+
   const [modalEspec, setModalEspec] = useState(false);
+  const hideEspec = () => setModalEspec(false);
+
   const { mutate } = usePostDentistaAuth();
   const navigation = useNavigation();
+
   const [pesquisa, setPesquisa] = useState('');
   const { dentista, setDentista } = useContext(GlobalContext);
 
@@ -34,11 +38,12 @@ const NovoDentista = ({ item }) => {
     marginHorizontal: 10,
     padding: 10,
     borderRadius: 15,
-    height: 450,
+    height: 650,
     justifyContent: '',
   };
 
   return (
+    <>
     <ScrollView style={globalStyle.container}>
       <LinearGradient
         colors={['#2e86c9', '#24aae3']}
@@ -239,8 +244,8 @@ const NovoDentista = ({ item }) => {
           textColor={cor}
           value={dentista.especialidade.tipo}
           labelColor={cor}
-          // editable={false}
-          onChangeText={(e) => setDentista({ ...dentista, especialidade: e })}
+           editable={false}
+          //onChangeText={(e) => setDentista({ ...dentista, especialidade: e })}
         />
         <LinearGradient
           colors={['#2e86c9', '#24aae3']}
@@ -258,46 +263,18 @@ const NovoDentista = ({ item }) => {
             Salvar Dentista
           </Button>
         </LinearGradient>
+       
       </View>
 
-      {/* <ModalEspec modalEspec={modalEspec} styleModalEspec={styleModal} pesquisa={pesquisa} /> */}
-      {/* <Modal visible={modalEspec} contentContainerStyle={styleModal}>
-        <Searchbar
-          style={globalStyle.search}
-          placeholder="Pesquisar Especialidade"
-          value={pesquisa}
-          onClearIconPress={() => setFiltro(lista)}
-          onChangeText={(e) => buscaUsuario(e)}
-        />
-        <View style={styles.modalBody}>
-          <FlatList
-            data={listaEspe}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => <ModalEspec espec={item} />}
-          />
-        </View>
-        <View style={[globalStyle.rowBetween, styles.acao]}>
-          <Button
-            onPress={() => {
-              setModalEspec(false);
-            }}
-            style={styles.btnModalVoltar}
-            textColor="#FFFFFF"
-            icon="arrow-left-bold"
-          >
-            Voltar
-          </Button>
-          <Button
-            onPress={() => {}}
-            style={styles.btnModalbtnSelecionar}
-            textColor="#FFFFFF"
-            icon="check"
-          >
-            Selecionar
-          </Button>
-        </View>
-      </Modal> */}
+       
     </ScrollView>
+     <ModalEspec
+     hideEspec={hideEspec}
+     pesquisa={pesquisa}
+     styleModalEspec={styleModal}
+     modalEspec={modalEspec}
+   /> 
+   </>
   );
 };
 
@@ -317,8 +294,6 @@ const styles = StyleSheet.create({
   },
   btn: {
     backgroundColor: 'transparent',
-    // backgroundColor: '#2070B4',
-    // marginTop: 20,
     borderRadius: 15,
   },
   modalBody: {

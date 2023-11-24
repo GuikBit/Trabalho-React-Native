@@ -12,10 +12,14 @@ import { GlobalContext } from '../../store/Context';
 import { usePostConsultaAuth } from '../../service/queries/consulta';
 import { useNavigation } from '@react-navigation/native';
 import { Colors } from '../../global/GlobalStyles'
+import ModalEspec from '../../components/Modal/ModalEspec';
+import { useGetPacientesAuth } from '../../service/queries/paciente';
+
 const NovaConsulta = () => {
 
   const navigation = useNavigation();
-  const { data, isLoading } = useGetDentistasAuth();
+  const { data:dentistaData, isLoadingD } = useGetDentistasAuth();
+  const { data:pacienteData, isLoadingP } = useGetPacientesAuth();
   const { mutate } = usePostConsultaAuth();
 
   const { userLogged } = useContext(AuthContext);
@@ -23,24 +27,44 @@ const NovaConsulta = () => {
 
   const [modalDent, setModalDent] = useState(false);
   const [modalPac, setModalPac] = useState(false);
+  // const [modalEspec, setModalEspec] = useState(false);
   const [pesquisa, setPesquisa] = useState('');
-  const [filtro, setFiltro] = useState([]);
-
+  const [FiltroDentistas, setFiltro] = useState([]);
+  const [FiltroPaciente, setFiltroPaciente] = useState([]);
   const hideDen = () => setModalDent(false);
   const hidePac = () => setModalPac(false);
+  // const hideEspec = () => setModalEspec(false);
 
-  function buscaUsuario(e) {
+  function buscaDentista(e) {
     setPesquisa(e);
-
+    console.log(dentistaData)
     if (e === '') {
-      setFiltro(data);
+      setFiltro(dentistaData);
     } else {
       const pesquisaLowerCase = e.toLowerCase();
-      const res = data.filter((user) => {
+      const res = dentistaData.filter((user) => {
+        const nomeLowerCase = user.nome.toLowerCase();
+        const especLowerCase = user.especialidade.tipo.toLowerCase();
+        return ( nomeLowerCase.includes(pesquisaLowerCase) || especLowerCase.includes(pesquisaLowerCase) );
+      });
+      setFiltro(res);
+    }
+  }
+
+  function buscaPaciente(e) {
+    setPesquisa(e);
+    
+    if (e === '') {
+      setFiltroPaciente(pacienteData);
+    } else {
+      const pesquisaLowerCase = e.toLowerCase();
+      console.log(pacienteData)
+      const res = pacienteData.filter((user) =>{
         const nomeLowerCase = user.nome.toLowerCase();
         return nomeLowerCase.includes(pesquisaLowerCase);
       });
-      setFiltro(res);
+     
+      setFiltroPaciente(res);
     }
   }
 
@@ -50,8 +74,7 @@ const NovaConsulta = () => {
     navigation.navigate('Lista Consultas');
   };
 
-  const ajustaData = (num) => {
-    
+  const ajustaData = (num) => {    
     const textoLimpo = num.replace(/\D/g, '');
     const limite = textoLimpo.substring(0, 8);
     const dataFormatada = limite.replace(/(\d{2})(\d{2})(\d{4})/, '$1/$2/$3');
@@ -70,7 +93,7 @@ const NovaConsulta = () => {
     marginHorizontal: 10,
     padding: 10,
     borderRadius: 15,
-    height: 650,
+    height: 550,
     justifyContent: '',
   };
 
@@ -111,6 +134,7 @@ const NovaConsulta = () => {
                 />
               }
               right={
+                
                 <TextInput.Icon
                   icon="chevron-down"
                   color={Colors.secondary}
@@ -119,6 +143,7 @@ const NovaConsulta = () => {
                     setModalPac(true);
                   }}
                 />
+               
               }
               selectionColor={Colors.secondary}
               outlineColor={Colors.secondary}
@@ -131,9 +156,9 @@ const NovaConsulta = () => {
               editable={false}
             />
           )}
-          <TextInput
+          {/* <TextInput
             mode="outlined"
-            label="Dentista"
+            label="Especialidade"
             left={
               <TextInput.Icon
                 icon="account"
@@ -147,8 +172,39 @@ const NovaConsulta = () => {
                 color={Colors.secondary}
                 style={{ paddingTop: 10 }}
                 onPress={() => {
-                  setModalDent(true);
+                  setModalEspec(true);
                 }}
+              />
+            }
+            selectionColor={Colors.secondary}
+            outlineColor={Colors.secondary}
+            outlineStyle={globalStyle.inputRadius}
+            activeOutlineColor={Colors.secondary}
+            style={globalStyle.input}
+            textColor={Colors.secondary}
+            value={consulta.dentista.nome}
+            labelColor={Colors.secondary}
+            editable={false}
+          /> */}
+          <TextInput
+            mode="outlined"
+            label="Dentista"
+            left={
+              <TextInput.Icon
+                icon="account"
+                color={Colors.secondary}
+                style={{ paddingTop: 10 }}
+              />
+            }
+            right={
+              
+              <TextInput.Icon
+              icon="chevron-down"
+              color={Colors.secondary}
+              style={{ paddingTop: 10 }}
+              onPress={() => {
+                setModalDent(true);
+              }}
               />
             }
             selectionColor={Colors.secondary}
@@ -181,15 +237,6 @@ const NovaConsulta = () => {
             value={consulta.dataConsulta}
             labelColor={Colors.secondary}
             maxLength={10}
-            // onChangeText={(e) => {
-            //    if (e.length == 8) {
-            //     const data = dayjs(e, 'YYYY-MM-DD').format('DD/MM/YYYY');
-            //     setConsulta({ ...consulta, dataConsulta: data });
-            //    }
-            //    if (e.length <= 9) {
-            //     setConsulta({ ...consulta, dataConsulta: e });
-            //   }
-            // }}
             onChangeText={ajustaData}
           />
            
@@ -230,25 +277,28 @@ const NovaConsulta = () => {
       <ModalDentista
         modalDent={modalDent}
         hideDentis={hideDen}
-        buscaUsuario={buscaUsuario}
+        buscaDentista={buscaDentista}
         pesquisa={pesquisa}
         styleModalDent={styleModal}
-        filtro={filtro}
+        filtro={FiltroDentistas}
         setFiltro={setFiltro}
       />
 
-      {/* <ModalEspec
+       {/* <ModalEspec
         hideEspec={hideEspec}
         pesquisa={pesquisa}
         styleModalEspec={styleModal}
         modalEspec={modalEspec}
-      /> */}
+      />  */}
 
       <ModalPaciente
         hidePac={hidePac}
         pesquisa={pesquisa}
         styleModalPac={styleModal}
         modalPac={modalPac}
+        buscaPaciente={buscaPaciente}
+        filtro={FiltroPaciente}
+        setFiltro={setFiltro}
       />
     </View>
   );

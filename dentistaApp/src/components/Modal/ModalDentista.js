@@ -10,12 +10,13 @@ import { GlobalContext } from '../../store/Context';
 const ModalDentista = ({
   modalDent,
   styleModalDent,
-  buscaUsuario,
+  buscaDentista,
   hideDentis,
   pesquisa,
   filtro,
   setFiltro,
 }) => {
+
   const { data, isLoading } = useGetDentistasAuth();
   const { consulta, setConsulta } = useContext(GlobalContext);
 
@@ -27,14 +28,14 @@ const ModalDentista = ({
     >
       <FiltroDentistas
         pesquisa={pesquisa}
-        buscaUsuario={buscaUsuario}
+        buscaDentista={buscaDentista}
         setFiltro={setFiltro}
-        data={data}
+        data={data}       
       />
       <View style={styles.modalBodyDentista}>
         {!isLoading && (
           <FlatList
-            data={data}
+            data={filtro.length == 0 ? data : filtro}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
               <Card
@@ -52,11 +53,11 @@ const ModalDentista = ({
                   <View style={styles.infoRow}>
                     <Text style={styles.texto}>
                       <Icon name="calendar" size={16} cor="#d1d1d1" />{' '}
-                      {item.dataNasc}
+                      {item.especialidade.tipo}
                     </Text>
                     <Text style={styles.texto}>
                       <Icon name="address-card-o" size={16} cor="#d1d1d1" />{' '}
-                      {item.cpf}
+                      {item.cro}
                     </Text>
                   </View>
                 </View>
@@ -65,7 +66,7 @@ const ModalDentista = ({
           />
         )}
       </View>
-      <View style={[globalStyle.rowBetween, styles.acao]}>
+      {/* <View style={[globalStyle.rowBetween, styles.acao]}>
         <Button
           onPress={hideDentis}
           style={styles.btnModalVoltar}
@@ -82,37 +83,10 @@ const ModalDentista = ({
         >
           Selecionar
         </Button>
-      </View>
+      </View> */}
     </Modal>
 
-    // <Card
-    //   style={[
-    //     styles.card,
-    //     {
-    //       borderColor: clicou ? '#1d9c06' : 'grey',
-    //       borderWidth: clicou ? 1 : 0.3,
-    //     },
-    //   ]}
-    //   onPress={() => {
-    //     setClicou(!clicou);
-    //   }}
-    // >
-    //   <View style={styles.header}>
-    //     <Text style={styles.nome}>{dentista.nome}</Text>
-    //   </View>
-
-    //   <View style={styles.body}>
-    //     <View style={styles.infoRow}>
-    //       <Text style={styles.texto}>
-    //         <Icon name="calendar" size={16} cor="#d1d1d1" /> {dentista.CRO}
-    //       </Text>
-    //       <Text style={styles.texto}>
-    //         <Icon name="address-card-o" size={16} cor="#d1d1d1" />{' '}
-    //         {dentista.dataNasc}
-    //       </Text>
-    //     </View>
-    //   </View>
-    // </Card>
+    
   );
 };
 
@@ -184,7 +158,7 @@ const styles = StyleSheet.create({
   },
   acao: {},
   modalBodyDentista: {
-    height: 520,
+    height: 460,
     padding: 10,
   },
   modalBodyEspec: {

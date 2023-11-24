@@ -9,6 +9,7 @@ import CardPaciente from '../../components/Cards/CardPaciente';
 import { useGetDentistasAuth } from '../../service/queries/dentista';
 import { LinearGradient } from 'expo-linear-gradient';
 import { AuthContext } from '../../Auth/Auth';
+import CardDentista from '../../components/Cards/CardDestista';
 
 const ListaDentista = ({ navigation }) => {
   const { data, isLoading } = useGetDentistasAuth();
@@ -23,12 +24,12 @@ const ListaDentista = ({ navigation }) => {
     if (e === '') {
       setFiltro(data);
     } else {
-      const pesquisaLowerCase = e.toLowerCase();
+      const pesquisaLowerCase = e.toLowerCase();     
       const res = data.filter((user) => {
         const nomeLowerCase = user.nome.toLowerCase();
-        // const pastaNuString = user.pastaNu.toString();
-        return nomeLowerCase.includes(pesquisaLowerCase);
-        // pastaNuString.includes(pesquisaLowerCase)
+        const especLowerCase = user.especialidade.tipo.toLowerCase();
+        return (nomeLowerCase.includes(pesquisaLowerCase) || especLowerCase.includes(pesquisaLowerCase));
+        
       });
       setFiltro(res);
     }
@@ -60,7 +61,7 @@ const ListaDentista = ({ navigation }) => {
               data={pesquisa.length == 0 ? data : filtro}
               keyExtractor={(item) => item.id}
               renderItem={({ item }) => (
-                <CardPaciente
+                <CardDentista
                   usuario={item}
                   onPress={() => {
                     // if (userLogged.role == 'Dentista')

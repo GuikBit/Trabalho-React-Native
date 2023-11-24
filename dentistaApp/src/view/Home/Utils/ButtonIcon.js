@@ -1,10 +1,12 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { TextInput, Button, IconButton } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
+import ModalNovaEspec from '../../../components/Modal/ModalNovaEspec';
 
 const ButtonIcon = ({ icone, tam, cor, texto, acao }) => {
   const [prim, seg] = texto.split(' ');
+
   return (
     <View style={styles.view}>      
         <TouchableOpacity style={styles.card} onPress={acao}>
@@ -26,8 +28,6 @@ const ButtonIcon = ({ icone, tam, cor, texto, acao }) => {
             </View>
           
         </TouchableOpacity>
-         
-        
         
     </View>
   );

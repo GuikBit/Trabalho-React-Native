@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { ScrollView } from 'react-native';
 import globalStyle from '../../../../globalStyle';
 import { AuthContext } from '../../../Auth/Auth';
