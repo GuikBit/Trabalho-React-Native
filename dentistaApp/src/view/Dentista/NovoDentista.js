@@ -8,8 +8,9 @@ import Icon from '@expo/vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/core';
 import { usePostDentistaAuth } from '../../service/queries/dentista';
 import { GlobalContext } from '../../store/Context';
+import { Colors } from '../../global/GlobalStyles';
 
-const NovoDentista = ({ item }) => {
+const NovoDentista = ({ item, paramsDentista }) => {
   const cor = '#2070B4';
   const titulo = 'Novo Dentista';
 
@@ -25,6 +26,9 @@ const NovoDentista = ({ item }) => {
   useEffect(() => {
     if (item != null) {
       titulo = 'Detalhes Dentista';
+    }
+    if(paramsDentista !== null){
+      //setDentista(...dentista, paramsDentista);
     }
   }, []);
 
@@ -73,18 +77,18 @@ const NovoDentista = ({ item }) => {
           left={
             <TextInput.Icon
               icon="lead-pencil"
-              color={cor}
+              color={Colors.secondary}
               style={{ paddingTop: 10 }}
             />
           }
-          selectionColor={cor}
-          outlineColor={cor}
+          selectionColor={Colors.secondary}
+          outlineColor={Colors.secondary}
           outlineStyle={globalStyle.inputRadius}
-          activeOutlineColor={cor}
+          activeOutlineColor={Colors.secondary}
           style={globalStyle.input}
-          textColor={cor}
+          textColor={Colors.secondary}
           value={dentista.nome}
-          labelColor={cor}
+          labelColor={Colors.secondary}
           onChangeText={(e) => setDentista({ ...dentista, nome: e })}
         />
         <TextInput
@@ -93,14 +97,14 @@ const NovoDentista = ({ item }) => {
           left={
             <TextInput.Icon
               icon="account"
-              color={cor}
+              color={Colors.secondary}
               style={{ paddingTop: 10 }}
             />
           }
-          selectionColor={cor}
-          outlineColor={cor}
+          selectionColor={Colors.secondary}
+          outlineColor={Colors.secondary}
           outlineStyle={globalStyle.inputRadius}
-          activeOutlineColor={cor}
+          activeOutlineColor={Colors.secondary}
           style={globalStyle.input}
           textColor="#2070B4"
           value={dentista.login}
@@ -125,14 +129,14 @@ const NovoDentista = ({ item }) => {
               style={{ paddingTop: 10 }}
             />
           }
-          selectionColor={cor}
-          outlineColor={cor}
+          selectionColor={Colors.secondary}
+          outlineColor={Colors.secondary}
           outlineStyle={globalStyle.inputRadius}
-          activeOutlineColor={cor}
+          activeOutlineColor={Colors.secondary}
           style={globalStyle.input}
-          textColor={cor}
+          textColor={Colors.secondary}
           value={dentista.senha}
-          labelColor={cor}
+          labelColor={Colors.secondary}
           onChangeText={(e) => setDentista({ ...dentista, senha: e })}
         />
         <TextInput
@@ -141,18 +145,18 @@ const NovoDentista = ({ item }) => {
           left={
             <TextInput.Icon
               icon="email"
-              color={cor}
+              color={Colors.secondary}
               style={{ paddingTop: 10 }}
             />
           }
-          selectionColor={cor}
-          outlineColor={cor}
+          selectionColor={Colors.secondary}
+          outlineColor={Colors.secondary}
           outlineStyle={globalStyle.inputRadius}
-          activeOutlineColor={cor}
+          activeOutlineColor={Colors.secondary}
           style={globalStyle.input}
-          textColor={cor}
+          textColor={Colors.secondary}
           value={dentista.email}
-          labelColor={cor}
+          labelColor={Colors.secondary}
           onChangeText={(e) => setDentista({ ...dentista, email: e })}
         />
         {/* SEXO */}
@@ -162,18 +166,18 @@ const NovoDentista = ({ item }) => {
           left={
             <TextInput.Icon
               icon="calendar"
-              color={cor}
+              color={Colors.secondary}
               style={{ paddingTop: 10 }}
             />
           }
-          selectionColor={cor}
-          outlineColor={cor}
+          selectionColor={Colors.secondary}
+          outlineColor={Colors.secondary}
           outlineStyle={globalStyle.inputRadius}
-          activeOutlineColor={cor}
+          activeOutlineColor={Colors.secondary}
           style={globalStyle.input}
-          textColor={cor}
+          textColor={Colors.secondary}
           value={dentista.dataNasc}
-          labelColor={cor}
+          labelColor={Colors.secondary}
           onChangeText={(e) => setDentista({ ...dentista, dataNasc: e })}
         />
         <TextInput
@@ -182,18 +186,18 @@ const NovoDentista = ({ item }) => {
           left={
             <TextInput.Icon
               icon="phone"
-              color={cor}
+              color={Colors.secondary}
               style={{ paddingTop: 10 }}
             />
           }
-          selectionColor={cor}
-          outlineColor={cor}
+          selectionColor={Colors.secondary}
+          outlineColor={Colors.secondary}
           outlineStyle={globalStyle.inputRadius}
-          activeOutlineColor={cor}
+          activeOutlineColor={Colors.secondary}
           style={globalStyle.input}
-          textColor={cor}
+          textColor={Colors.secondary}
           value={dentista.telefone}
-          labelColor={cor}
+          labelColor={Colors.secondary}
           onChangeText={(e) => setDentista({ ...dentista, telefone: e })}
         />
         <TextInput
@@ -202,18 +206,18 @@ const NovoDentista = ({ item }) => {
           left={
             <TextInput.Icon
               icon="badge-account-horizontal"
-              color={cor}
+              color={Colors.secondary}
               style={{ paddingTop: 10 }}
             />
           }
-          selectionColor={cor}
-          outlineColor={cor}
+          selectionColor={Colors.secondary}
+          outlineColor={Colors.secondary}
           outlineStyle={globalStyle.inputRadius}
-          activeOutlineColor={cor}
+          activeOutlineColor={Colors.secondary}
           style={globalStyle.input}
-          textColor={cor}
+          textColor={Colors.secondary}
           value={dentista.cro}
-          labelColor={cor}
+          labelColor={Colors.secondary}
           onChangeText={(e) => setDentista({ ...dentista, cro: e })}
         />
         <TextInput
@@ -222,28 +226,28 @@ const NovoDentista = ({ item }) => {
           left={
             <TextInput.Icon
               icon="account"
-              color={cor}
+              color={Colors.secondary}
               style={{ paddingTop: 10 }}
             />
           }
           right={
             <TextInput.Icon
               icon="chevron-down"
-              color={cor}
+              color={Colors.secondary}
               style={{ paddingTop: 10 }}
               onPress={() => {
                 setModalEspec(true);
               }}
             />
           }
-          selectionColor={cor}
-          outlineColor={cor}
+          selectionColor={Colors.secondary}
+          outlineColor={Colors.secondary}
           outlineStyle={globalStyle.inputRadius}
-          activeOutlineColor={cor}
+          activeOutlineColor={Colors.secondary}
           style={globalStyle.input}
-          textColor={cor}
+          textColor={Colors.secondary}
           value={dentista.especialidade.tipo}
-          labelColor={cor}
+          labelColor={Colors.secondary}
            editable={false}
           //onChangeText={(e) => setDentista({ ...dentista, especialidade: e })}
         />

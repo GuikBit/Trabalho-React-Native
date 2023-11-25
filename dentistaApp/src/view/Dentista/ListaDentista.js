@@ -1,5 +1,5 @@
 import { FlatList, StyleSheet, View } from 'react-native';
-import React, { useContext, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import globalStyle from '../../../globalStyle';
 import FiltroDentistas from '../../components/Listagem/FiltroDentistas';
 import { PaperProvider, FAB } from 'react-native-paper';
@@ -10,9 +10,11 @@ import { useGetDentistasAuth } from '../../service/queries/dentista';
 import { LinearGradient } from 'expo-linear-gradient';
 import { AuthContext } from '../../Auth/Auth';
 import CardDentista from '../../components/Cards/CardDestista';
+import { useFocusEffect } from '@react-navigation/native';
 
 const ListaDentista = ({ navigation }) => {
   const { data, isLoading } = useGetDentistasAuth();
+  const [reload, setReload] = useState();
   const { userLogged } = useContext(AuthContext);
 
   const [filtro, setFiltro] = useState([]);
@@ -34,6 +36,13 @@ const ListaDentista = ({ navigation }) => {
       setFiltro(res);
     }
   }
+  useFocusEffect(
+    useCallback(() => {
+      
+      
+
+    }, [])
+    );
 
   return (
     <PaperProvider>
@@ -68,9 +77,7 @@ const ListaDentista = ({ navigation }) => {
                     //   navigation.navigate('Dentista Details', {
                     //     dentista: item.id,
                     //   });
-                    navigation.navigate('Dentista Details', {
-                      dentista: item.id,
-                    })
+                    navigation.navigate('Dentista Details', {item})
                   }}
                 />
               )}

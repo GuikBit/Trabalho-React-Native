@@ -1,24 +1,17 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect  } from 'react';
 import img from '../../../../assets/img/odontoWhite.png';
 import { Image, StyleSheet, Text, View, Dimensions } from 'react-native';
 import Icon from '@expo/vector-icons/FontAwesome';
 import globalStyle from '../../../../globalStyle';
 import { AuthContext } from '../../../Auth/Auth';
-import { Button } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native';
+import { Button, TextInput, IconButton} from 'react-native-paper';
+import { useNavigation, useFocusEffect  } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Colors } from '../../../global/GlobalStyles';
 
 const width = Dimensions.get('screen').width;
 
-const Header = () => {
-  const { userLogged } = useContext(AuthContext);
-
-  const navigation = useNavigation();
-
-  const handleLogout = () =>{
-
-  }
+const Header = ({userLogged, handleLogout}) => { 
 
   return (
     <LinearGradient        
@@ -28,36 +21,24 @@ const Header = () => {
         >
         
         <View style={styles.top}>
+        <IconButton
+          icon="logout"
+          iconColor="#FFFFFF"
+          size={27}
+          onPress={handleLogout}
           
-          <Icon
-            name="chevron-left"
-            size={30}
-            color="#ECECEC"
-            style={{ padding: 8 }}
-            onPress={() => navigation.navigate('Login')}
-          />
-
-          <Icon
-            name="cog"
-            size={30}
-            color="#ECECEC"
-            style={styles.conf}
-            onPress={() => {}}
-          />
+        />
+        <IconButton
+          icon="cog-outline"
+          iconColor="#FFFFFF"
+          size={27}
+                    
+        />
         </View>
 
         <View style={styles.menu}>
           <Text style={styles.nome}>{userLogged.nome}</Text>
-          <Button
-              icon="login"
-              textColor={Colors.secondary}
-              mode="contained"
-              onPress={handleLogout}
-              style={styles.buttons}
-              labelStyle={{ fontSize: 20 }}
-            >
-              Sair
-            </Button>
+          
         </View>
         
       </LinearGradient>
@@ -107,5 +88,6 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     borderWidth: 1,
     borderColor: Colors.secondary,
+    paddingBottom: 4
   },
 });

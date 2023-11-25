@@ -23,7 +23,7 @@ import DentistaDetails from './src/view/Dentista/DentistaDetails.js';
 import PacienteDetails from './src/view/Paciente/PacienteDetails.js';
 import Admin from './src/view/admin/Admin.js';
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 const queryClient = new QueryClient();
 
 export default function App() {

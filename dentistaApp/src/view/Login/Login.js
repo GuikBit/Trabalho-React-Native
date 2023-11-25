@@ -1,49 +1,67 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useCallback } from 'react';
 import { StyleSheet, Text, View, Dimensions, ScrollView } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import { Colors, Dimension } from '../../global/GlobalStyles';
 import { AuthContext, AuthProvider, userAuth } from '../../Auth/Auth';
 import Logo from '../../components/Logo';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute, useFocusEffect  } from '@react-navigation/native';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { apiGetPorId } from '../../service/Api';
 import { LinearGradient } from 'expo-linear-gradient';
 import globalStyle from '../../../globalStyle';
+import ErrorResponse from '../../components/response/ErrorResponse';
+import SuccessResponse from '../../components/response/SuccessResponse';
+
+
+
 const Login = ({}) => {
-  const [newUser, setNewuser] = useState();
 
-  const { login, user, setUser } = useContext(AuthContext);
-
+  const [newUser, setNewuser] = useState(false);
+  const [vazio, setVazio] = useState(false);
+  const [erro, setErro] = useState(false);
+  const { login, user, msg, setMsg, setUser, userLogged} = useContext(AuthContext);
   const route = useRoute();
   const navigation = useNavigation();
 
-  // useEffect(() => {
-  //   if (route.params?.criado) {
-  //     setNewuser = true;
-  //   }
-  // }, [route.params?.criado]);
+  const handleLogin = async () => {
 
-  const handleLogin = () => {
-    login();
-
-    navigation.navigate('Home');
+    setNewuser(false);
+    if(user.login !== "" && user.password !== ""){      
+      const logado = await login();
+        
+      if(logado){
+        setUser({...user, login:'', password:''})
+        navigation.replace("Home")        
+      } 
+      else{
+        setErro(true);
+        //setMsg("");  
+        setVazio(false)      
+      }    
+    }
+    else{           
+      setVazio(true)
+      setErro(false)
+    }
   };
 
   return (
     <ScrollView style={globalStyle.container}>
       <Logo style={styles.topo} />
       <View style={styles.login}>
-        {newUser == true && (
-          <View>
-            <Text>Usuário cadastrado com sucesso!</Text>
-          </View>
-        )}
-        {newUser == false && (
-          <View>
-            <Text>Não foi possivel salvar o usuário!</Text>
-          </View>
-        )}
+        <View style={{marginBottom: 20, height: 40}}>
+          {vazio === true && (
+            <ErrorResponse titulo="Login ou senha vazio." onPress={()=> {setVazio(false)}} cor="#f44336"/>
+          )}
+          {erro === true && (
+            <ErrorResponse titulo={msg} onPress={()=> {setErro(false)}} cor="#f44336"/>
+          )}
+          {newUser === true && (
+            <SuccessResponse titulo="Usuario salvo." onPress={()=>{setNewuser(false)}} cor="#529558" />
+          )}
+        </View>
+        
         <TextInput
           mode="outlined"
           label="Login"
@@ -86,6 +104,7 @@ const Login = ({}) => {
               icon="key"
               color={Colors.secondary}
               style={{ paddingTop: 10 }}
+             
             />
           }
           selectionColor={Colors.secondary}
@@ -158,9 +177,9 @@ const styles = StyleSheet.create({
   },
   login: {
     marginHorizontal: 20,
-    height: 150,
+    height: 220,
     justifyContent: 'space-around',
-    marginTop: 130,
+    marginTop: 80,
   },
   label: {
     fontSize: 22,

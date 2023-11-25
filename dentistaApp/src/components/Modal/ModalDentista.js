@@ -35,7 +35,7 @@ const ModalDentista = ({
       <View style={styles.modalBodyDentista}>
         {!isLoading && (
           <FlatList
-            data={filtro.length == 0 ? data : filtro}
+            data={data}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
               <Card
