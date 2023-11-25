@@ -47,7 +47,7 @@ export  function apiGetByIdAuth(url, id) {
 
   try {
     const response = instance.get(`/v1/${url}/${id}`);
-    console.log(response.data)
+
     return response.data;
   } catch (error) {
     console.error(error);

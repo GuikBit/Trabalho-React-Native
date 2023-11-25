@@ -6,52 +6,56 @@ import lista from '../Mock/lista';
 import CardConsulta from './Cards/CardConsulta';
 import { useGetConsultaByPacienteIdAuth } from '../service/queries/paciente';
 import { AuthContext } from '../Auth/Auth';
+import { Colors } from '../global/GlobalStyles';
+import LoadingOverlay from './LoadingOverlay/LoadingOverlay';
 
-const UserBody = ({ navigation }) => {
-  const [titulo, setTitulo] = useState('Histórico de Consultas');
-  const [pesquisa, setPesquisa] = useState('');
+const UserBody = ({ navigation, paciente }) => {
+
+  // const [pesquisa, setPesquisa] = useState('');
   const [filtro, setFiltro] = useState([]);
-  const cor = '#2070B4';
 
   const { userLogged } = useContext(AuthContext);
-  // const id = userLogged.id;
-  const { data, isLoading } = useGetConsultaByPacienteIdAuth(userLogged.id);
 
-  function buscaUsuario(e) {
-    setPesquisa(e);
+  const { data, isLoading } =  useGetConsultaByPacienteIdAuth( paciente.id );
 
-    if (e === '') {
-      setFiltro(data);
-    } else {
-      const pesquisa = e.toLowerCase();
-      const filtro = data.filter((user) => {
-        const dataConsulta = user.dataNasc.toLowerCase();
-        return dataConsulta.includes(pesquisa);
-      });
-      setFiltro(filtro);
-    }
-  }
+  // function buscaUsuario(e) {
+  //   setPesquisa(e);
+
+  //   if (e === '') {
+  //     setFiltro(data);
+  //   } else {
+  //     const pesquisa = e.toLowerCase();
+  //     const filtro = data.filter((user) => {
+  //       const dataConsulta = user.dataNasc.toLowerCase();
+  //       return dataConsulta.includes(pesquisa);
+  //     });
+  //     setFiltro(filtro);
+  //   }
+  // }
   return (
     <View style={styles.body}>
       <View style={styles.boxTitulo}>
-        <Text style={styles.titulo}>{titulo}</Text>
+        <Text style={styles.titulo}>Histórico de Consultas</Text>
 
         <TextInput
           mode="outlined"
-          left={<TextInput.Icon icon="calendar-today" color={cor} />}
-          selectionColor={cor}
-          outlineColor={cor}
+          left={<TextInput.Icon icon="calendar-today" color={Colors.secondary} />}
+          selectionColor={Colors.secondary}
+          outlineColor={Colors.secondary}
           outlineStyle={{ borderRadius: 50 }}
-          activeOutlineColor={cor}
+          activeOutlineColor={Colors.secondary}
           style={styles.search}
-          textColor={cor}
-          labelColor={cor}
+          textColor={Colors.secondary}
+          labelColor={Colors.secondary}
           onChangeText={(e) => setDataInicio(e)}
         />
       </View>
-
+      {isLoading &&  <LoadingOverlay/>}
       {!isLoading && (
-        <FlatList
+        data === null? 
+          <Text>Nem uma consulta entrada</Text>
+          :
+          <FlatList
           style={styles.flatList}
           data={filtro.length == 0 ? data : filtro}
           keyExtractor={(item) => item.id}
@@ -64,6 +68,8 @@ const UserBody = ({ navigation }) => {
             />
           )}
         />
+        
+        
       )}
       <FAB
         icon="account-details"

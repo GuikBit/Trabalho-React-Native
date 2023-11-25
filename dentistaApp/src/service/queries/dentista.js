@@ -20,9 +20,15 @@ export function useGetDentistaByIdAuth(id) {
 }
 
 export function usePostDentistaAuth() {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (dentista) => {
-      return await apiPostAuth('dentista', dentista);
+
+      const novoDentista =  await apiPostAuth('dentista', dentista);
+      queryClient.invalidateQueries('getDentistasAuth');
+
+      return novoDentista;
     },
   });
 }
+

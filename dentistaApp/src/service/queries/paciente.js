@@ -13,14 +13,14 @@ export function useGetPacientesAuth() {
 export function useGetPacienteByIdAuth(id) {
   return useQuery({
     queryKey: ['getPacienteByIdAuth', id],
-    queryFn: () => {
-      return apiGetByIdAuth('paciente', id);
+    queryFn: async () => {
+      return await apiGetByIdAuth('paciente', id);
     },
   });
 }
 export function usePostPaciente() {
   return useMutation({
-    mutationFn: (paciente) => {
+    mutationFn: async (paciente) => {
       return apiPost('paciente', paciente);
     },
   });

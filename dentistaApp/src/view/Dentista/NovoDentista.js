@@ -1,42 +1,116 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import globalStyle from '../../../globalStyle';
-import { View, StyleSheet, Text, FlatList, ScrollView } from 'react-native';
-import { TextInput, Button, Modal, Searchbar } from 'react-native-paper';
+import { View, StyleSheet, Text, ScrollView } from 'react-native';
+import { TextInput, Button, IconButton } from 'react-native-paper';
 import ModalEspec from '../../components/Modal/ModalEspec';
 import { LinearGradient } from 'expo-linear-gradient';
 import Icon from '@expo/vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/core';
-import { usePostDentistaAuth } from '../../service/queries/dentista';
+import { usePostDentistaAuth, usePutDentistaAuth } from '../../service/queries/dentista';
 import { GlobalContext } from '../../store/Context';
 import { Colors } from '../../global/GlobalStyles';
+import { useCallback } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import ErrorResponse from '../../components/response/ErrorResponse';
 
 const NovoDentista = ({ item, paramsDentista }) => {
-  const cor = '#2070B4';
-  const titulo = 'Novo Dentista';
 
   const [modalEspec, setModalEspec] = useState(false);
   const hideEspec = () => setModalEspec(false);
 
   const { mutate } = usePostDentistaAuth();
+
   const navigation = useNavigation();
 
   const [pesquisa, setPesquisa] = useState('');
-  const { dentista, setDentista } = useContext(GlobalContext);
+  const { dentista, setDentista, limpaDentista } = useContext(GlobalContext);
+  const [editavel, setEditavel] = useState(true);
+  const [teste, setTeste] = useState(true);
+  const [error, setError] = useState(false);
 
-  useEffect(() => {
-    if (item != null) {
-      titulo = 'Detalhes Dentista';
+ useFocusEffect(
+   useCallback(() => {
+    if (paramsDentista !== undefined) {
+      
+      setDentista({...dentista, 
+        id: paramsDentista.id,
+        nome: paramsDentista.nome,
+        email: paramsDentista.email,
+        login: paramsDentista.login,
+        senha: paramsDentista.senha,
+        telefone: paramsDentista.telefone,
+        cpf: paramsDentista.cpf,
+        dataNasc: paramsDentista.dataNasc,
+        cro: paramsDentista.cro,
+        especialidade: paramsDentista.especialidade
+      });
+      setEditavel(false)
     }
-    if(paramsDentista !== null){
-      //setDentista(...dentista, paramsDentista);
-    }
-  }, []);
 
-  const handleCadastro = () => {
-    mutate(dentista);
-    navigation.navigate('Lista Dentista');
+    return () => {        
+      limpaDentista()
+
+    };
+    }, [])
+
+  );
+  function dadosTeste(){
+    setDentista({...dentista,
+      nome: 'Dr Matheus',
+      email: 'matheus@email.com',
+      login: 'dentista@email.com',
+      senha: '123',
+      telefone: '(32) 98877-6655',
+      cpf: '111.222.333-00',
+      dataNasc: '12/04/1996',
+      cro: '432143',
+      especialidade: {},
+    })
+    setTeste(!teste)
+  }
+  function validaDados(){
+    setError(false)
+    if(dentista.nome == '' || dentista.login == '' || dentista.senha == '' || dentista.cpf == '' ){
+      setError(true)
+      return false
+    }else{
+      return true
+    }
+    
+  }
+
+  const handleCadastro = async () => {
+    try{
+      if(validaDados()){
+        if(dentista.id === undefined){
+          mutate(dentista)
+        }       
+        navigation.navigate('Lista Dentista', {novo: true});
+      }
+    
+    }catch(error){
+      console.log(error)
+    }    
   };
+  const ajustaData = (num) => {    
+    const textoLimpo = num.replace(/\D/g, '');
+    const limite = textoLimpo.substring(0, 8);
+    const dataFormatada = limite.replace(/(\d{2})(\d{2})(\d{4})/, '$1/$2/$3');
+    setDentista({ ...dentista, dataNasc: dataFormatada })
+  }
 
+  const ajustaTelefone = (num) => {    
+    const textoLimpo = num.replace(/\D/g, '');
+    const limite = textoLimpo.substring(0, 11);
+    const telFormatado = limite.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+    setDentista({ ...dentista, telefone: telFormatado })
+  }
+  const ajustaCPF = (num) => {    
+    const textoLimpo = num.replace(/\D/g, '');
+    const limite = textoLimpo.substring(0, 11);
+    const cpfFormatado = limite.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+    setDentista({ ...dentista, cpf: num })
+  }
   const styleModal = {
     backgroundColor: '#FFFFFF',
     marginHorizontal: 10,
@@ -48,7 +122,7 @@ const NovoDentista = ({ item, paramsDentista }) => {
 
   return (
     <>
-    <ScrollView style={globalStyle.container}>
+     <ScrollView style={globalStyle.container}>
       <LinearGradient
         colors={['#2e86c9', '#24aae3']}
         style={globalStyle.headerPesq}
@@ -65,12 +139,37 @@ const NovoDentista = ({ item, paramsDentista }) => {
             }}
           />
           <View style={styles.titulo}>
-            <Text style={[globalStyle.titulo]}>{titulo}</Text>
+            <Text style={[globalStyle.titulo]}>{editavel? "Novo Dentista": "Detalhes Dentista" }</Text>
           </View>
         </View>
+        
       </LinearGradient>
-
+      
+   
+      <View style={{margin: 10, height: 40, marginHorizontal: 20}}>
+            
+          {error && 
+            <ErrorResponse titulo="Campos vazios foram identificados" onPress={()=> {setError(false)}} cor="#f44336"/> 
+          }
+        </View>
       <View style={styles.cadastro}>
+        
+      {teste? 
+        <IconButton
+          icon="account-cog"
+          iconColor={Colors.secondary}
+          size={20}
+          onPress={dadosTeste}          
+        />
+        :
+        <IconButton
+          icon="delete-empty"
+          iconColor={Colors.secondary}
+          size={20}
+          onPress={()=>{limpaDentista(); setTeste(!teste)}}          
+        />
+        }
+        
         <TextInput
           mode="outlined"
           label="Nome"
@@ -90,6 +189,7 @@ const NovoDentista = ({ item, paramsDentista }) => {
           value={dentista.nome}
           labelColor={Colors.secondary}
           onChangeText={(e) => setDentista({ ...dentista, nome: e })}
+          
         />
         <TextInput
           mode="outlined"
@@ -110,6 +210,7 @@ const NovoDentista = ({ item, paramsDentista }) => {
           value={dentista.login}
           labelColor="#2070B4"
           onChangeText={(e) => setDentista({ ...dentista, login: e })}
+          editable={editavel}
         />
         <TextInput
           mode="outlined"
@@ -138,6 +239,7 @@ const NovoDentista = ({ item, paramsDentista }) => {
           value={dentista.senha}
           labelColor={Colors.secondary}
           onChangeText={(e) => setDentista({ ...dentista, senha: e })}
+          editable={editavel}
         />
         <TextInput
           mode="outlined"
@@ -159,6 +261,27 @@ const NovoDentista = ({ item, paramsDentista }) => {
           labelColor={Colors.secondary}
           onChangeText={(e) => setDentista({ ...dentista, email: e })}
         />
+        <TextInput
+          mode="outlined"
+          label="CPF"
+          left={
+            <TextInput.Icon
+              icon="badge-account-horizontal"
+              color={Colors.secondary}
+              style={{ paddingTop: 10 }}
+            />
+          }
+          keyboardType='numeric'
+          selectionColor={Colors.secondary}
+          outlineColor={Colors.secondary}
+          outlineStyle={globalStyle.inputRadius}
+          activeOutlineColor={Colors.secondary}
+          style={globalStyle.input}
+          textColor={Colors.secondary}
+          value={dentista.cpf}
+          labelColor={Colors.secondary}
+          onChangeText={ajustaCPF}
+        />
         {/* SEXO */}
         <TextInput
           mode="outlined"
@@ -170,6 +293,7 @@ const NovoDentista = ({ item, paramsDentista }) => {
               style={{ paddingTop: 10 }}
             />
           }
+          keyboardType='numeric'
           selectionColor={Colors.secondary}
           outlineColor={Colors.secondary}
           outlineStyle={globalStyle.inputRadius}
@@ -178,7 +302,7 @@ const NovoDentista = ({ item, paramsDentista }) => {
           textColor={Colors.secondary}
           value={dentista.dataNasc}
           labelColor={Colors.secondary}
-          onChangeText={(e) => setDentista({ ...dentista, dataNasc: e })}
+          onChangeText={ajustaData}
         />
         <TextInput
           mode="outlined"
@@ -190,6 +314,7 @@ const NovoDentista = ({ item, paramsDentista }) => {
               style={{ paddingTop: 10 }}
             />
           }
+          keyboardType='numeric'
           selectionColor={Colors.secondary}
           outlineColor={Colors.secondary}
           outlineStyle={globalStyle.inputRadius}
@@ -198,14 +323,14 @@ const NovoDentista = ({ item, paramsDentista }) => {
           textColor={Colors.secondary}
           value={dentista.telefone}
           labelColor={Colors.secondary}
-          onChangeText={(e) => setDentista({ ...dentista, telefone: e })}
+          onChangeText={ajustaTelefone}
         />
-        <TextInput
+        {/* <TextInput
           mode="outlined"
           label="CRO"
           left={
             <TextInput.Icon
-              icon="badge-account-horizontal"
+              icon="badge-account"
               color={Colors.secondary}
               style={{ paddingTop: 10 }}
             />
@@ -219,7 +344,7 @@ const NovoDentista = ({ item, paramsDentista }) => {
           value={dentista.cro}
           labelColor={Colors.secondary}
           onChangeText={(e) => setDentista({ ...dentista, cro: e })}
-        />
+        /> */}
         <TextInput
           mode="outlined"
           label="Especialidade"
@@ -248,7 +373,7 @@ const NovoDentista = ({ item, paramsDentista }) => {
           textColor={Colors.secondary}
           value={dentista.especialidade.tipo}
           labelColor={Colors.secondary}
-           editable={false}
+          editable={false}
           //onChangeText={(e) => setDentista({ ...dentista, especialidade: e })}
         />
         <LinearGradient
@@ -290,11 +415,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderColor: '#2070B4',
     borderWidth: 0.3,
-    height: 700,
+    height: 800,
     margin: 15,
-    marginTop: 20,
+    marginTop: 0,
     padding: 15,
     borderRadius: 15,
+    marginBottom: 50
   },
   btn: {
     backgroundColor: 'transparent',

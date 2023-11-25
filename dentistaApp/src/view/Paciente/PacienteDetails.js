@@ -8,27 +8,18 @@ import { useGetPacienteByIdAuth } from '../../service/queries/paciente';
 import LoadingOverlay from '../../components/LoadingOverlay/LoadingOverlay';
 
 const PacienteDetails = ({navigation, route}) => {
-  
-  const { data, isLoading } = useGetPacienteByIdAuth(route.params.id);
- 
+  const paciente = route.params?.item || {};
+
+  // const { data, isLoading } = useGetPacienteByIdAuth(route.params.id);
 
   return (
     <View style={globalStyle.container}>
+     
+       <>
+        <PacienteHeader navigation={navigation} paciente={paciente}/>
+        <PacienteBody navigation={navigation} paciente={paciente} />
+       </>
 
-       {isLoading && (
-          <View style={[globalStyle.container, {justifyContent: 'center'}]}>
-          <LoadingOverlay/>
-        </View>
-        
-      )}
-      {!isLoading && (
-        <>
-        <PacienteHeader navigation={navigation} paciente={data}/>
-        <PacienteBody navigation={navigation} />
-        </>
-      )} 
-      
-      
     </View>
   );
 };

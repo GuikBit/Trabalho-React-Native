@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const UserHeader = ({ navigation, paciente }) => {
-  //console.log(paciente)
+  console.log(paciente)
   return (
     <View>
       <LinearGradient  
@@ -31,7 +31,7 @@ const UserHeader = ({ navigation, paciente }) => {
         start={ {x: 0.3, y: 0.1} } 
         >
           <View style={styles.header}>
-            <Text style={styles.nome}></Text>    
+            <Text style={styles.nome}> { paciente.nome } </Text>    
             <View
               style={[globalStyle.rowAround, { marginVertical: 15, marginTop: 10 }]}
             >
@@ -39,15 +39,15 @@ const UserHeader = ({ navigation, paciente }) => {
                 <Icon name="paste" size={16} cor="#2070B4" /> 1548{' '}
               </Text>
               <Text style={styles.texto}>
-                <Icon name="calendar" size={16} cor="#2070B4" /> {paciente.dataNasc}
+                <Icon name="calendar" size={16} cor="#2070B4" /> { paciente.dataNasc }
               </Text>
             </View>
             <View style={[globalStyle.rowAround]}>
               <Text style={styles.texto}>
-                <Icon name="address-card-o" size={16} cor="#2070B4" /> {paciente.cpf}
+                <Icon name="address-card-o" size={16} cor="#2070B4" /> { paciente.cpf }
               </Text>
               <Text style={styles.texto}>
-                <Icon name="phone" size={16} cor="#2070B4" /> {paciente.telefone}
+                <Icon name="phone" size={16} cor="#2070B4" /> { paciente.telefone }
               </Text>
             </View>
           </View>

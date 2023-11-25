@@ -1,5 +1,5 @@
 import { FlatList, StyleSheet, View } from 'react-native';
-import React, { useContext, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import globalStyle from '../../../globalStyle';
 import listUser from '../../Mock/lista';
 import Listagem from '../../components/Listagem/Listagem';
@@ -11,17 +11,19 @@ import CardPaciente from '../../components/Cards/CardPaciente';
 import { useGetPacientesAuth } from '../../service/queries/paciente';
 import { LinearGradient } from 'expo-linear-gradient';
 import { AuthContext } from '../../Auth/Auth';
+import { useFocusEffect } from '@react-navigation/native';
 
-const ListaPaciente = ({ navigation }) => {
+const ListaPaciente = ({ navigation, route }) => {
   const { data, isLoading } = useGetPacientesAuth();
   const { userLogged } = useContext(AuthContext);
 
   const [filtro, setFiltro] = useState([]);
   const [pesquisa, setPesquisa] = useState('');
 
+  const [novo, setNovo] = useState(false);
+
   function buscaUsuario(e) {
-    setPesquisa(e);
-    
+    setPesquisa(e);    
     if (e === '') {
       setFiltro(data);
     } else {
@@ -35,6 +37,17 @@ const ListaPaciente = ({ navigation }) => {
       setFiltro(filtro);
     }
   }
+
+  useFocusEffect(
+    useCallback(() => {
+
+      const novo = route.params?.novo || false;
+      console.log(novo)
+      if(novo === true){
+        setNovo(true)
+      }
+      return() =>{}
+    }, [data]));
 
   return (
     <PaperProvider>
@@ -58,6 +71,11 @@ const ListaPaciente = ({ navigation }) => {
           </View>
         ) : (
           <>
+          {novo &&
+            <View style={{marginHorizontal: 20, height: 40, margin: 5, marginTop: 10 }}>
+              <SuccessResponse titulo="Dentista salvo com sucesso" onPress={()=>{setNovo(false)}} cor="#529558" />
+            </View>
+          }
             <FlatList
               style={globalStyle.flatList}
               data={filtro.length == 0 ? data : filtro}
@@ -69,7 +87,7 @@ const ListaPaciente = ({ navigation }) => {
                     // if (userLogged.role == 'Paciente') {
                     //   navigation.navigate('Paciente Details', { id: item.id });
                     // }
-                    navigation.navigate('Paciente Details', { id: item.id })
+                    navigation.navigate('Paciente Details', { item })
                   }}
                 />
               )}

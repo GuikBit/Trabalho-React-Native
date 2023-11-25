@@ -6,19 +6,23 @@ import { PaperProvider, FAB } from 'react-native-paper';
 import HeaderGeral from '../../components/Listagem/HeaderGeral';
 import LoadingOverlay from '../../components/LoadingOverlay/LoadingOverlay';
 import CardPaciente from '../../components/Cards/CardPaciente';
-import { useGetDentistasAuth } from '../../service/queries/dentista';
+import { recarregaLista, useGetDentistasAuth } from '../../service/queries/dentista';
 import { LinearGradient } from 'expo-linear-gradient';
 import { AuthContext } from '../../Auth/Auth';
 import CardDentista from '../../components/Cards/CardDestista';
 import { useFocusEffect } from '@react-navigation/native';
+import SuccessResponse from '../../components/response/SuccessResponse';
 
-const ListaDentista = ({ navigation }) => {
+
+const ListaDentista = ({ navigation, route }) => {
+
   const { data, isLoading } = useGetDentistasAuth();
-  const [reload, setReload] = useState();
+  const [lista, setLista] = useState();
   const { userLogged } = useContext(AuthContext);
-
+  
   const [filtro, setFiltro] = useState([]);
   const [pesquisa, setPesquisa] = useState('');
+  const [novo, setNovo] = useState(false);
 
   function buscaUsuario(e) {
     setPesquisa(e);
@@ -36,13 +40,17 @@ const ListaDentista = ({ navigation }) => {
       setFiltro(res);
     }
   }
+
   useFocusEffect(
     useCallback(() => {
-      
-      
 
-    }, [])
-    );
+      const novo = route.params?.novo || false;
+      console.log(novo)
+      if(novo === true){
+        setNovo(true)
+      }
+      return() =>{}
+    }, [data]));
 
   return (
     <PaperProvider>
@@ -55,7 +63,7 @@ const ListaDentista = ({ navigation }) => {
           <HeaderGeral titulo="Dentistas" />
           <FiltroDentistas
             pesquisa={pesquisa}
-            buscaUsuario={buscaUsuario}
+            buscaDentista={buscaUsuario}
             setFiltro={setFiltro}
             data={data}
           />
@@ -65,6 +73,12 @@ const ListaDentista = ({ navigation }) => {
           <LoadingOverlay />
         ) : (
           <>
+          {novo &&
+          <View style={{marginHorizontal: 20, height: 40, margin: 5, marginTop: 10 }}>
+            <SuccessResponse titulo="Dentista salvo com sucesso" onPress={()=>{setNovo(false)}} cor="#529558" />
+          </View>
+           
+          }
             <FlatList
               style={globalStyle.flatList}
               data={pesquisa.length == 0 ? data : filtro}
@@ -86,7 +100,7 @@ const ListaDentista = ({ navigation }) => {
               icon="plus"
               color="#FFFFFF"
               style={styles.fab}
-              onPress={() => navigation.navigate('Novo Dentista')}
+              onPress={() => navigation.navigate('Novo Dentista', null)}
             />
           </>
         )}

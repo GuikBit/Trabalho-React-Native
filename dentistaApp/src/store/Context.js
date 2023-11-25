@@ -34,14 +34,14 @@ function ContextProvider({ children }) {
   });
 
   const [dentista, setDentista] = useState({
-    nome: 'Dentista',
-    email: 'matheus@email.com',
-    login: 'dentista@email.com',
-    senha: '123',
-    telefone: '543243534',
-    cpf: '2134326546',
-    dataNasc: '12/04/1996',
-    cro: '432143',
+    nome: '',
+    email: '',
+    login: '',
+    senha: '',
+    telefone: '',
+    cpf: '',
+    dataNasc: '',
+    cro: '',
     especialidade: {},
   });
 
@@ -104,6 +104,48 @@ function ContextProvider({ children }) {
       },
     });
   };
+  const  limpaDentista = () => {
+    setDentista({...dentista,
+      nome: '',
+      email: '',
+      login: '',
+      senha: '',
+      telefone: '',
+      cpf: '',
+      dataNasc: '',
+      cro: '',
+      especialidade: {},
+    })
+  }
+
+  const limpaConsulta = () => {
+    setConsulta({...consulta, 
+      paciente: {
+        nome: '',
+        email: '',
+        login: '',
+        senha: '',
+        telefone: '',
+        cpf: '',
+        dataNasc: '',
+      },
+      dentista: {
+        nome: '',
+        email: '',
+        login: '',
+        senha: '',
+        telefone: '',
+        cpf: '',
+        dataNasc: '',
+        cro: '',
+        especialidade: ''
+      },
+      dataConsulta: '',
+      horaConsulta: '',
+      pagamento: null,
+      procedimentoConsulta: '',
+      tempoPrevisto: ''})
+  }
 
   const buscaCep = async (cep) => {
     const data = await cepApi(cep);
@@ -125,13 +167,15 @@ function ContextProvider({ children }) {
     <GlobalContext.Provider
       value={{
         paciente,
-        setPaciente,
-        limpaPaciente,
+        setPaciente,       
         dentista,
         setDentista,
         buscaCep,
         consulta,
         setConsulta,
+        limpaDentista,
+        limpaPaciente,
+        limpaConsulta
       }}
     >
       {children}
