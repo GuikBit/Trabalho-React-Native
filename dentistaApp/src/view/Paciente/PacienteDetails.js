@@ -1,23 +1,38 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React, { useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import globalStyle from '../../../globalStyle';
 import PacienteHeader from '../../components/PacienteHeader';
 import PacienteBody from '../../components/PacienteBody';
-import { useEffect } from 'react';
-import { useGetPacienteByIdAuth } from '../../service/queries/paciente';
-import LoadingOverlay from '../../components/LoadingOverlay/LoadingOverlay';
+// import { useEffect } from 'react';
+// import { useGetPacienteByIdAuth } from '../../service/queries/paciente';
+// import LoadingOverlay from '../../components/LoadingOverlay/LoadingOverlay';
+import { AuthContext } from '../../Auth/Auth';
+import { useFocusEffect } from '@react-navigation/native';
 
 const PacienteDetails = ({navigation, route}) => {
-  const paciente = route.params?.item || {};
+//  const { userLogged } = useContext(AuthContext);
+//  const [user, setUser] = useState();
+  
+//   console.log(userLogged)
 
-  // const { data, isLoading } = useGetPacienteByIdAuth(route.params.id);
-
+//     useFocusEffect(()=>{
+//       console.log()
+//       if(userLogged.role === "Admin"){
+//         console.log("validei")
+//          setUser(userLogged)
+//       }
+//       else{
+//          setUser(route.params?.item)
+//       }
+//       console.log(user)
+//     })
+    
+  
   return (
-    <View style={globalStyle.container}>
-     
+    <View style={globalStyle.container}>     
        <>
-        <PacienteHeader navigation={navigation} paciente={paciente}/>
-        <PacienteBody navigation={navigation} paciente={paciente} />
+        <PacienteHeader navigation={navigation} paciente={route.params?.item} />
+        <PacienteBody navigation={navigation} paciente={route.params?.item} />
        </>
 
     </View>

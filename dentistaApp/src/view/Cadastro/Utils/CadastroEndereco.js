@@ -7,30 +7,6 @@ import { useGetViaCep } from '../../../service/queries/Queries';
 const CadastroEndereco = ({ subTitulo }) => {
   const cor = '#2070B4';
 
-  // const [paciente, setPaciente] = useState({
-  //   cep: null,
-  //   cidade: null,
-  //   bairro: null,
-  //   logradouro: null,
-  //   n: null,
-  //   complemento: null,
-  // });
-
-  // const [cepObj, setCepObj] = useState({
-  //   cep: '',
-  //   logradouro: '',
-  //   complemento: '',
-  //   bairro: '',
-  //   localidade: '',
-  //   uf: '',
-  // });
-
-  // const handleCepApi = (cep) => {
-  //   const { data, isLoading } = useGetViaCep(cep);
-  //   if (!isLoading) {
-  //     setCepObj(data);
-  //   }
-
   const [cep, setCep] = useState('');
 
   const { paciente, setPaciente, buscaCep } = useContext(GlobalContext);
@@ -47,6 +23,7 @@ const CadastroEndereco = ({ subTitulo }) => {
     paciente.endereco.bairro,
     paciente.endereco.complemento,
   ]);
+
 
   return (
     <View style={styles.cadastro}>
@@ -71,16 +48,11 @@ const CadastroEndereco = ({ subTitulo }) => {
           backgroundColor: '#FFFFFF',
           color: '#24AAE3',
         }}
+        maxLength={8}
         textColor={cor}
         value={cep}
         labelColor={cor}
-        onChangeText={(e) =>
-          // setPaciente({
-          //   ...paciente,
-          //   endereco: { ...paciente.endereco, cep: e },
-          // });
-          setCep(e)
-        }
+        onChangeText={(e)=>{setCep(e)}}
       />
       <TextInput
         mode="outlined"

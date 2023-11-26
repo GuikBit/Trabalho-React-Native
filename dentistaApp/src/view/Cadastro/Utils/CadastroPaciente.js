@@ -2,12 +2,30 @@ import React, { useContext, useState } from 'react';
 import { View, StyleSheet, Text, ScrollView } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import { GlobalContext } from '../../../store/Context';
+import { Colors } from '../../../global/GlobalStyles';
 
 const CadastroPaciente = ({ subTitulo }) => {
-  const cor = '#2070B4';
 
   const { paciente, setPaciente } = useContext(GlobalContext);
 
+  const ajustaData = (num) => {    
+    const textoLimpo = num.replace(/\D/g, '');
+    const limite = textoLimpo.substring(0, 8);
+    const dataFormatada = limite.replace(/(\d{2})(\d{2})(\d{4})/, '$1/$2/$3');
+    setPaciente({ ...paciente, dataNasc: dataFormatada })
+  }
+  const ajustaTelefone = (num) => {    
+    const textoLimpo = num.replace(/\D/g, '');
+    const limite = textoLimpo.substring(0, 11);
+    const telFormatado = limite.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+    setPaciente({ ...paciente, telefone: telFormatado })
+  }
+  const ajustaCPF = (num) => {    
+    const textoLimpo = num.replace(/\D/g, '');
+    const limite = textoLimpo.substring(0, 11);
+    const cpfFormatado = limite.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+    setPaciente({ ...paciente, cpf: cpfFormatado })
+  }
   return (
     <View style={styles.cadastro}>
       <Text>{subTitulo}</Text>
@@ -17,14 +35,14 @@ const CadastroPaciente = ({ subTitulo }) => {
         left={
           <TextInput.Icon
             icon="lead-pencil"
-            color={cor}
+            color={Colors.secondary}
             style={{ paddingTop: 10 }}
           />
         }
-        selectionColor={cor}
-        outlineColor={cor}
+        selectionColor={Colors.secondary}
+        outlineColor={Colors.secondary}
         outlineStyle={{ borderRadius: 8, borderWidth: 0.5 }}
-        activeOutlineColor={cor}
+        activeOutlineColor={Colors.secondary}
         style={{
           height: 50,
           fontSize: 22,
@@ -32,9 +50,9 @@ const CadastroPaciente = ({ subTitulo }) => {
           color: '#24AAE3',
           marginBottom: 10,
         }}
-        textColor={cor}
+        textColor={Colors.secondary}
         value={paciente.nome}
-        labelColor={cor}
+        labelColor={Colors.secondary}
         onChangeText={(e) => setPaciente({ ...paciente, nome: e })}
       />
       <TextInput
@@ -43,14 +61,14 @@ const CadastroPaciente = ({ subTitulo }) => {
         left={
           <TextInput.Icon
             icon="account"
-            color={cor}
+            color={Colors.secondary}
             style={{ paddingTop: 10 }}
           />
         }
-        selectionColor={cor}
-        outlineColor={cor}
+        selectionColor={Colors.secondary}
+        outlineColor={Colors.secondary}
         outlineStyle={{ borderRadius: 8, borderWidth: 0.5 }}
-        activeOutlineColor={cor}
+        activeOutlineColor={Colors.secondary}
         style={{
           height: 50,
           fontSize: 22,
@@ -81,10 +99,10 @@ const CadastroPaciente = ({ subTitulo }) => {
             style={{ paddingTop: 10 }}
           />
         }
-        selectionColor={cor}
-        outlineColor={cor}
+        selectionColor={Colors.secondary}
+        outlineColor={Colors.secondary}
         outlineStyle={{ borderRadius: 8, borderWidth: 0.5 }}
-        activeOutlineColor={cor}
+        activeOutlineColor={Colors.secondary}
         style={{
           height: 50,
           fontSize: 22,
@@ -92,21 +110,21 @@ const CadastroPaciente = ({ subTitulo }) => {
           color: '#24AAE3',
           marginBottom: 10,
         }}
-        textColor={cor}
+        textColor={Colors.secondary}
         value={paciente.senha}
-        labelColor={cor}
+        labelColor={Colors.secondary}
         onChangeText={(e) => setPaciente({ ...paciente, senha: e })}
       />
       <TextInput
         mode="outlined"
         label="Email"
         left={
-          <TextInput.Icon icon="email" color={cor} style={{ paddingTop: 10 }} />
+          <TextInput.Icon icon="email" color={Colors.secondary} style={{ paddingTop: 10 }} />
         }
-        selectionColor={cor}
-        outlineColor={cor}
+        selectionColor={Colors.secondary}
+        outlineColor={Colors.secondary}
         outlineStyle={{ borderRadius: 8, borderWidth: 0.5 }}
-        activeOutlineColor={cor}
+        activeOutlineColor={Colors.secondary}
         style={{
           height: 50,
           fontSize: 22,
@@ -114,9 +132,9 @@ const CadastroPaciente = ({ subTitulo }) => {
           color: '#24AAE3',
           marginBottom: 10,
         }}
-        textColor={cor}
+        textColor={Colors.secondary}
         value={paciente.email}
-        labelColor={cor}
+        labelColor={Colors.secondary}
         onChangeText={(e) => setPaciente({ ...paciente, email: e })}
       />
       {/* SEXO */}
@@ -127,14 +145,15 @@ const CadastroPaciente = ({ subTitulo }) => {
         left={
           <TextInput.Icon
             icon="calendar"
-            color={cor}
+            color={Colors.secondary}
             style={{ paddingTop: 10 }}
           />
         }
-        selectionColor={cor}
-        outlineColor={cor}
+        keyboardType='numeric'
+        selectionColor={Colors.secondary}
+        outlineColor={Colors.secondary}
         outlineStyle={{ borderRadius: 8, borderWidth: 0.5 }}
-        activeOutlineColor={cor}
+        activeOutlineColor={Colors.secondary}
         style={{
           height: 50,
           fontSize: 22,
@@ -142,21 +161,22 @@ const CadastroPaciente = ({ subTitulo }) => {
           color: '#24AAE3',
           marginBottom: 10,
         }}
-        textColor={cor}
+        textColor={Colors.secondary}
         value={paciente.cpf}
-        labelColor={cor}
-        onChangeText={(e) => setPaciente({ ...paciente, cpf: e })}
+        labelColor={Colors.secondary}
+        onChangeText={ajustaCPF}
       />
       <TextInput
         mode="outlined"
         label="Telefone"
         left={
-          <TextInput.Icon icon="phone" color={cor} style={{ paddingTop: 10 }} />
+          <TextInput.Icon icon="phone" color={Colors.secondary} style={{ paddingTop: 10 }} />
         }
-        selectionColor={cor}
-        outlineColor={cor}
+        keyboardType='numeric'
+        selectionColor={Colors.secondary}
+        outlineColor={Colors.secondary}
         outlineStyle={{ borderRadius: 8, borderWidth: 0.5 }}
-        activeOutlineColor={cor}
+        activeOutlineColor={Colors.secondary}
         style={{
           height: 50,
           fontSize: 22,
@@ -164,10 +184,10 @@ const CadastroPaciente = ({ subTitulo }) => {
           color: '#24AAE3',
           marginBottom: 10,
         }}
-        textColor={cor}
+        textColor={Colors.secondary}
         value={paciente.telefone}
-        labelColor={cor}
-        onChangeText={(e) => setPaciente({ ...paciente, telefone: e })}
+        labelColor={Colors.secondary}
+        onChangeText={ajustaTelefone}
       />
       <TextInput
         mode="outlined"
@@ -175,14 +195,15 @@ const CadastroPaciente = ({ subTitulo }) => {
         left={
           <TextInput.Icon
             icon="calendar"
-            color={cor}
+            color={Colors.secondary}
             style={{ paddingTop: 10 }}
           />
         }
-        selectionColor={cor}
-        outlineColor={cor}
+        keyboardType='numeric'
+        selectionColor={Colors.secondary}
+        outlineColor={Colors.secondary}
         outlineStyle={{ borderRadius: 8, borderWidth: 0.5 }}
-        activeOutlineColor={cor}
+        activeOutlineColor={Colors.secondary}
         style={{
           height: 50,
           fontSize: 22,
@@ -190,10 +211,10 @@ const CadastroPaciente = ({ subTitulo }) => {
           color: '#24AAE3',
           marginBottom: 10,
         }}
-        textColor={cor}
+        textColor={Colors.secondary}
         value={paciente.dataNasc}
-        labelColor={cor}
-        onChangeText={(e) => setPaciente({ ...paciente, dataNasc: e })}
+        labelColor={Colors.secondary}
+        onChangeText={ajustaData}
       />
     </View>
   );
@@ -203,7 +224,7 @@ export default CadastroPaciente;
 
 const styles = StyleSheet.create({
   cadastro: {
-    height: 620,
+    height: 600,
     justifyContent: 'space-around',
     
     padding: 15,

@@ -23,6 +23,7 @@ const Login = ({}) => {
   const { login, user, msg, setMsg, setUser, userLogged} = useContext(AuthContext);
   const route = useRoute();
   const navigation = useNavigation();
+  const [novo, setNovo] = useState(false);
 
   const handleLogin = async () => {
 
@@ -45,6 +46,15 @@ const Login = ({}) => {
       setErro(false)
     }
   };
+
+  useFocusEffect(
+    useCallback(() => {
+      const novo = route.params?.novo ;
+      if(novo === true){
+        setNewuser(true)
+      }
+      return() =>{}
+    }, []));
 
   return (
     <ScrollView style={globalStyle.container}>
@@ -134,7 +144,7 @@ const Login = ({}) => {
             textColor="white"
             mode="contained"
             onPress={() => {
-              navigation.navigate('Cadastro', (interno = false));
+              navigation.navigate('Cadastro', {interno: false});
             }}
             style={styles.buttons}
             labelStyle={{ fontSize: 20 }}

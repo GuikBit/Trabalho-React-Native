@@ -10,17 +10,20 @@ const CadastroResponsavel = ({ subTitulo }) => {
 
   const { paciente, setPaciente } = useContext(GlobalContext);
 
-  // const [addPacipaciente, setAddPacipaciente] = useState(false);
-
-  // const [paciente, setPaciente] = useState({
-  //   nome: null,
-  //   cpf: null,
-  //   telefone: null,
-  // });
-
-  // function adicionarPacipaciente() {
-  //   setAddPacipaciente(true);
-  // }
+  const ajustaTelefone = (num) => {    
+    const textoLimpo = num.replace(/\D/g, '');
+    const limite = textoLimpo.substring(0, 11);
+    const telFormatado = limite.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+    setPaciente({ ...paciente, responsavel: {...paciente.responsavel, telefone: telFormatado }})
+  } 
+  // ...paciente,
+  //           responsavel: { ...paciente.responsavel, nome: e },
+  const ajustaCPF = (num) => {    
+    const textoLimpo = num.replace(/\D/g, '');
+    const limite = textoLimpo.substring(0, 11);
+    const cpfFormatado = limite.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+    setPaciente({ ...paciente, responsavel: {...paciente.responsavel, cpf: cpfFormatado }})
+  }
 
   return (
     <View style={styles.cadastro}>
@@ -78,12 +81,7 @@ const CadastroResponsavel = ({ subTitulo }) => {
         textColor={cor}
         value={paciente.responsavel.cpf}
         labelColor={cor}
-        onChangeText={(e) =>
-          setPaciente({
-            ...paciente,
-            responsavel: { ...paciente.responsavel, cpf: e },
-          })
-        }
+        onChangeText={ajustaCPF}
       />
       <TextInput
         mode="outlined"
@@ -104,64 +102,8 @@ const CadastroResponsavel = ({ subTitulo }) => {
         textColor={cor}
         value={paciente.responsavel.telefone}
         labelColor={cor}
-        onChangeText={(e) =>
-          setPaciente({
-            ...paciente,
-            responsavel: { ...paciente.responsavel, telefone: e },
-          })
-        }
+        onChangeText={ajustaTelefone}
       />
-      {/* {addPacipaciente && 
-          <View>
-          <TextInput
-          mode="outlined"
-          label="Nome"                    
-          left={<TextInput.Icon icon="lead-pencil" color={cor} style={{paddingTop: 10}}/>}
-          selectionColor={cor}
-          outlineColor={cor} 
-          outlineStyle={{ borderRadius: 8, borderWidth: 0.5 }}
-          activeOutlineColor={cor}                 
-          style={globalStyle.input}
-          textColor={cor}
-          value={paciente.nome}
-          labelColor={cor}
-          onChangeText={(e)=> setPaciente({...paciente, nome: e})}
-                    
-        />
-        <TextInput
-          mode="outlined"
-          label="CPF"                    
-          left={<TextInput.Icon icon="lead-pencil" color={cor} style={{paddingTop: 10}}/>}
-          selectionColor={cor}
-          outlineColor={cor} 
-          outlineStyle={{ borderRadius: 8, borderWidth: 0.5 }}
-          activeOutlineColor={cor}                 
-          style={globalStyle.input}
-          textColor={cor}
-          value={paciente.cpf}
-          labelColor={cor}
-          onChangeText={(e)=> setPaciente({...paciente, cpf: e})}
-                    
-        />
-        <TextInput
-          mode="outlined"
-          label="Telefone"                    
-          left={<TextInput.Icon icon="phone" color={cor} style={{paddingTop: 10}}/>}
-          selectionColor={cor}
-          outlineColor={cor} 
-          outlineStyle={{ borderRadius: 8, borderWidth: 0.5 }}
-          activeOutlineColor={cor}                 
-          style={globalStyle.input}
-          textColor={cor}
-          value={paciente.telefone}
-          labelColor={cor}
-          onChangeText={(e)=> setPaciente({...paciente, telefone: e})}
-                    
-        />
-        </View>} */}
-      {/* <Text style={styles.add} onPress={adicionarPacipaciente}>
-        <Icon name="plus" size={15} color="#2070B4" /> Adicionar
-      </Text> */}
     </View>
   );
 };

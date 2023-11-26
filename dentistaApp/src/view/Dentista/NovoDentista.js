@@ -109,7 +109,7 @@ const NovoDentista = ({ item, paramsDentista }) => {
     const textoLimpo = num.replace(/\D/g, '');
     const limite = textoLimpo.substring(0, 11);
     const cpfFormatado = limite.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
-    setDentista({ ...dentista, cpf: num })
+    setDentista({ ...dentista, cpf: cpfFormatado })
   }
   const styleModal = {
     backgroundColor: '#FFFFFF',

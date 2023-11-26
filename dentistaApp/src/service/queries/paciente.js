@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { apiGetAuth, apiGetByIdAuth, apiPost } from '../Api';
+import { apiGetAuth, apiGetByIdAuth, apiPost, apiGetConsultasByPacienteIdAuth } from '../Api';
 
 export function useGetPacientesAuth() {
   return useQuery({
@@ -16,8 +16,11 @@ export function useGetPacienteByIdAuth(id) {
     queryFn: async () => {
       return await apiGetByIdAuth('paciente', id);
     },
+    
   });
 }
+
+
 export function usePostPaciente() {
   return useMutation({
     mutationFn: async (paciente) => {
@@ -27,10 +30,27 @@ export function usePostPaciente() {
 }
 
 export function useGetConsultaByPacienteIdAuth(id) {
+  console.log("Cheguei aqui")
   return useQuery({
     queryKey: ['getConsultaByPacienteIdAuth', id],
     queryFn: async () => {
-      return await apiGetByIdAuth('paciente/consultas', id);
+      return await apiGetConsultasByPacienteIdAuth('paciente/consultas', id);
     },
   });
 }
+// export function useGetConsultaByPacienteIdAuth(pacienteId) {
+//   return useQuery({
+//     queryKey: ['getConsultaByPacienteIdAuth', pacienteId],
+//     queryFn: async () => {
+//       try {
+//         const data = await apiGetConsultasByPacienteIdAuth('paciente/consultas', pacienteId);
+//         console.log(data) 
+//         return data;
+//       } catch (error) {
+//         return { error: 'Erro ao obter dados da consulta' };
+//       }
+//     },
+//   });
+// }
+
+

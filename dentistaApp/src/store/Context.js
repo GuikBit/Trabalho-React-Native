@@ -149,7 +149,6 @@ function ContextProvider({ children }) {
 
   const buscaCep = async (cep) => {
     const data = await cepApi(cep);
-    console.log(data);
     setPaciente((current) => {
       const endereco = { ...current.endereco };
 

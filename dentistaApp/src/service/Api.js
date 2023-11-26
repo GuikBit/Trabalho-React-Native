@@ -38,7 +38,7 @@ export async function apiGetAuth(url) {
   }
 }
 
-export  function apiGetByIdAuth(url, id) {
+export async function apiGetByIdAuth(url, id) {
   const instance = axios.create({
     baseURL: `${urlBase}`,
     timeout: 1000,
@@ -46,8 +46,24 @@ export  function apiGetByIdAuth(url, id) {
   });
 
   try {
-    const response = instance.get(`/v1/${url}/${id}`);
+    const response = await instance.get(`/v1/${url}/${id}`);
+    console.log(response)
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
 
+export async function apiGetConsultasByPacienteIdAuth(url, id) {
+  const instance = axios.create({
+    baseURL: `${urlBase}`,
+    timeout: 1000,
+    headers: { Authorization: 'Bearer ' + (await getToken()) },
+  });
+
+  try {
+    const response = await instance.get(`/v1/paciente/consutas/21`);
+    console.log(response.data)
     return response.data;
   } catch (error) {
     console.error(error);

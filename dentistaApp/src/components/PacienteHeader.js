@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const UserHeader = ({ navigation, paciente }) => {
-  console.log(paciente)
+  // console.log(paciente)
   return (
     <View>
       <LinearGradient  

@@ -4,20 +4,21 @@ import globalStyle from '../../globalStyle';
 import { Searchbar, TextInput, FAB } from 'react-native-paper';
 import lista from '../Mock/lista';
 import CardConsulta from './Cards/CardConsulta';
-import { useGetConsultaByPacienteIdAuth } from '../service/queries/paciente';
+import { useGetConsultaByPacienteIdAuth, useGetPacienteByIdAuth, useGetPacientesAuth } from '../service/queries/paciente';
 import { AuthContext } from '../Auth/Auth';
 import { Colors } from '../global/GlobalStyles';
 import LoadingOverlay from './LoadingOverlay/LoadingOverlay';
+import { useGetDentistaByIdAuth } from '../service/queries/dentista';
+import { useGetConsultaByIdAuth } from '../service/queries/consulta';
 
 const UserBody = ({ navigation, paciente }) => {
 
   // const [pesquisa, setPesquisa] = useState('');
   const [filtro, setFiltro] = useState([]);
-
   const { userLogged } = useContext(AuthContext);
+  const { data, isLoading } =  useGetConsultaByIdAuth( 7 );
 
-  const { data, isLoading } =  useGetConsultaByPacienteIdAuth( paciente.id );
-
+console.log(data)
   // function buscaUsuario(e) {
   //   setPesquisa(e);
 
@@ -52,7 +53,7 @@ const UserBody = ({ navigation, paciente }) => {
       </View>
       {isLoading &&  <LoadingOverlay/>}
       {!isLoading && (
-        data === null? 
+        data === undefined? 
           <Text>Nem uma consulta entrada</Text>
           :
           <FlatList

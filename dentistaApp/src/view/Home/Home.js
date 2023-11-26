@@ -13,7 +13,7 @@ const Home = ({ navigation, route }) => {
 
   const handleLogout = () =>{
     if( logout() ){
-      navigation.replace("Login")
+      navigation.replace("Login", {novo: false})
     }    
   }
   return (

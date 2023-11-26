@@ -34,7 +34,10 @@ const NovaConsulta = () => {
   const hideDen = () => setModalDent(false);
   const hidePac = () => setModalPac(false);
   // const hideEspec = () => setModalEspec(false);
-
+  const [data, setData] = useState({
+    data: null,
+    hora: null
+  })
   function buscaDentista(e) {
     setPesquisa(e);
     console.log(dentistaData)
@@ -69,10 +72,33 @@ const NovaConsulta = () => {
   }
 
   const handleNovaConsulta = () => {
-    console.log(consulta)
-    mutate(consulta);
+    //AjustaMarcacao()
+   console.log(consulta)
+     mutate(consulta);
     navigation.navigate('Lista Consultas');
   };
+
+  async function  AjustaMarcacao(){
+    const data = consulta.dataConsulta;
+    const hr = consulta.horaConsulta;
+  
+    const dataSubStr = data.split('/');
+    const horaSubStr = hr.split(':');
+  
+    const dia = parseInt(dataSubStr[0], 10);   
+    const mes = parseInt(dataSubStr[1], 10) - 1;  // Subtrai 1 para compensar a base zero dos meses
+    const ano = parseInt(dataSubStr[2], 10); 
+    const hora = parseInt(horaSubStr[0], 10); // Corrigido para pegar a hora da posição 0
+    const min = parseInt(horaSubStr[1], 10);   
+  
+    console.log(dataSubStr[2]);
+  
+    const datafor = `${ano}-${mes}-${dia} ${hora}:${min}:00`;
+  
+    setConsulta({...consulta, dataConsulta: datafor})    
+    setConsulta({...consulta, dataConsulta: datafor})
+
+  }
 
   const ajustaData = (num) => {    
     const textoLimpo = num.replace(/\D/g, '');

@@ -12,31 +12,44 @@ import { GlobalContext } from '../../store/Context';
 import Icon from '@expo/vector-icons/FontAwesome';
 import { usePostPaciente } from '../../service/queries/paciente';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useEffect } from 'react';
+import ErrorResponse from '../../components/response/ErrorResponse';
 
 const Cadastro = ({ route }) => {
   const [active, setActive] = useState(0);
-
   const navigation = useNavigation();
-
+  const [vazio, setVazio] = useState(false);
   const { mutate } = usePostPaciente();
 
   const { paciente, setPaciente, limpaPaciente } = useContext(GlobalContext);
 
   const handlePostPaciente = () => {
-    mutate(paciente);
-    limpaPaciente();
-    verificaRetorno();
+    
+    if(validaDados()){
+      mutate(paciente);
+      limpaPaciente();
+      verificaRetorno();
+    }
+    
   };
 
-  function verificaRetorno (){
-    if(route.params.interno == true){
-      navigation.navigate('Lista Pacientes')
+  function  verificaRetorno() {
+
+    if(route.params.interno === true){
+      navigation.navigate('Lista Pacientes', {novo: true})
     }
     else{
-      navigation.navigate('Login')
+      navigation.navigate('Login',{novo: true})
     }
     
     
+  }
+  function validaDados(){
+    if(paciente.nome === '' || paciente.login === '' || paciente.senha === '' ){
+      setVazio(true)
+      return false
+    }
+    return true
   }
 
   const content = [
@@ -60,7 +73,7 @@ const Cadastro = ({ route }) => {
               size={30}
               color="#ECECEC"
               style={{ padding: 8 }}
-              onPress={verificaRetorno}
+              onPress={()=>{navigation.goBack()}}
           />
           <View style={styles.titulo}>
             <Text style={[globalStyle.titulo]}>
@@ -69,7 +82,13 @@ const Cadastro = ({ route }) => {
           </View>
         </View>
       </LinearGradient>
-      
+      {vazio &&(
+      <View style={{marginTop: 10, marginHorizontal: 20, height: 40}}>
+        
+          <ErrorResponse titulo="Foram identificados campos vazios" onPress={()=> {setVazio(false)}} cor="#f44336"/>
+        
+      </View>
+      )}
       <View style={{ margin: 20 }}>
         <Stepper
           active={active}

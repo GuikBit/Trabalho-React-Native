@@ -11,9 +11,10 @@ import CardPaciente from '../../components/Cards/CardPaciente';
 import { useGetPacientesAuth } from '../../service/queries/paciente';
 import { LinearGradient } from 'expo-linear-gradient';
 import { AuthContext } from '../../Auth/Auth';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useRoute } from '@react-navigation/native';
+import SuccessResponse from '../../components/response/SuccessResponse'
 
-const ListaPaciente = ({ navigation, route }) => {
+const ListaPaciente = ({ navigation }) => {
   const { data, isLoading } = useGetPacientesAuth();
   const { userLogged } = useContext(AuthContext);
 
@@ -37,11 +38,10 @@ const ListaPaciente = ({ navigation, route }) => {
       setFiltro(filtro);
     }
   }
-
+  const route = useRoute();
   useFocusEffect(
     useCallback(() => {
-
-      const novo = route.params?.novo || false;
+      const novo = route.params?.novo ;
       console.log(novo)
       if(novo === true){
         setNovo(true)
@@ -73,7 +73,7 @@ const ListaPaciente = ({ navigation, route }) => {
           <>
           {novo &&
             <View style={{marginHorizontal: 20, height: 40, margin: 5, marginTop: 10 }}>
-              <SuccessResponse titulo="Dentista salvo com sucesso" onPress={()=>{setNovo(false)}} cor="#529558" />
+              <SuccessResponse titulo="Paciente salvo com sucesso" onPress={()=>{setNovo(false)}} cor="#529558" />
             </View>
           }
             <FlatList
