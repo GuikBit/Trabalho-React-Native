@@ -22,9 +22,13 @@ export function useGetPacienteByIdAuth(id) {
 
 
 export function usePostPaciente() {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (paciente) => {
-      return apiPost('paciente', paciente);
+      const novo = apiPost('paciente', paciente);
+      queryClient.invalidateQueries('getPacientesAuth');
+
+      return novo;
     },
   });
 }

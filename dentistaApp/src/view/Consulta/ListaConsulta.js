@@ -14,17 +14,22 @@ import LoadingOverlay from '../../components/LoadingOverlay/LoadingOverlay';
 import { useGetPacientesAuth } from '../../service/queries/paciente';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useGetConsultasAuth } from '../../service/queries/consulta';
+import { useCallback } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import SuccessResponse from '../../components/response/SuccessResponse';
+import { useContext } from 'react';
+import { GlobalContext } from '../../store/Context';
 
-const ListaConsulta = ({ navigation }) => {
+const ListaConsulta = ({ navigation, route }) => {
   const { data, isLoading } = useGetConsultasAuth();
-
+  const { consulta, setConsulta, limpaConsulta, especialidade, setEspecialidade, dentista } = useContext(GlobalContext);
   const [filtro, setFiltro] = useState([]);
   const [pesquisa, setPesquisa] = useState('');
   const [dataInicio, setDataInicio] = useState(null);
   const [dataFim, setDataFim] = useState(null);
-  const [dentista, setDentista] = useState(null);
-  const [espec, setEspec] = useState(null);
-
+  // const [dentista, setDentista] = useState(null);
+  // const [espec, setEspec] = useState(null);
+  const [novo, setNovo] = useState(false);
   const [modalDent, setModalDent] = useState(false);
   const [modalEspec, setModalEspec] = useState(false);
 
@@ -34,22 +39,54 @@ const ListaConsulta = ({ navigation }) => {
   const showEspec = () => setModalEspec(true);
   const hideEspec = () => setModalEspec(false);
 
-  function buscaUsuario(e) {
-    setPesquisa(e);
-
-    if (e === '') {
+  function buscaUsuario() {
+    if (pesquisa === '') {
       setFiltro(data);
+      validaBuscaFiltro();
     } else {
-      const pesquisaLowerCase = e.toLowerCase();
+      const pesquisaLowerCase = pesquisa.toLowerCase();
       const filtro = data.filter((user) => {
-        const nomeLowerCase = user.nome.toLowerCase();
-        // const pastaNuString = user.pastaNu.toString();
-        return nomeLowerCase.includes(pesquisaLowerCase);
-        // pastaNuString.includes(pesquisaLowerCase)
+
+        const nomeDentista = user.dentista.nome.toLowerCase();
+        const nomePaciente = user.paciente.nome.toLowerCase();
+        // if(dentista !== undefined){
+
+        // }
+        // if(especialidade !== undefined){
+        //   especialidadeSelecionada = especialidade.tipo
+        // }
+        return (nomeDentista.includes(pesquisaLowerCase) || nomePaciente.includes(pesquisaLowerCase)  ||
+          (dentista.nome === consulta.dentista.nome) || (dentista.especialidade === consulta.dentista.especialidade)
+                );
+        
       });
       setFiltro(filtro);
     }
   }
+
+ function validaBuscaFiltro(){
+
+    const filtro = data.filter((consulta) => {
+      
+    if((dentista.nome == consulta.dentista.nome) || (dentista.especialidade == consulta.dentista.especialidade)){
+      return consulta
+    }
+  })
+  setFiltro(filtro);
+
+ }
+
+  useFocusEffect(
+    useCallback(() => {
+
+      const novo = route.params?.novo || false;
+      buscaUsuario()
+      if(novo === true){
+        route.params=null; 
+        setNovo(true)
+      }
+      return() =>{}
+    }, [data, dentista, especialidade, pesquisa]));
 
   return (
     <PaperProvider>
@@ -61,6 +98,7 @@ const ListaConsulta = ({ navigation }) => {
         >
           <HeaderGeral titulo="Consultas" />
           <FiltroConsultas
+            data={data}
             setDataFim={setDataFim}
             setDataInicio={setDataInicio}
             setFiltro={setFiltro}
@@ -70,6 +108,9 @@ const ListaConsulta = ({ navigation }) => {
             dataFim={dataFim}
             dataInicio={dataInicio}
             pesquisa={pesquisa}
+            setPesquisa={setPesquisa}
+            nomeDentista={dentista.nome}
+            // especialidade={especialidade.tipo}
           />
         </LinearGradient>
 
@@ -77,6 +118,12 @@ const ListaConsulta = ({ navigation }) => {
           <LoadingOverlay />
         ) : (
           <>
+            {novo &&
+            <View style={{marginHorizontal: 20, height: 40, margin: 5, marginTop: 10 }}>
+              <SuccessResponse titulo="Consulta salva com sucesso" onPress={()=>{setNovo(false)}} cor="#529558" />
+            </View>
+            
+            }
             <FlatList
               style={globalStyle.flatList}
               data={filtro.length == 0 ? data : filtro}
@@ -109,6 +156,7 @@ const ListaConsulta = ({ navigation }) => {
         setFiltro={setFiltro}
         buscaUsuario={buscaUsuario}
         hideDentis={hideDentis}
+        tela="Consulta"
       />
 
       <ModalEspec

@@ -28,9 +28,9 @@ const Login = ({}) => {
   const handleLogin = async () => {
 
     setNewuser(false);
+
     if(user.login !== "" && user.password !== ""){      
       const logado = await login();
-        
       if(logado){
         setUser({...user, login:'', password:''})
         navigation.replace("Home")        

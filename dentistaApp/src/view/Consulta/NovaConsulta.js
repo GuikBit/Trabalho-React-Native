@@ -14,6 +14,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Colors } from '../../global/GlobalStyles'
 import ModalEspec from '../../components/Modal/ModalEspec';
 import { useGetPacientesAuth } from '../../service/queries/paciente';
+import ErrorResponse from '../../components/response/ErrorResponse';
 
 const NovaConsulta = () => {
 
@@ -23,24 +24,25 @@ const NovaConsulta = () => {
   const { mutate } = usePostConsultaAuth();
 
   const { userLogged } = useContext(AuthContext);
-  const { consulta, setConsulta } = useContext(GlobalContext);
+  const { consulta, setConsulta, limpaConsulta } = useContext(GlobalContext);
 
   const [modalDent, setModalDent] = useState(false);
   const [modalPac, setModalPac] = useState(false);
-  // const [modalEspec, setModalEspec] = useState(false);
+  const [erro, setErro] = useState(false);
   const [pesquisa, setPesquisa] = useState('');
   const [FiltroDentistas, setFiltro] = useState([]);
   const [FiltroPaciente, setFiltroPaciente] = useState([]);
   const hideDen = () => setModalDent(false);
   const hidePac = () => setModalPac(false);
-  // const hideEspec = () => setModalEspec(false);
+
+  const[msg, setMsg] = useState();
+
   const [data, setData] = useState({
     data: null,
     hora: null
   })
   function buscaDentista(e) {
     setPesquisa(e);
-    console.log(dentistaData)
     if (e === '') {
       setFiltro(dentistaData);
     } else {
@@ -61,7 +63,6 @@ const NovaConsulta = () => {
       setFiltroPaciente(pacienteData);
     } else {
       const pesquisaLowerCase = e.toLowerCase();
-      console.log(pacienteData)
       const res = pacienteData.filter((user) =>{
         const nomeLowerCase = user.nome.toLowerCase();
         return nomeLowerCase.includes(pesquisaLowerCase);
@@ -72,32 +73,100 @@ const NovaConsulta = () => {
   }
 
   const handleNovaConsulta = () => {
-    //AjustaMarcacao()
-   console.log(consulta)
-     mutate(consulta);
-    navigation.navigate('Lista Consultas');
+    if( verificaMarcacao() ){
+      console.log(consulta)
+        mutate(consulta);
+        limpaConsulta();
+        navigation.navigate('Lista Consultas', {novo: true});
+    }
   };
 
-  async function  AjustaMarcacao(){
-    const data = consulta.dataConsulta;
-    const hr = consulta.horaConsulta;
-  
-    const dataSubStr = data.split('/');
-    const horaSubStr = hr.split(':');
-  
-    const dia = parseInt(dataSubStr[0], 10);   
-    const mes = parseInt(dataSubStr[1], 10) - 1;  // Subtrai 1 para compensar a base zero dos meses
-    const ano = parseInt(dataSubStr[2], 10); 
-    const hora = parseInt(horaSubStr[0], 10); // Corrigido para pegar a hora da posição 0
-    const min = parseInt(horaSubStr[1], 10);   
-  
-    console.log(dataSubStr[2]);
-  
-    const datafor = `${ano}-${mes}-${dia} ${hora}:${min}:00`;
-  
-    setConsulta({...consulta, dataConsulta: datafor})    
-    setConsulta({...consulta, dataConsulta: datafor})
+  async function  verificaMarcacao(){
+    if( validaPaciente() && validaDentista() && validaData() && validaHora()){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
 
+  function validaHora(){       
+    const hr = consulta.horaConsulta;
+    const horaSubStr = hr.split(':');    
+    const hora = parseInt(horaSubStr[0], 10);
+    const min = parseInt(horaSubStr[1], 10);  
+    
+    if(hr !== ""){
+      if((hora >= 0 &&  hora <= 23) && (min >= 0 && min <= 59) ){
+        setMsg("")
+        setErro(false);
+        return true;
+      }else{
+        setMsg("Um erro na hora foi identificado")
+        setErro(true);
+        return false;
+      }
+    }else{
+      setMsg("Um erro na hora foi identificado")
+      setErro(true);
+      return false;
+    }
+  }
+
+  function validaData(){
+    const data = consulta.dataConsulta;
+    const dataAtual = new Date();
+    const dataSubStr = data.split('/');
+    const dia = parseInt(dataSubStr[0], 10);   
+    const mes = parseInt(dataSubStr[1], 10);
+    const ano = parseInt(dataSubStr[2], 10); 
+
+    if(data !== ""){
+      if((dia >= 1 && dia <= 31) && (mes >= 1 && mes <= 12) && (ano >= dataAtual.getFullYear()) ){
+        if(dia >= dataAtual.getDate() && mes >= dataAtual.getMonth()){
+          setMsg("")
+          setErro(false);
+          return true;
+        }else{
+          setMsg("A data não pode ser anterior a atual")
+          setErro(true);
+          return false;
+       }
+     }
+     else{
+        setMsg("Um erro na data foi identificado")
+        setErro(true);
+        return false;
+     }
+    }else{
+      setMsg("Escolha uma data")
+      setErro(true);
+      return false;
+    }
+  }
+  function validaPaciente(){
+    console.log(consulta.paciente.nome)
+    if(consulta.paciente.nome === ""){
+      setMsg("Selecione um paciente")
+      setErro(true);
+      return false;
+    }else{
+      setMsg("")
+      setErro(false);
+      return true;
+    }
+
+  }
+
+  function validaDentista(){
+    if(consulta.dentista.nome === ""){
+      setMsg("Selecione um dentista")
+      setErro(true);
+      return false;
+    }
+    setMsg("")
+    setErro(false);
+    return true;
   }
 
   const ajustaData = (num) => {    
@@ -137,7 +206,7 @@ const NovaConsulta = () => {
             color="#ECECEC"
             style={{ padding: 8 }}
             onPress={() => {
-              navigation.navigate('Lista Consultas');
+              navigation.goBack();
             }}
           />
           <View style={styles.titulo}>
@@ -147,6 +216,12 @@ const NovaConsulta = () => {
       </LinearGradient>
 
       <ScrollView>
+        <View style={{margin: 10, marginTop:20, height: 40}}>
+          {erro === true && (
+            <ErrorResponse titulo={msg} onPress={()=> {setErro(false)}} cor="#f44336"/>
+          )}
+          
+        </View>
         <View style={styles.conulta}>
           {userLogged.role == 'Admin' && (
             <TextInput
@@ -308,6 +383,7 @@ const NovaConsulta = () => {
         styleModalDent={styleModal}
         filtro={FiltroDentistas}
         setFiltro={setFiltro}
+        tela="NovaConsulta"
       />
 
        {/* <ModalEspec
@@ -340,7 +416,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.3,
     height: 500,
     margin: 15,
-    marginTop: 120,
+    marginTop: 10,
     padding: 15,
     borderRadius: 15,
   },

@@ -29,7 +29,6 @@ export const AuthProvider = ({ children }) => {
   const login = async () => {
 
       const res = await apiLogin(user);
-      
       if( res !== undefined){
         const token = res.result;
         setToken(token);  

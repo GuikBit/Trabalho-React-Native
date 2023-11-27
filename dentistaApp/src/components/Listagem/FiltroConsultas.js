@@ -1,10 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import React, { useContext } from 'react';
 import { Searchbar, TextInput } from 'react-native-paper';
 import globalStyle from '../../../globalStyle';
 import { Colors } from '../../global/GlobalStyles';
+import { GlobalContext } from '../../store/Context';
 
 const FiltroConsultas = ({
+  data,
   setFiltro,
   buscaUsuario,
   setDataInicio,
@@ -14,104 +16,65 @@ const FiltroConsultas = ({
   showEspec,
   showDentis,
   pesquisa,
+  setPesquisa,
+  nomeDentista,
 }) => {
+
+  const { consulta, setConsulta, limpaConsulta, especialidade, setEspecialidade, dentista, setDentista, limpaDentista } = useContext(GlobalContext);
   return (
     <>
       <Searchbar
         style={styles.search}
         placeholder="Pesquisar"
         value={pesquisa}
-        onClearIconPress={() => setFiltro(lista)}
-        onChangeText={(e) => buscaUsuario(e)}
+        onClearIconPress={() => setFiltro(data)}
+        onChangeText={(e) => setPesquisa(e)}
+        iconColor={Colors.secondary}
       />
 
-      <View style={[globalStyle.rowAround, { marginTop: 5 }]}>
-        <TextInput
-          mode="outlined"
-          label="Data Inicio"
-          placeholder="De"
-          left={
-            <TextInput.Icon
-              icon="calendar-today"
-              color={Colors.secondary}
-              style={{ paddingTop: 10 }}
-            />
-          }
-          selectionColor={Colors.secondary}
-          outlineColor={Colors.secondary}
-          outlineStyle={globalStyle.inputRadius}
-          activeOutlineColor={Colors.secondary}
-          style={[globalStyle.input, styles.inputConsulta]}
-          textColor={Colors.secondary}
-          value={dataInicio}
-          labelColor={Colors.secondary}
-          onChangeText={(e) => setDataInicio(e)}
-        />
-        <TextInput
-          mode="outlined"
-          label="Data Fim"
-          placeholder="Até"
-          left={
-            <TextInput.Icon
-              icon="calendar"
-              color={Colors.secondary}
-              style={{ paddingTop: 10 }}
-            />
-          }
-          selectionColor={Colors.secondary}
-          outlineColor={Colors.secondary}
-          outlineStyle={globalStyle.inputRadius}
-          activeOutlineColor={Colors.secondary}
-          style={[globalStyle.input, styles.inputConsulta]}
-          textColor={Colors.secondary}
-          value={dataFim}
-          labelColor={Colors.secondary}
-          onChangeText={(e) => setDataFim(e)}
-        />
-      </View>
-      <View style={[globalStyle.rowAround, { marginTop: 5 }]}>
-        <TextInput
+      <View style={[globalStyle.rowAround, {marginTop: 10}]}>
+      <TextInput
           mode="outlined"
           label="Dentista"
           right={
+            (nomeDentista === "" ? 
             <TextInput.Icon
               icon="chevron-down"
               color={Colors.secondary}
               style={{ paddingTop: 10 }}
               onPress={showDentis}
             />
-          }
-          selectionColor={Colors.secondary}
-          outlineColor={Colors.secondary}
-          outlineStyle={globalStyle.inputRadius}
-          activeOutlineColor={Colors.secondary}
-          style={[globalStyle.input, styles.inputConsulta]}
-          textColor={Colors.secondary}
-          value={dataFim}
-          labelColor={Colors.secondary}
-          onChangeText={(e) => setDataFim(e)}
-          editable={false}
-        />
-        <TextInput
-          mode="outlined"
-          label="Especialidade"
-          right={
+            :
             <TextInput.Icon
-              icon="chevron-down"
+              icon="close-thick"
+              size={19}
               color={Colors.secondary}
               style={{ paddingTop: 10 }}
-              onPress={showEspec}
-            />
+              onPress={()=>{limpaDentista()}}
+            />)
           }
           selectionColor={Colors.secondary}
           outlineColor={Colors.secondary}
-          outlineStyle={globalStyle.inputRadius}
+          outlineStyle={{ borderRadius: 50 }}
           activeOutlineColor={Colors.secondary}
-          style={[globalStyle.input, styles.inputConsulta]}
+          style={ styles.inputConsulta }
           textColor={Colors.secondary}
-          value={dataFim}
           labelColor={Colors.secondary}
+          value={nomeDentista}
           editable={false}
+        />
+         <TextInput
+          mode="outlined"
+          placeholder='Data'
+          left={<TextInput.Icon icon="calendar-today" color={Colors.secondary} />}
+          selectionColor={Colors.secondary}
+          outlineColor={Colors.secondary}
+          outlineStyle={{ borderRadius: 50 }}
+          activeOutlineColor={Colors.secondary}
+          style={styles.searchData}
+          textColor={Colors.secondary}
+          labelColor={Colors.secondary}
+          onChangeText={(e) => setDataInicio(e)}
         />
       </View>
     </>
@@ -122,9 +85,10 @@ export default FiltroConsultas;
 
 const styles = StyleSheet.create({
   inputConsulta: {
-    width: 150,
+    width: 190,
     fontSize: 18,
-    height: 35,
+    height: 40,
+    backgroundColor: '#FFFFFF',
   },
   search: {
     marginHorizontal: 5,
@@ -132,5 +96,13 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: '#2070B4',
     marginTop: 15,
+    
+  },
+  searchData: {
+    backgroundColor: '#FFFFFF',
+    width: 140,
+    height: 40,
+    fontSize: 18,
+    marginTop: 6,
   },
 });

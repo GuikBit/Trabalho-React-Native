@@ -1,5 +1,5 @@
 import { StyleSheet, View, Text } from 'react-native';
-import { Card } from 'react-native-paper';
+import { Card, IconButton } from 'react-native-paper';
 import React, { useContext } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Colors } from '../../global/GlobalStyles';
@@ -11,13 +11,19 @@ const CardConsulta = ({ consulta, onPress }) => {
   return (
     <Card style={styles.card} onPress={onPress}>
       <View style={styles.header}>
-        <Text style={styles.nome}>{consulta.dataConsulta}</Text>
-        <Text style={styles.nome}>{consulta.horaConsulta}</Text>
+        <Text style={styles.nome}>
+          <Icon name="calendar" size={20} /> {' '}
+          {consulta.dataConsulta}
+          {'      '}
+          <Icon name="clock-o" size={22} /> {' '}
+          {consulta.horaConsulta}
+        </Text>
+
       </View>
 
       <View style={styles.body}>
         <View style={styles.infoRow}>
-          {userLogged.role == 'Paciente' && (
+          {/* {userLogged.role == 'Paciente' && (
             <Text style={styles.texto}>
               <Icon name="user-md" size={18} /> {consulta.dentista.nome}
             </Text>
@@ -26,14 +32,16 @@ const CardConsulta = ({ consulta, onPress }) => {
             <Text style={styles.texto}>
               <Icon name="user-md" size={18} /> {consulta.paciente.nome}
             </Text>
-          )}
+          )} */}
           {userLogged.role == 'Admin' && (
             <>
               <Text style={styles.texto}>
-                <Icon name="user-md" size={18} /> {consulta.dentista.nome}
+                <Icon name="user-md" size={20} /> {' '}
+                {consulta.dentista.nome}
               </Text>
               <Text style={styles.texto}>
-                <Icon name="user-md" size={18} /> {consulta.paciente.nome}
+                <Icon name="user" size={20} /> {' '}
+                {consulta.paciente.nome}
               </Text>
             </>
           )}
@@ -55,7 +63,7 @@ const styles = StyleSheet.create({
   card: {
     // height: 110,
     marginHorizontal: 15,
-    marginVertical: 8,
+    marginVertical: 10,
     borderRadius: 10,
     backgroundColor: '#FFFFFF',
     elevation: 10,
@@ -66,20 +74,22 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   header: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     borderBottomColor: '#CCCED2',
     borderBottomWidth: 0.5,
     paddingBottom: 5,
+    marginVertical: 5
   },
   nome: {
     flexDirection: 'row',
     alignSelf: 'center',
-    color: Colors.secondary,
-    // color: '#7a7d7a',
+    color: '#529558',
     fontSize: 20,
     fontWeight: 'bold',
   },
   body: {
-    height: 70,
+    height: 50,
   },
   dataNasc: {
     color: '#7a7d7a',
@@ -88,11 +98,11 @@ const styles = StyleSheet.create({
   },
   infoRow: {
     flexDirection: 'row',
-    marginTop: 25,
+    marginTop: 15,
     justifyContent: 'space-around',
   },
   texto: {
-    fontSize: 18,
+    fontSize: 19,
     color: '#7a7d7a',
   },
   dent: {

@@ -20,9 +20,12 @@ export function useGetConsultaByIdAuth(id) {
 }
 
 export function usePostConsultaAuth() {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (consulta) => {
-      return await apiPostAuth('consulta', consulta);
+      const novo = await apiPostAuth('consulta', consulta);
+      queryClient.invalidateQueries('getConsultasAuth');
+      return novo;
     },
   });
 }

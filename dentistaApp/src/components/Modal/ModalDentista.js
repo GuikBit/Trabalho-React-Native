@@ -15,10 +15,11 @@ const ModalDentista = ({
   pesquisa,
   filtro,
   setFiltro,
+  tela
 }) => {
 
   const { data, isLoading } = useGetDentistasAuth();
-  const { consulta, setConsulta } = useContext(GlobalContext);
+  const { consulta, setConsulta , dentista, setDentista} = useContext(GlobalContext);
 
   return (
     <Modal
@@ -41,8 +42,16 @@ const ModalDentista = ({
               <Card
                 style={[styles.card]}
                 onPress={() => {
-                  setConsulta({ ...consulta, dentista: item });
-                  hideDentis();
+                  if(tela == "Consulta"){
+                    //console.log(item)
+                    setDentista({...item})
+                    //console.log(dentista)
+                    hideDentis();
+                  }
+                  if(tela == "NovaConsulta"){
+                    setConsulta({ ...consulta, dentista: item });
+                    hideDentis();
+                  }
                 }}
               >
                 <View style={styles.header}>
