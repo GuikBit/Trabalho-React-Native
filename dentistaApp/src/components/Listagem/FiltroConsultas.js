@@ -8,7 +8,7 @@ import { GlobalContext } from '../../store/Context';
 const FiltroConsultas = ({
   data,
   setFiltro,
-  buscaUsuario,
+  filtrarConsulta,
   setDataInicio,
   setDataFim,
   dataInicio,
@@ -20,7 +20,18 @@ const FiltroConsultas = ({
   nomeDentista,
 }) => {
 
-  const { consulta, setConsulta, limpaConsulta, especialidade, setEspecialidade, dentista, setDentista, limpaDentista } = useContext(GlobalContext);
+  const { limpaDentista } = useContext(GlobalContext);
+
+  const ajustaData = (num) => {    
+    const textoLimpo = num.replace(/\D/g, '');
+    const limite = textoLimpo.substring(0, 8);
+    const dataFormatada = limite.replace(/(\d{2})(\d{2})(\d{4})/, '$1/$2/$3');
+    setDataInicio(dataFormatada)
+    
+  }
+  function limpaData(){
+    setDataInicio("")
+  }
   return (
     <>
       <Searchbar
@@ -66,7 +77,11 @@ const FiltroConsultas = ({
          <TextInput
           mode="outlined"
           placeholder='Data'
-          left={<TextInput.Icon icon="calendar-today" color={Colors.secondary} />}
+          left={ dataInicio === "" ?
+          <TextInput.Icon icon="calendar-today" color={Colors.secondary} size={19}/>
+          :
+          <TextInput.Icon icon="close-thick" color={Colors.secondary} size={19} onPress={limpaData}/>
+          }
           selectionColor={Colors.secondary}
           outlineColor={Colors.secondary}
           outlineStyle={{ borderRadius: 50 }}
@@ -74,7 +89,9 @@ const FiltroConsultas = ({
           style={styles.searchData}
           textColor={Colors.secondary}
           labelColor={Colors.secondary}
-          onChangeText={(e) => setDataInicio(e)}
+          onChangeText={ajustaData}
+          value={dataInicio}
+          keyboardType='numeric'
         />
       </View>
     </>
@@ -100,9 +117,9 @@ const styles = StyleSheet.create({
   },
   searchData: {
     backgroundColor: '#FFFFFF',
-    width: 140,
+    width: 150,
     height: 40,
     fontSize: 18,
-    marginTop: 6,
+    marginTop: 8,
   },
 });

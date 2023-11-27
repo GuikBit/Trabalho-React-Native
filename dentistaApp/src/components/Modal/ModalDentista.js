@@ -10,7 +10,7 @@ import { GlobalContext } from '../../store/Context';
 const ModalDentista = ({
   modalDent,
   styleModalDent,
-  buscaDentista,
+  buscarDentista,
   hideDentis,
   pesquisa,
   filtro,
@@ -21,6 +21,18 @@ const ModalDentista = ({
   const { data, isLoading } = useGetDentistasAuth();
   const { consulta, setConsulta , dentista, setDentista} = useContext(GlobalContext);
 
+  function buscarDentista(e) {
+    if (e === '') {
+      setFiltro(data);
+    } else {
+      const pesquisaLowerCase = e.toLowerCase();
+      const filtro = data.filter((d) => {
+        const nomeDentista = d.nome.toLowerCase();
+        return (nomeDentista.includes(pesquisaLowerCase) );
+      });
+      setFiltro(filtro);
+    }
+  }
   return (
     <Modal
       visible={modalDent}
@@ -29,7 +41,7 @@ const ModalDentista = ({
     >
       <FiltroDentistas
         pesquisa={pesquisa}
-        buscaDentista={buscaDentista}
+        buscarDentista={buscarDentista}
         setFiltro={setFiltro}
         data={data}       
       />

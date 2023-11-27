@@ -79,7 +79,9 @@ export default StyleSheet.create({
   icon: {
     marginLeft: 10,
   },
-  flatList: {},
+  flatList: {
+    marginTop: 15
+  },
   rowBetween: {
     flexDirection: 'row',
     justifyContent: 'space-between',

@@ -22,71 +22,74 @@ import { GlobalContext } from '../../store/Context';
 
 const ListaConsulta = ({ navigation, route }) => {
   const { data, isLoading } = useGetConsultasAuth();
-  const { consulta, setConsulta, limpaConsulta, especialidade, setEspecialidade, dentista } = useContext(GlobalContext);
+  const { dentista } = useContext(GlobalContext);
   const [filtro, setFiltro] = useState([]);
   const [pesquisa, setPesquisa] = useState('');
-  const [dataInicio, setDataInicio] = useState(null);
-  const [dataFim, setDataFim] = useState(null);
-  // const [dentista, setDentista] = useState(null);
-  // const [espec, setEspec] = useState(null);
+  const [dataInicio, setDataInicio] = useState('');
   const [novo, setNovo] = useState(false);
   const [modalDent, setModalDent] = useState(false);
-  const [modalEspec, setModalEspec] = useState(false);
 
   const showDentis = () => setModalDent(true);
   const hideDentis = () => setModalDent(false);
 
-  const showEspec = () => setModalEspec(true);
-  const hideEspec = () => setModalEspec(false);
 
-  function buscaUsuario() {
+  function filtrarConsulta() {
     if (pesquisa === '') {
-      setFiltro(data);
-      validaBuscaFiltro();
+      var filtro ;
+      setFiltro(data)
+      if(dentista.nome != '' && dataInicio != ''){
+        filtro = data.filter((consulta) => {    
+          if((dentista.nome == consulta.dentista.nome && consulta.dataConsulta === dataInicio)){
+            return consulta
+          }
+        })
+        setFiltro(filtro);
+      }
+      else if(dentista.nome != '' || dataInicio != ''){
+        filtro = data.filter((consulta) => {      
+          if((dentista.nome == consulta.dentista.nome)){
+            return consulta
+          }
+          if(consulta.dataConsulta === dataInicio){
+            return consulta
+          }
+        })
+        setFiltro(filtro);
+      }
+      
+      
     } else {
       const pesquisaLowerCase = pesquisa.toLowerCase();
       const filtro = data.filter((user) => {
-
         const nomeDentista = user.dentista.nome.toLowerCase();
         const nomePaciente = user.paciente.nome.toLowerCase();
-        // if(dentista !== undefined){
-
-        // }
-        // if(especialidade !== undefined){
-        //   especialidadeSelecionada = especialidade.tipo
-        // }
-        return (nomeDentista.includes(pesquisaLowerCase) || nomePaciente.includes(pesquisaLowerCase)  ||
-          (dentista.nome === consulta.dentista.nome) || (dentista.especialidade === consulta.dentista.especialidade)
-                );
-        
+        const lista = (nomeDentista.includes(pesquisaLowerCase) ||  
+                       nomePaciente.includes(pesquisaLowerCase)  
+                      //  && 
+                      // (dentista.nome === consulta.dentista.nome) || 
+                      // (dentista.especialidade === consulta.dentista.especialidade)
+                      );
+       
+        return lista;
       });
       setFiltro(filtro);
     }
   }
 
- function validaBuscaFiltro(){
-
-    const filtro = data.filter((consulta) => {
-      
-    if((dentista.nome == consulta.dentista.nome) || (dentista.especialidade == consulta.dentista.especialidade)){
-      return consulta
-    }
-  })
-  setFiltro(filtro);
-
- }
 
   useFocusEffect(
     useCallback(() => {
 
       const novo = route.params?.novo || false;
-      buscaUsuario()
+      filtrarConsulta()
       if(novo === true){
         route.params=null; 
         setNovo(true)
       }
-      return() =>{}
-    }, [data, dentista, especialidade, pesquisa]));
+      return() =>{
+        // limpaDentista()
+      }
+    }, [data, dentista, pesquisa, dataInicio]));
 
   return (
     <PaperProvider>
@@ -99,18 +102,14 @@ const ListaConsulta = ({ navigation, route }) => {
           <HeaderGeral titulo="Consultas" />
           <FiltroConsultas
             data={data}
-            setDataFim={setDataFim}
             setDataInicio={setDataInicio}
             setFiltro={setFiltro}
             showDentis={showDentis}
-            showEspec={showEspec}
-            buscaUsuario={buscaUsuario}
-            dataFim={dataFim}
+            filtrarConsulta={filtrarConsulta}
             dataInicio={dataInicio}
             pesquisa={pesquisa}
             setPesquisa={setPesquisa}
             nomeDentista={dentista.nome}
-            // especialidade={especialidade.tipo}
           />
         </LinearGradient>
 
@@ -126,7 +125,7 @@ const ListaConsulta = ({ navigation, route }) => {
             }
             <FlatList
               style={globalStyle.flatList}
-              data={filtro.length == 0 ? data : filtro}
+              data={(!filtro || filtro.length === 0) ? data : filtro}
               keyExtractor={(item) => item.id}
               renderItem={({ item }) => (
                 <CardConsulta
@@ -154,19 +153,18 @@ const ListaConsulta = ({ navigation, route }) => {
         styleModalDent={styles.styleModalDent}
         pesquisa={pesquisa}
         setFiltro={setFiltro}
-        buscaUsuario={buscaUsuario}
         hideDentis={hideDentis}
         tela="Consulta"
       />
 
-      <ModalEspec
+      {/* <ModalEspec
         pesquisa={pesquisa}
         setFiltro={setFiltro}
         buscaUsuario={buscaUsuario}
         modalEspec={modalEspec}
         styleModalEspec={styles.styleModalEspec}
         hideEspec={hideEspec}
-      />
+      /> */}
     </PaperProvider>
   );
 };
@@ -236,7 +234,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     padding: 10,
     borderRadius: 15,
-    height: 450,
+    height: 550,
     justifyContent: '',
   },
 });
