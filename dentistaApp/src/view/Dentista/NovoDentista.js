@@ -19,7 +19,6 @@ const NovoDentista = ({ item, paramsDentista }) => {
   const hideEspec = () => setModalEspec(false);
 
   const { mutate } = usePostDentistaAuth();
-
   const navigation = useNavigation();
 
   const [pesquisa, setPesquisa] = useState('');
@@ -30,6 +29,7 @@ const NovoDentista = ({ item, paramsDentista }) => {
 
  useFocusEffect(
    useCallback(() => {
+    console.log(paramsDentista)
     if (paramsDentista !== undefined) {
       
       setDentista({...dentista, 
@@ -41,7 +41,7 @@ const NovoDentista = ({ item, paramsDentista }) => {
         telefone: paramsDentista.telefone,
         cpf: paramsDentista.cpf,
         dataNasc: paramsDentista.dataNasc,
-        cro: paramsDentista.cro,
+       // cro: paramsDentista.cro,
         especialidade: paramsDentista.especialidade
       });
       setEditavel(false)
@@ -81,10 +81,10 @@ const NovoDentista = ({ item, paramsDentista }) => {
 
   const handleCadastro = async () => {
     try{
+     
       if(validaDados()){
-        if(dentista.id === undefined){
-          mutate(dentista)
-        }       
+        console.log("entrei")
+        mutate(dentista)  
         navigation.navigate('Lista Dentista', {novo: true});
       }
     
@@ -154,7 +154,7 @@ const NovoDentista = ({ item, paramsDentista }) => {
         </View>
       <View style={styles.cadastro}>
         
-      {teste? 
+      {/* {teste? 
         <IconButton
           icon="account-cog"
           iconColor={Colors.secondary}
@@ -168,7 +168,7 @@ const NovoDentista = ({ item, paramsDentista }) => {
           size={20}
           onPress={()=>{limpaDentista(); setTeste(!teste)}}          
         />
-        }
+        } */}
         
         <TextInput
           mode="outlined"

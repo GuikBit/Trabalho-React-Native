@@ -80,7 +80,6 @@ export default StyleSheet.create({
     marginLeft: 10,
   },
   flatList: {
-    marginTop: 15
   },
   rowBetween: {
     flexDirection: 'row',

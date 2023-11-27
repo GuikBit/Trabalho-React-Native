@@ -76,13 +76,13 @@ const Body = ({ navigation }) => {
                 }}
               />
           </View> */}
-          <Dashboard />
+          <Dashboard user="admin" id={null}/>
           </>
           
           
         )}
         {userLogged.role == "Dentista" && (
-          <Dashboard />
+          <Dashboard user="dentista" id={userLogged.id} />
         )}
 
         {userLogged.role == 'Paciente' && (

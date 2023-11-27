@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   topo: {
     alignSelf: 'center',
     flexDirection: 'row',
-    marginTop: 50
+    marginTop: 40
   },
   fontLarge: {
     fontSize: 80,
@@ -31,6 +31,6 @@ const styles = StyleSheet.create({
   },
   img: {
     width: width,
-    height: (475 / 950) * width,
+    height: ((475 / 950) * width) ,
   },
 });

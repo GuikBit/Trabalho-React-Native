@@ -21,8 +21,9 @@ import { useContext } from 'react';
 import { GlobalContext } from '../../store/Context';
 
 const ListaConsulta = ({ navigation, route }) => {
+
   const { data, isLoading } = useGetConsultasAuth();
-  const { dentista } = useContext(GlobalContext);
+  const { dentista, userLogged } = useContext(GlobalContext);
   const [filtro, setFiltro] = useState([]);
   const [pesquisa, setPesquisa] = useState('');
   const [dataInicio, setDataInicio] = useState('');
@@ -34,6 +35,7 @@ const ListaConsulta = ({ navigation, route }) => {
 
 
   function filtrarConsulta() {
+    if
     if (pesquisa === '') {
       var filtro ;
       setFiltro(data)

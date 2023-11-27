@@ -43,10 +43,10 @@ function ContextProvider({ children }) {
       dataNasc: '',
       cro: '',
       especialidade: {},
-      ativo: '',
-      dataCadastro:'',
-      id: '',
-      role: ''
+      // ativo: '',
+      // dataCadastro:'',
+      // id: '',
+      // role: ''
   });
 
   const [especialidade, setEspecialidade] = useState({
@@ -124,12 +124,7 @@ function ContextProvider({ children }) {
       telefone: '',
       cpf: '',
       dataNasc: '',
-      cro: '',
       especialidade: {},
-      ativo: '',
-      dataCadastro:'',
-      id: '',
-      role: ''
 
     })
   }

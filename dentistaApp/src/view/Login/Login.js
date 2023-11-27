@@ -58,7 +58,7 @@ const Login = ({}) => {
 
   return (
     <ScrollView style={globalStyle.container}>
-      <Logo style={styles.topo} />
+      <Logo />
       <View style={styles.login}>
         <View style={{marginBottom: 20, height: 40}}>
           {vazio === true && (

@@ -3,17 +3,22 @@ import React, { useContext, useEffect } from 'react'
 import { BarChart, LineChart, PieChart, ProgressChart } from 'react-native-chart-kit'
 import { Colors, Dimension } from '../../global/GlobalStyles'
 import { AuthContext } from '../../Auth/Auth'
-import { useGetAllDashbords } from '../../service/queries/dashbords'
+import { useGetAllDashbords, useGetDashBordsDentista } from '../../service/queries/dashbords'
 import LoadingOverlay from '../../components/LoadingOverlay/LoadingOverlay'
 
-const Dashboard = () => {
+const Dashboard = ({user, id}) => {
 
   const { data, isLoading } = useGetAllDashbords();
-  
+  const { data:dentista, isLoading:dentistaLoading} = useGetDashBordsDentista(id);
+  console.log(dentista)
+  useEffect(()=>{
+
+  }, [dentista])
   return (
     <ScrollView >
       
-      
+      {user === "admin"?
+      <>
       <View style={{alignItems: 'center', marginTop: 20}}>
       <Text style={styles.tituloGrafico}>Atendimentos por mês</Text>
         {isLoading ? (
@@ -74,10 +79,8 @@ const Dashboard = () => {
         
       </View>
       
-
-
       <View style={{alignItems: 'center', marginTop: 20}}>
-        <Text style={styles.tituloGrafico}>Atendimento por especialidade</Text>
+        <Text style={styles.tituloGrafico}>Atendimentos por especialidade</Text>
         
         {isLoading ? (
           <View style={styles.contLooding}>
@@ -87,6 +90,7 @@ const Dashboard = () => {
         ):(
           <ProgressChart
             data= {data.qtdPorEspec}
+            la
             width={Dimension.width - 20}
             height={220}
             style={{
@@ -97,9 +101,55 @@ const Dashboard = () => {
             
             chartConfig={styles.chatConfig}
           />
+          // <PieChart
+          //   data={data.qtdPorEspec}
+          //   width={Dimension.width - 20}
+          //   height={220}
+          //   chartConfig={styles.chatConfig}
+          //   accessor={"population"}
+          //   backgroundColor={"transparent"}
+          //   paddingLeft={"15"}
+          //   center={[10, 50]}
+          //   absolute
+          // />
         )}
         
+      </View> 
+      </>
+      : 
+      <View style={{alignItems: 'center', marginTop: 20}}>
+      <Text style={styles.tituloGrafico}>Atendimentos por mês</Text>
+        {dentistaLoading ? (
+          <View style={styles.contLooding}>
+            <LoadingOverlay />
+          </View>
+         
+        ):
+        (
+          <LineChart
+            data={{
+              labels: data.meses,
+              datasets: [
+                {
+                  data: data.qtdPorMes
+                }
+              ]
+            }}
+            width={Dimension.width - 20} // from react-native
+            height={220}
+            chartConfig={styles.chatConfig}
+            bezier
+            
+            style={{
+              marginVertical: 10,
+              borderRadius: 16,
+
+            }}
+          />
+        )}
       </View>
+      }
+      
     </ScrollView>
     
 
