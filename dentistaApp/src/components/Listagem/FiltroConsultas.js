@@ -29,6 +29,7 @@ const FiltroConsultas = ({
     setDataInicio(dataFormatada)
     
   }
+
   function limpaData(){
     setDataInicio("")
   }

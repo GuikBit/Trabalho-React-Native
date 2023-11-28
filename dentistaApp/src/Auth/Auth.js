@@ -44,7 +44,6 @@ export const AuthProvider = ({ children }) => {
           telefone: res.usuario.telefone,
           ativo: res.usuario.ativo,
         });
-       
       }
       else{
         setMsg("Login ou senha invalida.")

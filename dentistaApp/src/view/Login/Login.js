@@ -33,7 +33,12 @@ const Login = ({}) => {
       const logado = await login();
       if(logado){
         setUser({...user, login:'', password:''})
-        navigation.replace("Home")        
+        
+        if (userLogged && userLogged.role === 'Paciente') {
+          navigation.replace('Paciente Details',{paciente: userLogged} );
+        }else {
+          navigation.replace('Home');
+        }     
       } 
       else{
         setErro(true);
@@ -53,7 +58,8 @@ const Login = ({}) => {
       if(novo === true){
         setNewuser(true)
       }
-      return() =>{}
+
+      return() =>{}  
     }, []));
 
   return (

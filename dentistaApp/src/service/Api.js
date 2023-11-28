@@ -42,12 +42,10 @@ export async function apiGetByIdAuth(url, id) {
   const instance = axios.create({
     baseURL: `${urlBase}`,
     timeout: 1000,
-    headers: { Authorization: 'Bearer ' + (getToken()) },
+    headers: { Authorization: 'Bearer ' + (await getToken()) },
   });
-
   try {
     const response = await instance.get(`/v1/${url}/${id}`);
-    console.log(response)
     return response.data;
   } catch (error) {
     console.error(error);
@@ -61,9 +59,8 @@ export async function apiGetConsultasByPacienteIdAuth(url, id) {
     headers: { Authorization: 'Bearer ' + (await getToken()) },
   });
 
-  try {
-    const response = await instance.get(`/v1/paciente/consutas/21`);
-    console.log(response.data)
+  try {   
+    const response = await instance.get(`/v1/${url}/${id}`);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -120,7 +117,7 @@ export async function apiGetDashBordsDentista(url, id) {
   });
 
   try {
-    const response = await instance.get(`/v1/${url}/dentista/${id}`);
+    const response = await instance.get(`/v1/${url}/${id}`);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -153,14 +150,3 @@ export async function apiLogin(obj) {
     
   }
 }
-
-// export const apiDelete = (url, id, sucesso, erro) => {
-//   axios
-//     .delete(`${urlBase}/${url}/${id}`)
-//     .then(() => {
-//       sucesso();
-//     })
-//     .catch((error) => {
-//       erro(error);
-//     });
-// };

@@ -1,7 +1,7 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import React, { useContext, useState } from 'react';
 import globalStyle from '../../globalStyle';
-import { Searchbar, TextInput, FAB } from 'react-native-paper';
+import { Searchbar, TextInput, FAB, Button } from 'react-native-paper';
 import lista from '../Mock/lista';
 import CardConsulta from './Cards/CardConsulta';
 import { useGetConsultaByPacienteIdAuth, useGetPacienteByIdAuth, useGetPacientesAuth } from '../service/queries/paciente';
@@ -13,13 +13,12 @@ import { useGetConsultaByIdAuth } from '../service/queries/consulta';
 
 const UserBody = ({ navigation, paciente }) => {
 
-  // const [pesquisa, setPesquisa] = useState('');
   const [filtro, setFiltro] = useState([]);
-  const { userLogged } = useContext(AuthContext);
-  const { data, isLoading } =  useGetConsultaByIdAuth( 7 );
+  const [dataCons, setDataCons] = useState();
+  const {data, isLoading } = useGetConsultaByPacienteIdAuth(paciente.id)
+  // const { data, isLoading } =  useGetConsultaByIdAuth( 7 );
 
-console.log(data)
-  // function buscaUsuario(e) {
+  // function buscarConsultaData(e) {
   //   setPesquisa(e);
 
   //   if (e === '') {
@@ -33,6 +32,13 @@ console.log(data)
   //     setFiltro(filtro);
   //   }
   // }
+  const ajustaData = (num) => {    
+    const textoLimpo = num.replace(/\D/g, '');
+    const limite = textoLimpo.substring(0, 8);
+    const dataFormatada = limite.replace(/(\d{2})(\d{2})(\d{4})/, '$1/$2/$3');
+    setDataCons(dataFormatada)
+  }
+
   return (
     <View style={styles.body}>
       <View style={styles.boxTitulo}>
@@ -48,13 +54,27 @@ console.log(data)
           style={styles.search}
           textColor={Colors.secondary}
           labelColor={Colors.secondary}
-          onChangeText={(e) => setDataInicio(e)}
+          value={dataCons}
+          // onChangeText={(e) => setDataInicio(e)}
+          onChangeText={ajustaData}
         />
       </View>
       {isLoading &&  <LoadingOverlay/>}
       {!isLoading && (
-        data === undefined? 
-          <Text>Nem uma consulta entrada</Text>
+        data === undefined || data.length === 0? 
+          <View style={styles.cont}>
+            <Text style={styles.novo}>Nem uma consulta cadastrada</Text>
+            <Button
+            icon="plus-thick"
+            textColor="#FFFFFF"
+            mode="contained"
+            labelStyle={globalStyle.label}
+            style={styles.btnConsulta}
+            onPress={()=>{navigation.navigate("Nova Consulta")}}
+          >
+            Nova Consulta
+          </Button>
+          </View>
           :
           <FlatList
           style={styles.flatList}
@@ -73,6 +93,14 @@ console.log(data)
         
       )}
       <FAB
+        icon="plus-thick"
+        color="#FFFFFF"
+        style={styles.fabConsulta}
+        onPress={() => {
+          navigation.navigate('Nova Consulta');
+        }}
+      />
+      <FAB
         icon="account-details"
         color="#FFFFFF"
         style={styles.fab}
@@ -80,6 +108,7 @@ console.log(data)
           navigation.navigate('Cadastro', { id: user.id });
         }}
       />
+      
     </View>
   );
 };
@@ -93,7 +122,7 @@ const styles = StyleSheet.create({
   },
   titulo: {
     color: '#2070B4',
-    fontSize: 26,
+    fontSize: 22,
     fontWeight: 'bold',
   },
   boxTitulo: {
@@ -105,8 +134,16 @@ const styles = StyleSheet.create({
   search: {
     marginHorizontal: 5,
     backgroundColor: '#FFFFFF',
-    width: 140,
-    height: 40,
+    width: 142,
+    height: 35,
+  },
+  fabConsulta: {
+    position: 'absolute',
+    margin: 20,
+    right: 0,
+    bottom: +70,
+    backgroundColor: '#2D8ACD',
+    color: '#FFFFFF',
   },
   fab: {
     position: 'absolute',
@@ -116,4 +153,24 @@ const styles = StyleSheet.create({
     backgroundColor: '#2D8ACD',
     color: '#FFFFFF',
   },
+  cont:{
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+    top: -100
+
+    
+  }, novo :{
+    color: '#7a7d7a',
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginBottom: 30
+
+  }, btnConsulta: {
+    margin: 20,
+    backgroundColor: '#2D8ACD',
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 });

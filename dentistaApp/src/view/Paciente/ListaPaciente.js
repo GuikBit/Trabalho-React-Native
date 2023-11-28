@@ -92,15 +92,17 @@ const ListaPaciente = ({ navigation }) => {
                 />
               )}
             />
-
+          {userLogged.role === "Admin" &&( 
             <FAB
-              icon="plus"
+              icon="plus-thick"
               color="#FFFFFF"
               style={styles.fab}
               onPress={() => {
                 navigation.navigate('Cadastro', { interno: true });
               }}
             />
+          )}
+            
           </>
         )}
       </View>

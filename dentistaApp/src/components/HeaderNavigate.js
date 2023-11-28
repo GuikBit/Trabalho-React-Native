@@ -6,11 +6,11 @@ import { TextInput } from 'react-native-paper';
 const HeaderNavigate = ({ titulo, onPress }) => {
   return (
     <View>
-      <View style={{ margin: 15 }}>
+      <View style={{ margin: 10 }}>
         <TextInput.Icon
           icon="chevron-left"
-          size={35}
-          color="#2070B4"
+          size={55}
+          color="#FFFFFF"
           onPress={onPress}
         />
         <Text style={[globalStyle.titulo, { alignSelf: 'center' }]}>

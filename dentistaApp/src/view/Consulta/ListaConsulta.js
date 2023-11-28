@@ -19,11 +19,13 @@ import { useFocusEffect } from '@react-navigation/native';
 import SuccessResponse from '../../components/response/SuccessResponse';
 import { useContext } from 'react';
 import { GlobalContext } from '../../store/Context';
+import { AuthContext } from '../../Auth/Auth';
 
 const ListaConsulta = ({ navigation, route }) => {
 
   const { data, isLoading } = useGetConsultasAuth();
-  const { dentista, userLogged } = useContext(GlobalContext);
+  const { dentista, setDentista, limpaDentista } = useContext(GlobalContext);
+  const { userLogged } = useContext(AuthContext);
   const [filtro, setFiltro] = useState([]);
   const [pesquisa, setPesquisa] = useState('');
   const [dataInicio, setDataInicio] = useState('');
@@ -33,11 +35,9 @@ const ListaConsulta = ({ navigation, route }) => {
   const showDentis = () => setModalDent(true);
   const hideDentis = () => setModalDent(false);
 
-
   function filtrarConsulta() {
-    if
-    if (pesquisa === '') {
-      var filtro ;
+    var filtro ;
+    if (pesquisa === '') {      
       setFiltro(data)
       if(dentista.nome != '' && dataInicio != ''){
         filtro = data.filter((consulta) => {    
@@ -45,40 +45,32 @@ const ListaConsulta = ({ navigation, route }) => {
             return consulta
           }
         })
-        setFiltro(filtro);
+        setFiltro(filtro.length > 0 ? filtro : []);
       }
       else if(dentista.nome != '' || dataInicio != ''){
         filtro = data.filter((consulta) => {      
-          if((dentista.nome == consulta.dentista.nome)){
-            return consulta
-          }
-          if(consulta.dataConsulta === dataInicio){
-            return consulta
-          }
+          return (
+            dentista.nome === consulta.dentista.nome ||
+            consulta.dataConsulta === dataInicio
+          );
         })
-        setFiltro(filtro);
-      }
-      
-      
+        setFiltro(filtro.length > 0 ? filtro : []);
+      }     
     } else {
       const pesquisaLowerCase = pesquisa.toLowerCase();
       const filtro = data.filter((user) => {
         const nomeDentista = user.dentista.nome.toLowerCase();
         const nomePaciente = user.paciente.nome.toLowerCase();
-        const lista = (nomeDentista.includes(pesquisaLowerCase) ||  
+        const item = (nomeDentista.includes(pesquisaLowerCase) ||  
                        nomePaciente.includes(pesquisaLowerCase)  
-                      //  && 
-                      // (dentista.nome === consulta.dentista.nome) || 
-                      // (dentista.especialidade === consulta.dentista.especialidade)
                       );
        
-        return lista;
+        return item;
       });
-      setFiltro(filtro);
+      setFiltro(filtro.length > 0 ? filtro : []);
     }
   }
-
-
+  
   useFocusEffect(
     useCallback(() => {
 
@@ -88,10 +80,14 @@ const ListaConsulta = ({ navigation, route }) => {
         route.params=null; 
         setNovo(true)
       }
-      return() =>{
-        // limpaDentista()
+      //console.log(userLogged)
+      if(userLogged.role === "Dentista"){
+        setDentista(userLogged)
       }
-    }, [data, dentista, pesquisa, dataInicio]));
+      return() =>{
+         //limpaDentista()
+      }
+    }, [ dentista, pesquisa, dataInicio]));
 
   return (
     <PaperProvider>
@@ -138,14 +134,17 @@ const ListaConsulta = ({ navigation, route }) => {
                 />
               )}
             />
-            <FAB
-              icon="plus"
+            {userLogged.role === "Admin" &&(
+              <FAB
+              icon="plus-thick"
               color="#FFFFFF"
               style={styles.fab}
               onPress={() => {
                 navigation.navigate('Nova Consulta');
               }}
             />
+            )}
+            
           </>
         )}
       </View>
@@ -158,15 +157,6 @@ const ListaConsulta = ({ navigation, route }) => {
         hideDentis={hideDentis}
         tela="Consulta"
       />
-
-      {/* <ModalEspec
-        pesquisa={pesquisa}
-        setFiltro={setFiltro}
-        buscaUsuario={buscaUsuario}
-        modalEspec={modalEspec}
-        styleModalEspec={styles.styleModalEspec}
-        hideEspec={hideEspec}
-      /> */}
     </PaperProvider>
   );
 };

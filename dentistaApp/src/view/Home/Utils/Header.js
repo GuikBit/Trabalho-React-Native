@@ -8,11 +8,14 @@ import { Button, TextInput, IconButton} from 'react-native-paper';
 import { useNavigation, useFocusEffect  } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Colors } from '../../../global/GlobalStyles';
+import { useGetPacienteByIdAuth } from '../../../service/queries/paciente';
 
 const width = Dimensions.get('screen').width;
 
 const Header = ({userLogged, handleLogout}) => { 
 
+  const { data, isLoading } = useGetPacienteByIdAuth(userLogged.id)
+  console.log(data)
   return (
     <LinearGradient        
         colors={["#2e86c9", "#24aae3"]}
@@ -35,11 +38,15 @@ const Header = ({userLogged, handleLogout}) => {
                     
         />
         </View>
-
-        <View style={styles.menu}>
+        {!isLoading &&
+        (
+          <View style={styles.menu}>
           <Text style={styles.nome}>{userLogged.nome}</Text>
           
         </View>
+        )
+        }
+       
         
       </LinearGradient>
   );

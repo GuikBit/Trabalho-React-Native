@@ -12,7 +12,6 @@ import { GlobalContext } from '../../store/Context';
 import { usePostConsultaAuth } from '../../service/queries/consulta';
 import { useNavigation } from '@react-navigation/native';
 import { Colors } from '../../global/GlobalStyles'
-import ModalEspec from '../../components/Modal/ModalEspec';
 import { useGetPacientesAuth } from '../../service/queries/paciente';
 import ErrorResponse from '../../components/response/ErrorResponse';
 
@@ -257,36 +256,7 @@ const NovaConsulta = () => {
               editable={false}
             />
           )}
-          {/* <TextInput
-            mode="outlined"
-            label="Especialidade"
-            left={
-              <TextInput.Icon
-                icon="account"
-                color={Colors.secondary}
-                style={{ paddingTop: 10 }}
-              />
-            }
-            right={
-              <TextInput.Icon
-                icon="chevron-down"
-                color={Colors.secondary}
-                style={{ paddingTop: 10 }}
-                onPress={() => {
-                  setModalEspec(true);
-                }}
-              />
-            }
-            selectionColor={Colors.secondary}
-            outlineColor={Colors.secondary}
-            outlineStyle={globalStyle.inputRadius}
-            activeOutlineColor={Colors.secondary}
-            style={globalStyle.input}
-            textColor={Colors.secondary}
-            value={consulta.dentista.nome}
-            labelColor={Colors.secondary}
-            editable={false}
-          /> */}
+         
           <TextInput
             mode="outlined"
             label="Dentista"
@@ -385,13 +355,6 @@ const NovaConsulta = () => {
         setFiltro={setFiltro}
         tela="NovaConsulta"
       />
-
-       {/* <ModalEspec
-        hideEspec={hideEspec}
-        pesquisa={pesquisa}
-        styleModalEspec={styleModal}
-        modalEspec={modalEspec}
-      />  */}
 
       <ModalPaciente
         hidePac={hidePac}

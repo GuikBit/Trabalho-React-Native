@@ -34,7 +34,7 @@ export function usePostPaciente() {
 }
 
 export function useGetConsultaByPacienteIdAuth(id) {
-  console.log("Cheguei aqui")
+ 
   return useQuery({
     queryKey: ['getConsultaByPacienteIdAuth', id],
     queryFn: async () => {

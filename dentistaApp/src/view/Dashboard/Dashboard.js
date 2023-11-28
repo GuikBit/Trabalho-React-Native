@@ -6,19 +6,13 @@ import { AuthContext } from '../../Auth/Auth'
 import { useGetAllDashbords, useGetDashBordsDentista } from '../../service/queries/dashbords'
 import LoadingOverlay from '../../components/LoadingOverlay/LoadingOverlay'
 
-const Dashboard = ({user, id}) => {
+const Dashboard = () => {
 
   const { data, isLoading } = useGetAllDashbords();
-  const { data:dentista, isLoading:dentistaLoading} = useGetDashBordsDentista(id);
-  console.log(dentista)
-  useEffect(()=>{
 
-  }, [dentista])
   return (
     <ScrollView >
       
-      {user === "admin"?
-      <>
       <View style={{alignItems: 'center', marginTop: 20}}>
       <Text style={styles.tituloGrafico}>Atendimentos por mês</Text>
         {isLoading ? (
@@ -40,12 +34,12 @@ const Dashboard = ({user, id}) => {
             width={Dimension.width - 20} // from react-native
             height={220}
             chartConfig={styles.chatConfig}
-            bezier
-            
+            bezier            
             style={{
               marginVertical: 10,
               borderRadius: 16,
-
+              borderWidth: 1,
+              borderColor: "#54a2dc"
             }}
           />
         )}
@@ -72,6 +66,8 @@ const Dashboard = ({user, id}) => {
             style={{
               marginVertical: 10,
               borderRadius: 16,
+              borderWidth: 1,
+              borderColor: "#54a2dc"
             }}
             chartConfig={styles.chatConfig}
           />
@@ -89,70 +85,24 @@ const Dashboard = ({user, id}) => {
          
         ):(
           <ProgressChart
-            data= {data.qtdPorEspec}
-            la
+            data= {data.qtdPorEspec}            
             width={Dimension.width - 20}
             height={220}
             style={{
               marginVertical: 10,
               borderRadius: 16,
+              borderWidth: 1,
+              borderColor: "#54a2dc"
               
             }}
             
             chartConfig={styles.chatConfig}
           />
-          // <PieChart
-          //   data={data.qtdPorEspec}
-          //   width={Dimension.width - 20}
-          //   height={220}
-          //   chartConfig={styles.chatConfig}
-          //   accessor={"population"}
-          //   backgroundColor={"transparent"}
-          //   paddingLeft={"15"}
-          //   center={[10, 50]}
-          //   absolute
-          // />
         )}
         
       </View> 
-      </>
-      : 
-      <View style={{alignItems: 'center', marginTop: 20}}>
-      <Text style={styles.tituloGrafico}>Atendimentos por mês</Text>
-        {dentistaLoading ? (
-          <View style={styles.contLooding}>
-            <LoadingOverlay />
-          </View>
-         
-        ):
-        (
-          <LineChart
-            data={{
-              labels: data.meses,
-              datasets: [
-                {
-                  data: data.qtdPorMes
-                }
-              ]
-            }}
-            width={Dimension.width - 20} // from react-native
-            height={220}
-            chartConfig={styles.chatConfig}
-            bezier
-            
-            style={{
-              marginVertical: 10,
-              borderRadius: 16,
-
-            }}
-          />
-        )}
-      </View>
-      }
       
     </ScrollView>
-    
-
   
   )}
 
@@ -164,13 +114,11 @@ const styles = StyleSheet.create({
   
   chatConfig: 
     {
-     
-      backgroundColor: "#f2f8fd",
-      backgroundGradientFrom: "#f1f9fe",
-      backgroundGradientTo: "#e2f2fc",
+      backgroundGradientFrom: "#f2f8fd",
+      backgroundGradientTo: "#f2f8fd",
       decimalPlaces: 2, // optional, defaults to 2dp
-      color: (opacity = 1) => `rgba(18, 73, 104, ${opacity})`,
-      labelColor: (opacity = 1) => `rgba(18, 73, 104, ${opacity})`,
+      color: (opacity = 1) => `rgba(36, 170, 227, ${opacity})`,
+      labelColor: (opacity = 1) => `rgba(25, 73, 115, ${opacity})`,
       style: {
         borderRadius: 16,   
         fontSize: 5,   
@@ -178,7 +126,8 @@ const styles = StyleSheet.create({
       propsForDots: {
         r: "6",
         strokeWidth: "2",
-        stroke: "#FFFFFF"
+        stroke: "#f2f8fd",
+        
       }
     
   }, tituloGrafico: {

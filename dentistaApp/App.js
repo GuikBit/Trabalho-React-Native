@@ -9,7 +9,6 @@ import NovoDentista from './src/view/Dentista/NovoDentista.js';
 import Home from './src/view/Home/Home.js';
 import { AuthProvider } from './src/Auth/Auth.js';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import ListaPaciente from './src/view/Paciente/ListaPaciente.js';
 import Paciente from './src/view/Paciente/Paciente.js';

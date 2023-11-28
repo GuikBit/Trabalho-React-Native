@@ -27,30 +27,18 @@ const CardConsulta = ({ consulta, onPress }) => {
             <Text style={styles.texto}>
               <Icon name="user-md" size={18} /> {consulta.dentista.nome}
             </Text>
-          )}
-          {userLogged == 'Dentista' && (
-            <Text style={styles.texto}>
-              <Icon name="user-md" size={18} /> {consulta.paciente.nome}
-            </Text>
-          )} */}
-          {userLogged.role == 'Admin' && (
+          )}*/}
+          {userLogged.role === 'Admin' && (
             <>
               <Text style={styles.texto}>
                 <Icon name="user-md" size={20} /> {' '}
                 {consulta.dentista.nome}
               </Text>
-              <Text style={styles.texto}>
-                <Icon name="user" size={20} /> {' '}
-                {consulta.paciente.nome}
-              </Text>
             </>
           )}
-          {/* <Text style={styles.texto}>
-            <Icon name="calendar" size={16} /> {consulta.dataNasc}
-          </Text> */}
-          {/* <Text style={styles.texto}>
-            <Icon name="clock-o" size={16} /> 15:00
-          </Text> */}
+          <Text style={styles.texto}>
+              <Icon name="user-md" size={18} /> {consulta.paciente.nome}
+            </Text> 
         </View>
       </View>
     </Card>
@@ -61,7 +49,6 @@ export default CardConsulta;
 
 const styles = StyleSheet.create({
   card: {
-    // height: 110,
     marginHorizontal: 15,
     marginVertical: 10,
     borderRadius: 10,

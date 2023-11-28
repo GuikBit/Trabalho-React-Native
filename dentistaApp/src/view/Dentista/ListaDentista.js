@@ -17,8 +17,6 @@ import SuccessResponse from '../../components/response/SuccessResponse';
 const ListaDentista = ({ navigation, route }) => {
 
   const { data, isLoading } = useGetDentistasAuth();
-  const [lista, setLista] = useState();
-  const { userLogged } = useContext(AuthContext);
   
   const [filtro, setFiltro] = useState([]);
   const [pesquisa, setPesquisa] = useState('');
@@ -97,7 +95,7 @@ const ListaDentista = ({ navigation, route }) => {
               )}
             />
             <FAB
-              icon="plus"
+              icon="plus-thick"
               color="#FFFFFF"
               style={styles.fab}
               onPress={() => navigation.navigate('Novo Dentista', null)}

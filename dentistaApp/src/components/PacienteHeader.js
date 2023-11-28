@@ -1,12 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import React, { useContext } from 'react';
 import globalStyle from '../../globalStyle';
 import { TextInput } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useGetPacienteByIdAuth } from '../service/queries/paciente';
+import { AuthContext } from '../Auth/Auth';
 
 const UserHeader = ({ navigation, paciente }) => {
-  // console.log(paciente)
+  const { userLogged } = useContext(AuthContext);
   return (
     <View>
       <LinearGradient  
@@ -17,10 +19,16 @@ const UserHeader = ({ navigation, paciente }) => {
           <Text style={styles.voltar}>
             <TextInput.Icon
               icon="chevron-left"
-              size={35}
+              size={45}
               color="#FFFFFF"
               onPress={() => {
-                navigation.navigate('Lista Pacientes');
+                if(userLogged.role === "Paciente"){
+                  navigation.navigate('Home');
+                  
+                }else{
+                  navigation.navigate('Lista Pacientes');
+                }
+                
               }}
             />
           </Text>
