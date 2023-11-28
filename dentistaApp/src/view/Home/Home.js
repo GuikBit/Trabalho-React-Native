@@ -10,18 +10,27 @@ import { useCallback } from 'react';
 import { useFocusEffect  } from '@react-navigation/native';
 import { useGetPacienteByIdAuth } from '../../service/queries/paciente';
 import LoadingOverlay from '../../components/LoadingOverlay/LoadingOverlay';
+import { GlobalContext } from '../../store/Context';
 
 const Home = ({ navigation, route }) => {
 
-  const { userLogged, logout } = useContext(AuthContext);
- 
+  const { userLogged, logout, isLoading} = useContext(AuthContext);
+ const { paciente, setPaciente } = useContext(GlobalContext);
+
   const handleLogout = () =>{
     if( logout() ){
       navigation.replace("Login", {novo: false})
     }    
   }
 
-  console.log(userLogged)
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     if(userLogged.role === "Paciente"){
+  //       setPaciente()
+  //     }
+      
+  //     return() =>{}
+  //   }, [paciente]));
 
   return (
     <View style={styles.container}>

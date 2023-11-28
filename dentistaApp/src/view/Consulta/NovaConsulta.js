@@ -10,10 +10,11 @@ import Icon from '@expo/vector-icons/FontAwesome';
 import { AuthContext } from '../../Auth/Auth';
 import { GlobalContext } from '../../store/Context';
 import { usePostConsultaAuth } from '../../service/queries/consulta';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Colors } from '../../global/GlobalStyles'
 import { useGetPacientesAuth } from '../../service/queries/paciente';
 import ErrorResponse from '../../components/response/ErrorResponse';
+import { useCallback } from 'react';
 
 const NovaConsulta = () => {
 
@@ -23,7 +24,7 @@ const NovaConsulta = () => {
   const { mutate } = usePostConsultaAuth();
 
   const { userLogged } = useContext(AuthContext);
-  const { consulta, setConsulta, limpaConsulta } = useContext(GlobalContext);
+  const { consulta, setConsulta, limpaConsulta, paciente } = useContext(GlobalContext);
 
   const [modalDent, setModalDent] = useState(false);
   const [modalPac, setModalPac] = useState(false);
@@ -40,6 +41,7 @@ const NovaConsulta = () => {
     data: null,
     hora: null
   })
+  
   function buscaDentista(e) {
     setPesquisa(e);
     if (e === '') {
@@ -54,6 +56,22 @@ const NovaConsulta = () => {
       setFiltro(res);
     }
   }
+  useFocusEffect(
+    useCallback(() => {
+      if(userLogged.role === "Paciente"){
+        const pacientelogado = pacienteData.filter((user) =>{
+          if(user.id === userLogged.id && user.nome === userLogged.nome){
+            return user;
+          }
+        })
+        setFiltroPaciente(pacientelogado)
+        // setConsulta({...consulta, paciente:{...consulta.paciente, pacientelogado}})
+      }
+      
+      return() =>{
+        //limpaConsulta()
+      }
+    }, [paciente]));
 
   function buscaPaciente(e) {
     setPesquisa(e);
@@ -76,11 +94,16 @@ const NovaConsulta = () => {
       console.log(consulta)
         mutate(consulta);
         limpaConsulta();
-        navigation.navigate('Lista Consultas', {novo: true});
+        if(userLogged.role === "Paciente"){
+          navigation.navigate('Paciente Details',  {item: consulta.paciente})
+        }else{
+          navigation.navigate('Lista Consultas', {novo: true});
+        }
+        
     }
   };
 
-  async function  verificaMarcacao(){
+  function verificaMarcacao(){
     if( validaPaciente() && validaDentista() && validaData() && validaHora()){
       return true;
     }
@@ -114,15 +137,18 @@ const NovaConsulta = () => {
 
   function validaData(){
     const data = consulta.dataConsulta;
+    
     const dataAtual = new Date();
     const dataSubStr = data.split('/');
     const dia = parseInt(dataSubStr[0], 10);   
-    const mes = parseInt(dataSubStr[1], 10);
+    const mes = parseInt(dataSubStr[1], 10) - 1;
     const ano = parseInt(dataSubStr[2], 10); 
 
+    const dataConsulta = new Date(ano, mes, dia);
+    
     if(data !== ""){
       if((dia >= 1 && dia <= 31) && (mes >= 1 && mes <= 12) && (ano >= dataAtual.getFullYear()) ){
-        if(dia >= dataAtual.getDate() && mes >= dataAtual.getMonth()){
+        if(dataConsulta > dataAtual){         
           setMsg("")
           setErro(false);
           return true;
@@ -131,12 +157,12 @@ const NovaConsulta = () => {
           setErro(true);
           return false;
        }
-     }
-     else{
+      }
+      else{
         setMsg("Um erro na data foi identificado")
         setErro(true);
         return false;
-     }
+      }
     }else{
       setMsg("Escolha uma data")
       setErro(true);
@@ -222,7 +248,7 @@ const NovaConsulta = () => {
           
         </View>
         <View style={styles.conulta}>
-          {userLogged.role == 'Admin' && (
+          {/* {userLogged.role == 'Admin' && ( */}
             <TextInput
               mode="outlined"
               label="Paciente"
@@ -255,7 +281,7 @@ const NovaConsulta = () => {
               labelColor={Colors.secondary}
               editable={false}
             />
-          )}
+          {/* )} */}
          
           <TextInput
             mode="outlined"

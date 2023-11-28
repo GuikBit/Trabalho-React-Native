@@ -46,6 +46,10 @@ export async function apiGetByIdAuth(url, id) {
   });
   try {
     const response = await instance.get(`/v1/${url}/${id}`);
+    console.log(response.status)
+    if(response.status === 404){
+      return {};
+    }
     return response.data;
   } catch (error) {
     console.error(error);

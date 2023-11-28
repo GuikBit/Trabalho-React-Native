@@ -8,10 +8,19 @@ import { AuthContext } from '../../Auth/Auth';
 const CardConsulta = ({ consulta, onPress }) => {
   const { userLogged } = useContext(AuthContext);
 
+  const data = consulta.dataConsulta;    
+  const dataAtual = new Date();
+  const dataSubStr = data.split('/');
+  const dia = parseInt(dataSubStr[0], 10);   
+  const mes = parseInt(dataSubStr[1], 10) - 1;
+  const ano = parseInt(dataSubStr[2], 10); 
+
+  const dataConsulta = new Date(ano, mes, dia);
+
   return (
     <Card style={styles.card} onPress={onPress}>
       <View style={styles.header}>
-        <Text style={styles.nome}>
+        <Text style={[styles.nome, {color: dataConsulta >= dataAtual? '#529558': '#7a7d7a'}]}>
           <Icon name="calendar" size={20} /> {' '}
           {consulta.dataConsulta}
           {'      '}
@@ -23,18 +32,13 @@ const CardConsulta = ({ consulta, onPress }) => {
 
       <View style={styles.body}>
         <View style={styles.infoRow}>
-          {/* {userLogged.role == 'Paciente' && (
-            <Text style={styles.texto}>
-              <Icon name="user-md" size={18} /> {consulta.dentista.nome}
-            </Text>
-          )}*/}
-          {userLogged.role === 'Admin' && (
-            <>
+          {userLogged.role !== 'Dentista' && (
+            
               <Text style={styles.texto}>
                 <Icon name="user-md" size={20} /> {' '}
                 {consulta.dentista.nome}
               </Text>
-            </>
+            
           )}
           <Text style={styles.texto}>
               <Icon name="user-md" size={18} /> {consulta.paciente.nome}
@@ -71,7 +75,7 @@ const styles = StyleSheet.create({
   nome: {
     flexDirection: 'row',
     alignSelf: 'center',
-    color: '#529558',
+    
     fontSize: 20,
     fontWeight: 'bold',
   },

@@ -23,7 +23,7 @@ const ConsultaDetails = ({route}) => {
         style={globalStyle.headerPesq}
         start={{ x: 0.3, y: 0.1 }}
       >
-        <HeaderNavigate titulo="Consulta" onPress={()=>{navigation.navigate("Lista Consultas")}}/>
+        <HeaderNavigate titulo="Consulta" onPress={()=>{navigation.goBack()}}/>
         
       </LinearGradient>
 

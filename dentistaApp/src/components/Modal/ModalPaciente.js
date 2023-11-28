@@ -7,6 +7,7 @@ import FiltroDentistas from '../Listagem/FiltroDentistas';
 import { useGetPacientesAuth } from '../../service/queries/paciente';
 import { GlobalContext } from '../../store/Context';
 import FiltroPacientes from '../Listagem/FiltroPacientes';
+import { AuthContext } from '../../Auth/Auth';
 
 const ModalPaciente = ({
   modalPac,
@@ -19,6 +20,9 @@ const ModalPaciente = ({
 }) => {
   const { data, isLoading } = useGetPacientesAuth();
   const { consulta, setConsulta } = useContext(GlobalContext);
+  const { userLogged } = useContext(AuthContext);
+
+  
 
   return (
     <Modal

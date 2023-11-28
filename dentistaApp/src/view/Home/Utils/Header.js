@@ -14,8 +14,8 @@ const width = Dimensions.get('screen').width;
 
 const Header = ({userLogged, handleLogout}) => { 
 
-  const { data, isLoading } = useGetPacienteByIdAuth(userLogged.id)
-  console.log(data)
+  // const { data, isLoading } = useGetPacienteByIdAuth(userLogged.id)
+  // console.log(data)
   return (
     <LinearGradient        
         colors={["#2e86c9", "#24aae3"]}
@@ -38,14 +38,14 @@ const Header = ({userLogged, handleLogout}) => {
                     
         />
         </View>
-        {!isLoading &&
-        (
+        {/* {!isLoading &&
+        ( */}
           <View style={styles.menu}>
           <Text style={styles.nome}>{userLogged.nome}</Text>
           
         </View>
-        )
-        }
+        {/* )
+        } */}
        
         
       </LinearGradient>

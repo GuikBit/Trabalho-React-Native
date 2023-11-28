@@ -1,5 +1,5 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import globalStyle from '../../globalStyle';
 import { Searchbar, TextInput, FAB, Button } from 'react-native-paper';
 import lista from '../Mock/lista';
@@ -14,52 +14,59 @@ import { useGetConsultaByIdAuth } from '../service/queries/consulta';
 const UserBody = ({ navigation, paciente }) => {
 
   const [filtro, setFiltro] = useState([]);
-  const [dataCons, setDataCons] = useState();
+  const [dataCons, setDataCons] = useState("");
   const {data, isLoading } = useGetConsultaByPacienteIdAuth(paciente.id)
-  // const { data, isLoading } =  useGetConsultaByIdAuth( 7 );
 
-  // function buscarConsultaData(e) {
-  //   setPesquisa(e);
-
-  //   if (e === '') {
-  //     setFiltro(data);
-  //   } else {
-  //     const pesquisa = e.toLowerCase();
-  //     const filtro = data.filter((user) => {
-  //       const dataConsulta = user.dataNasc.toLowerCase();
-  //       return dataConsulta.includes(pesquisa);
-  //     });
-  //     setFiltro(filtro);
-  //   }
-  // }
   const ajustaData = (num) => {    
     const textoLimpo = num.replace(/\D/g, '');
     const limite = textoLimpo.substring(0, 8);
     const dataFormatada = limite.replace(/(\d{2})(\d{2})(\d{4})/, '$1/$2/$3');
     setDataCons(dataFormatada)
   }
+  function verificaFiltro() {
+    if (data) { 
+      console.log(data);
+      const consultas = data.filter((c) => {
+        if (c.dataConsulta === dataCons) return c;
+      });
+      setFiltro(consultas.length > 0 ? consultas : []);
+    }
+  }
+
+  useEffect(()=>{
+    
+    verificaFiltro()
+  }, [])
+
 
   return (
+ 
     <View style={styles.body}>
+      {isLoading &&  <LoadingOverlay/> }
+      {!isLoading && (
       <View style={styles.boxTitulo}>
-        <Text style={styles.titulo}>Histórico de Consultas</Text>
+      <Text style={styles.titulo}>Histórico de Consultas</Text>
 
-        <TextInput
-          mode="outlined"
-          left={<TextInput.Icon icon="calendar-today" color={Colors.secondary} />}
-          selectionColor={Colors.secondary}
-          outlineColor={Colors.secondary}
-          outlineStyle={{ borderRadius: 50 }}
-          activeOutlineColor={Colors.secondary}
-          style={styles.search}
-          textColor={Colors.secondary}
-          labelColor={Colors.secondary}
-          value={dataCons}
-          // onChangeText={(e) => setDataInicio(e)}
-          onChangeText={ajustaData}
-        />
+      <TextInput
+        mode="outlined"
+        left={<TextInput.Icon icon="calendar-today" color={Colors.secondary} size={18} />}
+        selectionColor={Colors.secondary}
+        outlineColor={Colors.secondary}
+        outlineStyle={{ borderRadius: 50 }}
+        activeOutlineColor={Colors.secondary}
+        labelStyle={globalStyle.label}
+        style={styles.search}
+        textColor={Colors.secondary}
+        labelColor={Colors.secondary}
+        value={dataCons}
+        
+        onChangeText={ajustaData}
+        keyboardType='numeric'
+      />
       </View>
-      {isLoading &&  <LoadingOverlay/>}
+      )}
+      
+      
       {!isLoading && (
         data === undefined || data.length === 0? 
           <View style={styles.cont}>
@@ -76,6 +83,7 @@ const UserBody = ({ navigation, paciente }) => {
           </Button>
           </View>
           :
+          <>
           <FlatList
           style={styles.flatList}
           data={filtro.length == 0 ? data : filtro}
@@ -84,30 +92,31 @@ const UserBody = ({ navigation, paciente }) => {
             <CardConsulta
               consulta={item}
               onPress={() => {
-                navigation.navigate('Consulta', { id: item.id });
+                navigation.navigate('Consulta Details', { id: item.id });
               }}
             />
           )}
-        />
-        
+          />
+          <FAB
+            icon="plus-thick"
+            color="#FFFFFF"
+            style={styles.fabConsulta}
+            onPress={() => {
+              navigation.navigate('Nova Consulta');
+            }}
+          />
+        </>
         
       )}
-      <FAB
-        icon="plus-thick"
-        color="#FFFFFF"
-        style={styles.fabConsulta}
-        onPress={() => {
-          navigation.navigate('Nova Consulta');
-        }}
-      />
-      <FAB
+      
+      {/* <FAB
         icon="account-details"
         color="#FFFFFF"
         style={styles.fab}
         onPress={() => {
           navigation.navigate('Cadastro', { id: user.id });
         }}
-      />
+      /> */}
       
     </View>
   );
@@ -134,8 +143,10 @@ const styles = StyleSheet.create({
   search: {
     marginHorizontal: 5,
     backgroundColor: '#FFFFFF',
-    width: 142,
+    width: 150,
     height: 35,
+    fontSize: 18,
+   
   },
   fabConsulta: {
     position: 'absolute',
