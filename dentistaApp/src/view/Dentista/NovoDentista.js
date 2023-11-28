@@ -29,7 +29,7 @@ const NovoDentista = ({ item, paramsDentista }) => {
 
  useFocusEffect(
    useCallback(() => {
-    console.log(paramsDentista)
+    
     if (paramsDentista !== undefined) {
       
       setDentista({...dentista, 
@@ -57,7 +57,7 @@ const NovoDentista = ({ item, paramsDentista }) => {
   function dadosTeste(){
     setDentista({...dentista,
       nome: 'Dr Matheus',
-      email: 'matheus@email.com',
+      email: 'matheus',
       login: 'dentista@email.com',
       senha: '123',
       telefone: '(32) 98877-6655',
@@ -83,7 +83,7 @@ const NovoDentista = ({ item, paramsDentista }) => {
     try{
      
       if(validaDados()){
-        console.log("entrei")
+        
         mutate(dentista)  
         navigation.navigate('Lista Dentista', {novo: true});
       }
@@ -153,22 +153,6 @@ const NovoDentista = ({ item, paramsDentista }) => {
           }
         </View>
       <View style={styles.cadastro}>
-        
-      {/* {teste? 
-        <IconButton
-          icon="account-cog"
-          iconColor={Colors.secondary}
-          size={20}
-          onPress={dadosTeste}          
-        />
-        :
-        <IconButton
-          icon="delete-empty"
-          iconColor={Colors.secondary}
-          size={20}
-          onPress={()=>{limpaDentista(); setTeste(!teste)}}          
-        />
-        } */}
         
         <TextInput
           mode="outlined"
@@ -325,26 +309,6 @@ const NovoDentista = ({ item, paramsDentista }) => {
           labelColor={Colors.secondary}
           onChangeText={ajustaTelefone}
         />
-        {/* <TextInput
-          mode="outlined"
-          label="CRO"
-          left={
-            <TextInput.Icon
-              icon="badge-account"
-              color={Colors.secondary}
-              style={{ paddingTop: 10 }}
-            />
-          }
-          selectionColor={Colors.secondary}
-          outlineColor={Colors.secondary}
-          outlineStyle={globalStyle.inputRadius}
-          activeOutlineColor={Colors.secondary}
-          style={globalStyle.input}
-          textColor={Colors.secondary}
-          value={dentista.cro}
-          labelColor={Colors.secondary}
-          onChangeText={(e) => setDentista({ ...dentista, cro: e })}
-        /> */}
         <TextInput
           mode="outlined"
           label="Especialidade"

@@ -14,23 +14,31 @@ import { GlobalContext } from '../../store/Context';
 
 const Home = ({ navigation, route }) => {
 
-  const { userLogged, logout, isLoading} = useContext(AuthContext);
- const { paciente, setPaciente } = useContext(GlobalContext);
+  const { userLogged, logout} = useContext(AuthContext);
+ const { paciente, setPaciente, pacienteConsulta, setPacienteConsulta} = useContext(GlobalContext);
+ const { data: p, isLoading } = useGetPacienteByIdAuth(userLogged.id);
 
   const handleLogout = () =>{
     if( logout() ){
       navigation.replace("Login", {novo: false})
     }    
   }
+  const  preenchepaciente = ()=>{
+    if(userLogged.role === "Paciente"){
+      setPacienteConsulta(p)
+      console.log(pacienteConsulta)
+    }
+  }
 
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     if(userLogged.role === "Paciente"){
-  //       setPaciente()
-  //     }
+  useFocusEffect(
+    useCallback(() => {
+      if(!isLoading){
+        preenchepaciente()
+      }
       
-  //     return() =>{}
-  //   }, [paciente]));
+      
+      return() =>{}
+    }, [p]));
 
   return (
     <View style={styles.container}>

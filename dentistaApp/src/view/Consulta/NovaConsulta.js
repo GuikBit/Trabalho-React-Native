@@ -12,19 +12,23 @@ import { GlobalContext } from '../../store/Context';
 import { usePostConsultaAuth } from '../../service/queries/consulta';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Colors } from '../../global/GlobalStyles'
-import { useGetPacientesAuth } from '../../service/queries/paciente';
+import { useGetPacienteByIdAuth, useGetPacientesAuth } from '../../service/queries/paciente';
 import ErrorResponse from '../../components/response/ErrorResponse';
 import { useCallback } from 'react';
+import { useGetByIdPublic } from '../../service/queries/Queries';
 
 const NovaConsulta = () => {
 
   const navigation = useNavigation();
+  const { userLogged } = useContext(AuthContext);
   const { data:dentistaData, isLoadingD } = useGetDentistasAuth();
   const { data:pacienteData, isLoadingP } = useGetPacientesAuth();
+  
+
   const { mutate } = usePostConsultaAuth();
 
-  const { userLogged } = useContext(AuthContext);
-  const { consulta, setConsulta, limpaConsulta, paciente } = useContext(GlobalContext);
+  
+  const { consulta, setConsulta, limpaConsulta, paciente, pacienteConsulta} = useContext(GlobalContext);
 
   const [modalDent, setModalDent] = useState(false);
   const [modalPac, setModalPac] = useState(false);
@@ -56,22 +60,29 @@ const NovaConsulta = () => {
       setFiltro(res);
     }
   }
-  useFocusEffect(
-    useCallback(() => {
-      if(userLogged.role === "Paciente"){
-        const pacientelogado = pacienteData.filter((user) =>{
-          if(user.id === userLogged.id && user.nome === userLogged.nome){
-            return user;
-          }
-        })
-        setFiltroPaciente(pacientelogado)
-        // setConsulta({...consulta, paciente:{...consulta.paciente, pacientelogado}})
-      }
+ 
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     // if(!isLoading && userLogged.role === "Paciente"){
+  //     //   setConsulta({...consulta, paciente:{...consulta.paciente, p} })
+  //     // }
+  //     // console.log(consulta)
       
-      return() =>{
-        //limpaConsulta()
-      }
-    }, [paciente]));
+  //     // if(userLogged.role === "Paciente"){
+  //     //   const pacientelogado = pacienteData.filter((user) =>{
+  //     //     if(user.id === userLogged.id && user.nome === userLogged.nome){
+  //     //       return user;
+  //     //     }
+  //     //   })
+  //     //   setFiltroPaciente(pacientelogado)
+  //     //   // setConsulta({...consulta, paciente:{...consulta.paciente, pacientelogado}})
+  //     // }
+    
+      
+  //     return() =>{
+  //       //limpaConsulta()
+  //     }
+  //   }, [p]));
 
   function buscaPaciente(e) {
     setPesquisa(e);
@@ -89,17 +100,20 @@ const NovaConsulta = () => {
     }
   }
 
-  const handleNovaConsulta = () => {
-    if( verificaMarcacao() ){
-      console.log(consulta)
+
+  const  handleNovaConsulta = () => {
+    if(userLogged.role === "Paciente"){
+      setConsulta({...consulta, paciente: pacienteConsulta})
+    }
+    console.log(consulta)
+    if( verificaMarcacao() ){      
         mutate(consulta);
         limpaConsulta();
         if(userLogged.role === "Paciente"){
           navigation.navigate('Paciente Details',  {item: consulta.paciente})
         }else{
           navigation.navigate('Lista Consultas', {novo: true});
-        }
-        
+        }        
     }
   };
 
@@ -170,7 +184,7 @@ const NovaConsulta = () => {
     }
   }
   function validaPaciente(){
-    console.log(consulta.paciente.nome)
+    
     if(consulta.paciente.nome === ""){
       setMsg("Selecione um paciente")
       setErro(true);
@@ -248,7 +262,7 @@ const NovaConsulta = () => {
           
         </View>
         <View style={styles.conulta}>
-          {/* {userLogged.role == 'Admin' && ( */}
+           {userLogged.role == 'Admin' && ( 
             <TextInput
               mode="outlined"
               label="Paciente"
@@ -281,7 +295,7 @@ const NovaConsulta = () => {
               labelColor={Colors.secondary}
               editable={false}
             />
-          {/* )} */}
+           )} 
          
           <TextInput
             mode="outlined"

@@ -25,7 +25,6 @@ const UserBody = ({ navigation, paciente }) => {
   }
   function verificaFiltro() {
     if (data) { 
-      console.log(data);
       const consultas = data.filter((c) => {
         if (c.dataConsulta === dataCons) return c;
       });

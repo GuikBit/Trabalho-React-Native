@@ -43,7 +43,7 @@ const ListaDentista = ({ navigation, route }) => {
     useCallback(() => {
 
       const novo = route.params?.novo || false;
-      console.log(novo)
+      
       if(novo === true){
         setNovo(true)
       }

@@ -55,9 +55,9 @@ const ModalDentista = ({
                 style={[styles.card]}
                 onPress={() => {
                   if(tela == "Consulta"){
-                    //console.log(item)
+                    
                     setDentista({...item})
-                    //console.log(dentista)
+                    
                     hideDentis();
                   }
                   if(tela == "NovaConsulta"){

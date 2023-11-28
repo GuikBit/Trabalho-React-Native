@@ -42,7 +42,7 @@ const ListaPaciente = ({ navigation }) => {
   useFocusEffect(
     useCallback(() => {
       const novo = route.params?.novo ;
-      console.log(novo)
+      
       if(novo === true){
         setNovo(true)
       }

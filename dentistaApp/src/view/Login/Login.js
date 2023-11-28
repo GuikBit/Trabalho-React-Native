@@ -23,7 +23,6 @@ const Login = ({}) => {
   const { login, user, msg, setMsg, setUser, userLogged} = useContext(AuthContext);
   const route = useRoute();
   const navigation = useNavigation();
-  const [novo, setNovo] = useState(false);
 
   const handleLogin = async () => {
 
@@ -52,15 +51,13 @@ const Login = ({}) => {
     }
   };
 
-  useFocusEffect(
-    useCallback(() => {
-      const novo = route.params?.novo ;
-      if(novo === true){
-        setNewuser(true)
-      }
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     // const novo = route.params?.novo ; 
+      
 
-      return() =>{}  
-    }, []));
+  //     return() =>{}  
+  //   }, []));
 
   return (
     <ScrollView style={globalStyle.container}>
@@ -73,8 +70,8 @@ const Login = ({}) => {
           {erro === true && (
             <ErrorResponse titulo={msg} onPress={()=> {setErro(false)}} cor="#f44336"/>
           )}
-          {newUser === true && (
-            <SuccessResponse titulo="Usuario salvo." onPress={()=>{setNewuser(false)}} cor="#529558" />
+          {route.params?.novo  && (
+            <SuccessResponse titulo="Usuario salvo com sucesso." onPress={()=>{setNewuser(false)}} cor="#529558" />
           )}
         </View>
         

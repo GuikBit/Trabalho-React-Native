@@ -5,31 +5,59 @@ export const GlobalContext = createContext({});
 
 function ContextProvider({ children }) {
   const [paciente, setPaciente] = useState({
-    nome: 'Paciente Completo',
-    email: 'matheus@email.com',
-    login: 'matheus2@email.com',
-    senha: '1234567',
-    telefone: '543243534',
-    cpf: '2134326546',
-    dataNasc: '12/04/1996',
-    responsavel: { nome: 'teste', cpf: '42345235', telefone: '5245345' },
+    nome: '',
+    email: '',
+    login: '',
+    senha: '',
+    telefone: '',
+    cpf: '',
+    dataNasc: '',
+    responsavel: { nome: '', cpf: '', telefone: '' },
     endereco: {
-      rua: 'teste',
-      bairro: 'teste',
-      cidade: 'teste',
+      rua: '',
+      bairro: '',
+      cidade: '',
       cep: '',
       numero: '',
-      complemento: 'teste',
+      complemento: '',
     },
     anamnese: {
-      problemaSaude: 'teste',
-      tratamento: 'teste',
-      remedio: 'teste',
-      alergia: 'teste',
-      sangramentoExcessivo: true,
-      hipertensao: true,
-      gravida: true,
-      traumatismoFace: true,
+      problemaSaude: '',
+      tratamento: '',
+      remedio: '',
+      alergia: '',
+      sangramentoExcessivo: false,
+      hipertensao: false,
+      gravida: false,
+      traumatismoFace: false,
+    },
+  });
+  const [pacienteConsulta, setPacienteConsulta] = useState({
+    nome: '',
+    email: '',
+    login: '',
+    senha: '',
+    telefone: '',
+    cpf: '',
+    dataNasc: '',
+    responsavel: { nome: '', cpf: '', telefone: '' },
+    endereco: {
+      rua: '',
+      bairro: '',
+      cidade: '',
+      cep: '',
+      numero: '',
+      complemento: '',
+    },
+    anamnese: {
+      problemaSaude: '',
+      tratamento: '',
+      remedio: '',
+      alergia: '',
+      sangramentoExcessivo: false,
+      hipertensao: false,
+      gravida: false,
+      traumatismoFace: false,
     },
   });
 
@@ -187,7 +215,9 @@ function ContextProvider({ children }) {
         setConsulta,
         limpaDentista,
         limpaPaciente,
-        limpaConsulta
+        limpaConsulta,
+        pacienteConsulta,
+        setPacienteConsulta
       }}
     >
       {children}

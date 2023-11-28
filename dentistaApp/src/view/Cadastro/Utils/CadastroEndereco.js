@@ -12,7 +12,7 @@ const CadastroEndereco = ({ subTitulo }) => {
   const { paciente, setPaciente, buscaCep } = useContext(GlobalContext);
 
   useEffect(() => {
-    console.log('executa quando o cep é alterado');
+    
     if (cep.length == 8) {
       buscaCep(cep);
     }

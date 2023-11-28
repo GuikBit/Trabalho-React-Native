@@ -23,7 +23,7 @@ export function usePostDentistaAuth() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (dentista) => {
-      console.log(dentista)
+      
       const novoDentista =  await apiPostAuth('dentista', dentista);
       queryClient.invalidateQueries('getDentistasAuth');
 
@@ -36,7 +36,7 @@ export function usePutDentistaAuth() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (dentista) => {
-      console.log(dentista)
+      
       const novoDentista =  await apiPutAuth('dentista', dentista);
       queryClient.invalidateQueries('getDentistasAuth');
 

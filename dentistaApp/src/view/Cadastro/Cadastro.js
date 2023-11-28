@@ -39,7 +39,7 @@ const Cadastro = ({ route }) => {
       navigation.navigate('Lista Pacientes', {novo: true})
     }
     else{
-      navigation.navigate('Login',{novo: true})
+      navigation.navigate('Login', {novo: true})
     }
     
     
