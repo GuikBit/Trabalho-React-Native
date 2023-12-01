@@ -22,7 +22,7 @@ const ListaDentista = ({ navigation, route }) => {
   const [pesquisa, setPesquisa] = useState('');
   const [novo, setNovo] = useState(false);
 
-  function buscaUsuario(e) {
+  function buscarDentista(e) {
     setPesquisa(e);
 
     if (e === '') {
@@ -61,7 +61,7 @@ const ListaDentista = ({ navigation, route }) => {
           <HeaderGeral titulo="Dentistas" />
           <FiltroDentistas
             pesquisa={pesquisa}
-            buscaDentista={buscaUsuario}
+            buscarDentista={buscarDentista}
             setFiltro={setFiltro}
             data={data}
           />

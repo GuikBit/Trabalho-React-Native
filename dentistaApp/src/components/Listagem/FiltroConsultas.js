@@ -48,6 +48,13 @@ const FiltroConsultas = ({
       <TextInput
           mode="outlined"
           label="Dentista"
+          left={<TextInput.Icon
+                  icon="account-tie"
+                  color={Colors.secondary}
+                  style={{ paddingTop: 10 }}
+                  size={19}
+                />
+              }
           right={
             (nomeDentista === "" ? 
             <TextInput.Icon

@@ -23,7 +23,7 @@ const ListaPaciente = ({ navigation }) => {
 
   const [novo, setNovo] = useState(false);
 
-  function buscaUsuario(e) {
+  function buscaPaciente(e) {
     setPesquisa(e);    
     if (e === '') {
       setFiltro(data);
@@ -31,9 +31,10 @@ const ListaPaciente = ({ navigation }) => {
       const pesquisaLowerCase = e.toLowerCase();
       const filtro = data.filter((user) => {
         const nomeLowerCase = user.nome.toLowerCase();
-        const pastaNuString = user.pastaNu.toString();
-        return (nomeLowerCase.includes(pesquisaLowerCase) ||
-                pastaNuString.includes(pesquisaLowerCase))
+        //const pastaNuString = user.pastaNu.toString();
+        return (nomeLowerCase.includes(pesquisaLowerCase) 
+        //|| pastaNuString.includes(pesquisaLowerCase)
+                )
         });
       setFiltro(filtro);
     }
@@ -60,7 +61,7 @@ const ListaPaciente = ({ navigation }) => {
           <HeaderGeral titulo="Pacientes" />
           <FiltroPacientes
             pesquisa={pesquisa}
-            buscaUsuario={buscaUsuario}
+            buscaPaciente={buscaPaciente}
             setFiltro={setFiltro}
           />
         </LinearGradient>

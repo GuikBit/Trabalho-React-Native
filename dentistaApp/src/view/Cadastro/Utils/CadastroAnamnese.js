@@ -97,7 +97,7 @@ const CadastroAnamnese = ({ subTitulo }) => {
       />
       <TextInput
         mode="outlined"
-        label="Alérgico(a) a algum tipo de medicamento?"
+        label="Alérgico(a) a algum medicamento?"
         placeholder="Qual?"
         left={
           <TextInput.Icon
