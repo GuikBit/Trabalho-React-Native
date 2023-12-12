@@ -41,30 +41,7 @@ const UserBody = ({ navigation, paciente }) => {
   return (
  
     <View style={styles.body}>
-      {isLoading &&  <LoadingOverlay/> }
-      {!isLoading && (
-      <View style={styles.boxTitulo}>
-      <Text style={styles.titulo}>Histórico de Consultas</Text>
-
-      <TextInput
-        mode="outlined"
-        left={<TextInput.Icon icon="calendar-today" color={Colors.secondary} size={18} />}
-        selectionColor={Colors.secondary}
-        outlineColor={Colors.secondary}
-        outlineStyle={{ borderRadius: 50 }}
-        activeOutlineColor={Colors.secondary}
-        labelStyle={globalStyle.label}
-        style={styles.search}
-        textColor={Colors.secondary}
-        labelColor={Colors.secondary}
-        value={dataCons}
-        
-        onChangeText={ajustaData}
-        keyboardType='numeric'
-      />
-      </View>
-      )}
-      
+      {isLoading &&  <LoadingOverlay/> }      
       
       {!isLoading && (
         data === undefined || data.length === 0? 
@@ -83,6 +60,26 @@ const UserBody = ({ navigation, paciente }) => {
           </View>
           :
           <>
+          <View style={styles.boxTitulo}>
+            <Text style={styles.titulo}>Histórico de Consultas</Text>
+
+            <TextInput
+              mode="outlined"
+              left={<TextInput.Icon icon="calendar-today" color={Colors.secondary} size={18} />}
+              selectionColor={Colors.secondary}
+              outlineColor={Colors.secondary}
+              outlineStyle={{ borderRadius: 50 }}
+              activeOutlineColor={Colors.secondary}
+              labelStyle={globalStyle.label}
+              style={styles.search}
+              textColor={Colors.secondary}
+              labelColor={Colors.secondary}
+              value={dataCons}
+              
+              onChangeText={ajustaData}
+              keyboardType='numeric'
+            />
+          </View>
           <FlatList
           style={styles.flatList}
           data={filtro.length == 0 ? data : filtro}
@@ -108,14 +105,14 @@ const UserBody = ({ navigation, paciente }) => {
         
       )}
       
-      {/* <FAB
+      <FAB
         icon="account-details"
         color="#FFFFFF"
         style={styles.fab}
         onPress={() => {
-          navigation.navigate('Cadastro', { id: user.id });
+          navigation.navigate('Cadastro', { pacienteId: paciente.id });
         }}
-      /> */}
+      />
       
     </View>
   );

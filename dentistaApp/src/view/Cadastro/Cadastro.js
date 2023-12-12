@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState} from 'react';
 import { ScrollView, View, StyleSheet, Dimensions, Text } from 'react-native';
 import globalStyle from '../../../globalStyle';
 import Stepper from 'react-native-stepper-ui';
@@ -10,10 +10,11 @@ import CadastroEndereco from './Utils/CadastroEndereco';
 import CadastroAnamnese from './Utils/CadastroAnamnese';
 import { GlobalContext } from '../../store/Context';
 import Icon from '@expo/vector-icons/FontAwesome';
-import { usePostPaciente } from '../../service/queries/paciente';
+import { useGetPacienteByIdAuth, usePostPaciente } from '../../service/queries/paciente';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useEffect } from 'react';
 import ErrorResponse from '../../components/response/ErrorResponse';
+import { useFocusEffect  } from '@react-navigation/native';
+import { useCallback } from 'react';
 
 const Cadastro = ({ route }) => {
   const [active, setActive] = useState(0);
@@ -22,6 +23,8 @@ const Cadastro = ({ route }) => {
   const { mutate } = usePostPaciente();
 
   const { paciente, setPaciente, limpaPaciente } = useContext(GlobalContext);
+
+  const { data, isLoading } = useGetPacienteByIdAuth(route.params.pacienteId);
 
   const handlePostPaciente = () => {
     
@@ -52,6 +55,24 @@ const Cadastro = ({ route }) => {
     return true
   }
 
+
+  useFocusEffect(
+    useCallback(() => {
+      if(!isLoading){
+        preenchePacienteDetalhes()
+
+      }
+      return() =>{}
+    }, []));
+
+    function preenchePacienteDetalhes(){
+      if(!isLoading){
+        console.log(datashoppi)
+        setPaciente(data)
+      }
+      
+    }
+
   const content = [
     <CadastroPaciente subTitulo="Informações Pessoais" />,
     <CadastroResponsavel subTitulo="Responsável" />,
@@ -77,7 +98,7 @@ const Cadastro = ({ route }) => {
           />
           <View style={styles.titulo}>
             <Text style={[globalStyle.titulo]}>
-              Novo Paciente
+              {route.params.pacienteId !== null? "Detalhes Paciente" : "Novo Paciente"}
             </Text>
           </View>
         </View>
