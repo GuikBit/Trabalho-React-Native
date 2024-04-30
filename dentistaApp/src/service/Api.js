@@ -21,7 +21,7 @@ import { getToken } from '../hooks/TokenStore';
 // };
 
 const urlBase =
-  'https://1ab6-186-233-45-53.ngrok-free.app';
+  'https://0cd3-186-233-43-9.ngrok-free.app';
 
 export async function apiGetAuth(url) {
   const instance = axios.create({
@@ -46,7 +46,7 @@ export async function apiGetByIdAuth(url, id) {
   });
   try {
     const response = await instance.get(`/v1/${url}/${id}`);
-    console.log(response.status)
+    // console.log(response.status)
     if(response.status === 404){
       return {};
     }

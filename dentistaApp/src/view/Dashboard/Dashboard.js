@@ -27,7 +27,7 @@ const Dashboard = () => {
               labels: data.meses,
               datasets: [
                 {
-                  data: data.qtdPorMes
+                  data: data.qtdMes
                 }
               ]
             }}
@@ -56,9 +56,9 @@ const Dashboard = () => {
         ):(
           <BarChart
             data={{
-              labels: data.dentistas,
+              labels: data.dentistasList,
               datasets: [{
-                data: data.qtdPorDentista
+                data: data.qtdConsultasDentistaMes
               }]
             }}
             width={Dimension.width - 20}
@@ -85,7 +85,7 @@ const Dashboard = () => {
          
         ):(
           <ProgressChart
-            data= {data.qtdPorEspec}            
+            data= {data.qtdEspecialidade}            
             width={Dimension.width - 20}
             height={220}
             style={{

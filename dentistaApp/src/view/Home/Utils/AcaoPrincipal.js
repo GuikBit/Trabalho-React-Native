@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
         
     },
     img:{
-        backgroundColor: "#2D8ACD",  //2D8ACD
+        backgroundColor: "#309ed9",  //2D8ACD        
         elevation: 5
 
     }, consulta: {

@@ -26,7 +26,7 @@ const Home = ({ navigation, route }) => {
   const  preenchepaciente = ()=>{
     if(userLogged.role === "Paciente"){
       setPacienteConsulta(p)
-      console.log(pacienteConsulta)
+      // console.log(pacienteConsulta)
     }
   }
 

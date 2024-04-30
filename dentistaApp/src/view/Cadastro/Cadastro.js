@@ -67,7 +67,7 @@ const Cadastro = ({ route }) => {
 
     function preenchePacienteDetalhes(){
       if(!isLoading){
-        console.log(datashoppi)
+        // console.log(datashoppi)
         setPaciente(data)
       }
       

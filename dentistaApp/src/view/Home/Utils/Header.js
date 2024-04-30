@@ -18,7 +18,8 @@ const Header = ({userLogged, handleLogout}) => {
   // console.log(data)
   return (
     <LinearGradient        
-        colors={["#2e86c9", "#24aae3"]}
+        // colors={["#2e86c9", "#24aae3"]}
+        colors={["#2070b4", "#1e7bbd", "#1c85c7", "#1c90cf", "#1e9bd8", "#309ed9", "#3ea1d9", "#49a4da", "#599fd3", "#669bcc", "#6f96c4", "#7692bc"]}
         style={styles.header}
         start={ {x: 0.3, y: 0.1} } 
         >

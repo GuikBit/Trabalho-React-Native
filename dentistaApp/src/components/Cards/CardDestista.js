@@ -13,7 +13,7 @@ const CardDentista = ({ usuario, onPress }) => {
       <View style={styles.body}>
         <View style={styles.infoRow}>
           <Text style={styles.texto}>
-            <Icon name="calendar" size={16} cor="#d1d1d1" /> {usuario.dataNasc}
+            <Icon name="calendar" size={16} cor="#d1d1d1" /> {usuario.dataNascimento}
           </Text>
           <Text style={styles.texto}>
             <Icon name="address-card-o" size={16} cor="#d1d1d1" /> {usuario.cpf}

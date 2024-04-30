@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React, { useContext } from 'react';
-import { Searchbar, TextInput } from 'react-native-paper';
+import { Searchbar, TextInput, SegmentedButtons } from 'react-native-paper';
 import globalStyle from '../../../globalStyle';
 import { Colors } from '../../global/GlobalStyles';
 import { GlobalContext } from '../../store/Context';
@@ -21,7 +21,7 @@ const FiltroConsultas = ({
 }) => {
 
   const { limpaDentista } = useContext(GlobalContext);
-
+  const [value, setValue] = React.useState('');
   const ajustaData = (num) => {    
     const textoLimpo = num.replace(/\D/g, '');
     const limite = textoLimpo.substring(0, 8);
@@ -42,6 +42,7 @@ const FiltroConsultas = ({
         onClearIconPress={() => setFiltro(data)}
         onChangeText={(e) => setPesquisa(e)}
         iconColor={Colors.secondary}
+      
       />
 
       <View style={[globalStyle.rowAround, {marginTop: 10}]}>
@@ -102,6 +103,53 @@ const FiltroConsultas = ({
           keyboardType='numeric'
         />
       </View>
+
+      <View style={{marginTop: 10}}>
+      <SegmentedButtons
+        value={value}
+        onValueChange={setValue}
+        density= 'small'     
+        theme={{ colors: { primary: '#2070B4' } }}
+        buttons={[
+          {
+            value: 'mes',
+            label: 'Mes',
+            icon: 'calendar-month-outline',
+            uncheckedColor: '#193C47',
+            checkedColor: '#2070B4',
+            style:{
+              backgroundColor: '#FFF',
+              borderColor: '#FFF',
+            },
+            showSelectedCheck: true,
+          },
+          {
+            value: 'semana',
+            label: 'Semana',
+            icon: 'calendar-month-outline',
+            uncheckedColor: '#193C47',
+            checkedColor: '#2070B4',
+            style:{
+              backgroundColor: '#FFF',
+              borderColor: '#FFF',
+            },
+            showSelectedCheck: true
+          },
+          { 
+            value: 'dia',
+            label: 'Dia',
+            icon:'calendar-month-outline',
+            uncheckedColor: '#193C47',
+            checkedColor:'#2070B4',
+            style:{
+              backgroundColor: '#FFF',
+              borderColor: '#FFF',
+            }, 
+            showSelectedCheck: true,
+          },
+        ]}
+      />
+      </View>
     </>
   );
 };
@@ -121,7 +169,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: '#2070B4',
     marginTop: 15,
-    
+
   },
   searchData: {
     backgroundColor: '#FFFFFF',
@@ -130,4 +178,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginTop: 8,
   },
+  botaoGroup: {
+
+  }
+
 });

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Listagem from '../../components/Listagem/Listagem';
 import globalStyle from '../../../globalStyle';
 import lista from '../../Mock/lista';
-import { Button, Modal, PaperProvider, FAB } from 'react-native-paper';
+import { Button, Modal, PaperProvider, FAB, SegmentedButtons  } from 'react-native-paper';
 import FiltroConsultas from '../../components/Listagem/FiltroConsultas';
 import FiltroPacientes from '../../components/Listagem/FiltroPacientes';
 import HeaderGeral from '../../components/Listagem/HeaderGeral';
@@ -93,7 +93,7 @@ const ListaConsulta = ({ navigation, route }) => {
     <PaperProvider>
       <View style={globalStyle.container}>
         <LinearGradient
-          colors={['#2e86c9', '#24aae3']}
+          colors={["#2070b4", "#1e7bbd", "#1c85c7", "#1c90cf", "#1e9bd8", "#309ed9", "#3ea1d9", "#49a4da", "#599fd3", "#669bcc", "#6f96c4", "#7692bc"]}
           style={globalStyle.headerPesq}
           start={{ x: 0.3, y: 0.1 }}
         >

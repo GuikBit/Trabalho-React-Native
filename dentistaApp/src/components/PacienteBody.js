@@ -1,7 +1,7 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
 import globalStyle from '../../globalStyle';
-import { Searchbar, TextInput, FAB, Button } from 'react-native-paper';
+import { Searchbar, TextInput, FAB, Button, Chip  } from 'react-native-paper';
 import lista from '../Mock/lista';
 import CardConsulta from './Cards/CardConsulta';
 import { useGetConsultaByPacienteIdAuth, useGetPacienteByIdAuth, useGetPacientesAuth } from '../service/queries/paciente';
@@ -93,6 +93,7 @@ const UserBody = ({ navigation, paciente }) => {
             />
           )}
           />
+          {paciente.ativo? 
           <FAB
             icon="plus-thick"
             color="#FFFFFF"
@@ -101,6 +102,14 @@ const UserBody = ({ navigation, paciente }) => {
               navigation.navigate('Nova Consulta');
             }}
           />
+          :
+          <FAB
+            icon="account-off"
+            color="#FFFFFF"
+            style={styles.fabInativo}
+            
+          />
+          }
         </>
         
       )}
@@ -143,6 +152,13 @@ const styles = StyleSheet.create({
     height: 35,
     fontSize: 18,
    
+  },  fabInativo: {
+    position: 'absolute',
+    margin: 20,
+    right: 0,
+    bottom: +70,
+    backgroundColor: '#EF4444',
+    color: '#EF4444',
   },
   fabConsulta: {
     position: 'absolute',
