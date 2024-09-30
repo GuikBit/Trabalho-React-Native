@@ -17,7 +17,7 @@ import SuccessResponse from '../../components/response/SuccessResponse';
 
 const Login = ({}) => {
 
-  const [newUser, setNewuser] = useState(false);
+  // const [newUser, setNewuser] = useState(false);
   const [vazio, setVazio] = useState(false);
   const [erro, setErro] = useState(false);
   const { login, user, msg, setMsg, setUser, userLogged} = useContext(AuthContext);
@@ -26,7 +26,7 @@ const Login = ({}) => {
 
   const handleLogin = async () => {
 
-    setNewuser(false);
+    
 
     if(user.login !== "" && user.password !== ""){      
       const logado = await login();

@@ -12,18 +12,26 @@ export const AuthProvider = ({ children }) => {
     password: '123',
   });
 
-  const [msg, setMsg] = useState('');
 
   const [userLogged, setUserLogged] = useState({
-    id: '',
-    nome: '',
-    email: '',
-    login: '',
-    role: '',
-    cpf: '',
-    dataNasc: '',
-    telefone: '',
-    ativo: '',
+    id: null,
+    nome: null,
+    email: null,
+    login: null,
+    role: null,
+    cpf: null,
+    dataNascimento: null,
+    dataCadastro: null,
+    telefone: null,
+    ativo: null,
+    fotoCadastro: null,
+    role: null,
+    numPasta: null,
+    organizacaoId: null,
+    consultas: {},
+    responsavelId: {},
+    anamneseId: {},
+    enderecoId: {},
   });
 
   const login = async () => {
